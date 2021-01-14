@@ -1,6 +1,6 @@
 package io.vacco.volach.dsp;
 
-public class HammingWindow {
+public class VlHammingWindow {
 
   public static final float TWO_PI = (float) (2 * Math.PI);
 

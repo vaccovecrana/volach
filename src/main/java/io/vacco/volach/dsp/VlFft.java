@@ -1,14 +1,14 @@
 package io.vacco.volach.dsp;
 
-public class Fft {
+public class VlFft {
 
   private final float[] window;
 
-  public Fft(int sampleSize) {
-    this.window = HammingWindow.generateCurve(sampleSize);
+  public VlFft(int sampleSize) {
+    this.window = VlHammingWindow.generateCurve(sampleSize);
   }
 
-  public FftSampleF fft(float[] inputReal, float[] inputImag, boolean direct) {
+  public VlFftSample fft(float[] inputReal, float[] inputImag, boolean direct) {
     int n = inputReal.length;
     double ld = Math.log(n) / Math.log(2.0);
 
@@ -68,12 +68,13 @@ public class Fft {
       }
       k++;
     }
-    return FftSampleF.from(xReal, xImag);
+    return VlFftSample.from(xReal, xImag);
   }
 
-  public FftSampleF fft(float[] inputReal, boolean direct) {
+  public VlFftSample fft(float[] inputReal, boolean direct) {
     if (inputReal.length != window.length) {
-      throw new IllegalArgumentException(String.format("Invalid sample size: %s", inputReal.length));
+      throw new IllegalArgumentException(
+          String.format("Invalid sample size: %s", inputReal.length));
     }
     float[] windowed = new float[inputReal.length];
     for (int i = 0; i < inputReal.length; i++) {

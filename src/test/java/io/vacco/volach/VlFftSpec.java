@@ -1,18 +1,17 @@
 package io.vacco.volach;
 
-import io.vacco.volach.dsp.Fft;
-import io.vacco.volach.dsp.FftSampleF;
+import static j8spec.J8Spec.it;
+
+import io.vacco.volach.dsp.VlFft;
+import io.vacco.volach.dsp.VlFftSample;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
-import org.junit.runner.RunWith;
-
 import java.util.Arrays;
-
-import static j8spec.J8Spec.it;
+import org.junit.runner.RunWith;
 
 @DefinedOrder
 @RunWith(J8SpecRunner.class)
-public class FftSpec {
+public class VlFftSpec {
 
   private static float[] copy(double[] input) {
     float[] out = new float[input.length];
@@ -25,8 +24,7 @@ public class FftSpec {
   private static void printChunked(int chunkSize, float[] a) {
     for (int i = 0; i < a.length; i += chunkSize) {
       System.out.println(
-          Arrays.toString(Arrays.copyOfRange(a, i, Math.min(a.length, i + chunkSize)))
-      );
+          Arrays.toString(Arrays.copyOfRange(a, i, Math.min(a.length, i + chunkSize))));
     }
   }
 
@@ -38,8 +36,8 @@ public class FftSpec {
       float[] inputF = copy(inputD);
       float[] fftOutputF = copy(fftOutputD);
 
-      Fft fft = new Fft(512);
-      FftSampleF fftSmp = fft.fft(inputF, true);
+      VlFft fft = new VlFft(512);
+      VlFftSample fftSmp = fft.fft(inputF, true);
 
       printChunked(8, fftOutputF);
       System.out.println("=======================");

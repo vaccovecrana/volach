@@ -10,6 +10,7 @@ group = "io.vacco.volach"
 version = "0.1.0"
 
 configure<io.vacco.common.CbPluginProfileExtension> {
+  // addGoogleJavaFormat()
   addJ8Spec()
   addPmd()
   addSpotBugs()

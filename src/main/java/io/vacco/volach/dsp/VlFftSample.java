@@ -1,13 +1,13 @@
 package io.vacco.volach.dsp;
 
-public class FftSampleF {
+public class VlFftSample {
 
   public float[] real;
   public float[] imaginary;
   public float[] composite;
 
-  public static FftSampleF from(float[] real, float[] imaginary) {
-    FftSampleF sample = new FftSampleF();
+  public static VlFftSample from(float[] real, float[] imaginary) {
+    VlFftSample sample = new VlFftSample();
 
     sample.real = real;
     sample.imaginary = imaginary;
