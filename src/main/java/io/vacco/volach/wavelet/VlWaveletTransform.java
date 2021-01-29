@@ -40,20 +40,15 @@ public class VlWaveletTransform {
 
     int k = arrTime.length;
     int h = arrTime.length;
-    int transformWavelength = wavelet.transformWavelength;
     int l = 0;
 
-    while (h >= transformWavelength && l < level) {
+    while (h >= wavelet.transformWavelength && l < level) {
       int g = k / h;
       for (int p = 0; p < g; p++) {
         float[] iBuf = new float[h];
-        for (int i = 0; i < h; i++) {
-          iBuf[i] = arrHilb[i + (p * h)];
-        }
+        System.arraycopy(arrHilb, p * h, iBuf, 0, h);
         float[] oBuf = wavelet.forward(iBuf, h);
-        for (int i = 0; i < h; i++) {
-          arrHilb[i + (p * h)] = oBuf[i];
-        }
+        System.arraycopy(oBuf, 0, arrHilb, p * h, h);
       }
       h = h >> 1;
       l++;

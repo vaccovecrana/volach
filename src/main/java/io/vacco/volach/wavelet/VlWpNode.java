@@ -9,8 +9,8 @@ import static java.util.Objects.requireNonNull;
 public class VlWpNode {
 
   public final float[] coefficients;
-  private final int level;
-  private final boolean isDetail;
+  public final int level;
+  public final boolean isDetail;
   public VlWpNode parent, approx, detail;
 
   public VlWpNode(int level, boolean isDetail, float[] coefficients, VlWpNode parent) {
@@ -31,10 +31,11 @@ public class VlWpNode {
   }
 
   public VlWpNode[] collectChildren() {
-    return collectTail(this).filter(n -> n.approx == null && n.detail == null).toArray(VlWpNode[]::new);
+    VlWpNode[] out = collectTail(this).filter(n -> n.approx == null && n.detail == null).toArray(VlWpNode[]::new);
+    return out;
   }
 
-  public float[][] collectChildrenSamples(int originalSignalLength) {
+  public float[][] collectLeafSamples(int originalSignalLength) {
     float[][] raw = stream(collectChildren()).map(n -> n.coefficients).toArray(float[][]::new);
     int paddedLength = this.coefficients.length;
     int childrenCoefficientsLength = raw[0].length;
