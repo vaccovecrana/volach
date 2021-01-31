@@ -9,11 +9,12 @@ import static java.util.Objects.requireNonNull;
 public class VlWpNode {
 
   public final float[] coefficients;
-  public final int level;
+  public final int id, level;
   public final boolean isDetail;
   public VlWpNode parent, approx, detail;
 
-  public VlWpNode(int level, boolean isDetail, float[] coefficients, VlWpNode parent) {
+  public VlWpNode(int id, int level, boolean isDetail, float[] coefficients, VlWpNode parent) {
+    this.id = id;
     this.isDetail = isDetail;
     this.level = level;
     this.coefficients = requireNonNull(coefficients);
@@ -46,7 +47,7 @@ public class VlWpNode {
 
   @Override
   public String toString() {
-    return String.format("[%s%s%s, %s]",
+    return String.format("W%s,%s[%s%s%s, %s]", level, id,
         parent != null ? '^' : "", isDetail ? 'd' : 'a',
         level, coefficients.length);
   }

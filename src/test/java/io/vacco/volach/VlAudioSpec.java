@@ -1,15 +1,17 @@
 package io.vacco.volach;
 
-import static j8spec.J8Spec.*;
-
 import io.vacco.volach.audioio.VlSignalExtractor;
+import io.vacco.volach.wavelet.VlDwPt;
+import io.vacco.volach.wavelet.VlHaar1;
+import io.vacco.volach.wavelet.VlWpNode;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
-
-import javax.sound.sampled.*;
 import org.junit.runner.RunWith;
 
-import static io.vacco.volach.audioio.VlMonoAudioInputStream.*;
+import javax.sound.sampled.AudioInputStream;
+
+import static io.vacco.volach.audioio.VlMonoAudioInputStream.loadPcm16Le;
+import static j8spec.J8Spec.it;
 
 @DefinedOrder
 @RunWith(J8SpecRunner.class)
@@ -32,10 +34,47 @@ public class VlAudioSpec {
     it(
         "Can normalize audio data",
         () -> {
-          float[] samples = VlSignalExtractor.apply(VlAudioSpec.class.getResource("/mactonite-piano-piece-6-winter-lights.mp3"));
-          // for (float sample : samples) { System.out.printf("%.8f%n", sample); }
-          System.out.println();
+          // float[] samples = VlSignalExtractor.apply(VlAudioSpec.class.getResource("/mactonite-piano-piece-6-winter-lights.mp3"));
+
+          float[] samples = from(VlChirpSignal.samplesD);
+          float[] samplesP2 = VlSignalExtractor.padPow2(samples);
+
+          VlWpNode root = VlDwPt.extract(samplesP2, new VlHaar1(), 5);
+
+          float[][] freqData = root.collectLeafSamples(samples.length);
+
+          System.out.println("================= Frq data (L5) =================");
+          print2d(freqData);
+
+          System.out.println("================= Ref data (L5) =================");
+          print2d(VlChirpSignal.refCoefficientsLevel5);
         }
     );
+  }
+
+  private static float[] from(double[] in) {
+    float[] out = new float[in.length];
+    for (int i = 0; i < in.length; i++) {
+      out[i] = (float) in[i];
+    }
+    return out;
+  }
+
+  private static void print2d(float[][] in) {
+    for (int i = 0; i < in.length; i++) {
+      float[] data = in[i];
+      for (int k = 0; k < data.length; k++) {
+        System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
+      }
+    }
+  }
+
+  private static void print2d(double[][] in) {
+    for (int i = 0; i < in.length; i++) {
+      double[] data = in[i];
+      for (int k = 0; k < data.length; k++) {
+        System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
+      }
+    }
   }
 }

@@ -28,7 +28,7 @@ public class VlDwPt {
     for (int i = 0; i < splits.size(); i++) {
       boolean isDetail = i % 2 != 0;
       VlWpNode parent = parents[i / 2];
-      wpc[i] = new VlWpNode(lN, isDetail, splits.get(i), parent);
+      wpc[i] = new VlWpNode(i, lN, isDetail, splits.get(i), parent);
       if (isDetail) {
         parent.detail = wpc[i];
       } else {
@@ -39,7 +39,7 @@ public class VlDwPt {
   }
 
   public static VlWpNode extract(float[] signal, VlWavelet wavelet, int level) {
-    VlWpNode result = new VlWpNode(0, false, signal, null);
+    VlWpNode result = new VlWpNode(0, 0, false, signal, null);
     extractTail(signal, 0, level, wavelet, result);
     return result;
   }
