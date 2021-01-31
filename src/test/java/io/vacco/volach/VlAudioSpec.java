@@ -1,7 +1,7 @@
 package io.vacco.volach;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.VlDwPt;
+import io.vacco.volach.wavelet.VlWaveletPacketTransform;
 import io.vacco.volach.wavelet.VlHaar1;
 import io.vacco.volach.wavelet.VlWpNode;
 import j8spec.annotation.DefinedOrder;
@@ -35,19 +35,23 @@ public class VlAudioSpec {
         "Can normalize audio data",
         () -> {
           // float[] samples = VlSignalExtractor.apply(VlAudioSpec.class.getResource("/mactonite-piano-piece-6-winter-lights.mp3"));
-
           float[] samples = from(VlChirpSignal.samplesD);
           float[] samplesP2 = VlSignalExtractor.padPow2(samples);
 
-          VlWpNode root = VlDwPt.extract(samplesP2, new VlHaar1(), 5);
+          VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), 4);
 
-          float[][] freqData = root.collectLeafSamples(samples.length);
+          System.out.println("================= Frq data (L4 - Natural) =================");
+          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, 4)));
 
-          System.out.println("================= Frq data (L5) =================");
-          print2d(freqData);
+          System.out.println("================= Ref data (L4 - Natural) =================");
+          print2d(VlChirpSignal.refCoefficientsLevel4Natural);
 
-          System.out.println("================= Ref data (L5) =================");
-          print2d(VlChirpSignal.refCoefficientsLevel5);
+          root.asSequencyMutation();
+          System.out.println("================= Frq data (L4 - Frequency) =================");
+          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, 4)));
+
+          System.out.println("================= Ref data (L4 - Frequency) =================");
+          print2d(VlChirpSignal.refCoefficientsLevel4Frequency);
         }
     );
   }
