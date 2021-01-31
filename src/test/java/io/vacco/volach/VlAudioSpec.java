@@ -1,6 +1,7 @@
 package io.vacco.volach;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
+import io.vacco.volach.wavelet.VlCoiflet2;
 import io.vacco.volach.wavelet.VlWaveletPacketTransform;
 import io.vacco.volach.wavelet.VlHaar1;
 import io.vacco.volach.wavelet.VlWpNode;
@@ -10,6 +11,9 @@ import org.junit.runner.RunWith;
 
 import javax.sound.sampled.AudioInputStream;
 
+import java.nio.FloatBuffer;
+
+import static io.vacco.volach.audioio.VlArrays.*;
 import static io.vacco.volach.audioio.VlMonoAudioInputStream.loadPcm16Le;
 import static j8spec.J8Spec.it;
 
@@ -34,41 +38,40 @@ public class VlAudioSpec {
     it(
         "Can normalize audio data",
         () -> {
-          // float[] samples = VlSignalExtractor.apply(VlAudioSpec.class.getResource("/mactonite-piano-piece-6-winter-lights.mp3"));
-          float[] samples = from(VlChirpSignal.samplesD);
-          float[] samplesP2 = VlSignalExtractor.padPow2(samples);
+          FloatBuffer samples = from(VlChirpSignal.samplesD); // VlSignalExtractor.apply(url);
+          FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);
+          int level = 4;
 
-          VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), 4);
+          VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
 
           System.out.println("================= Frq data (L4 - Natural) =================");
           print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, 4)));
-
           System.out.println("================= Ref data (L4 - Natural) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Natural);
 
           root.asSequencyMutation();
-          System.out.println("================= Frq data (L4 - Frequency) =================");
-          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, 4)));
 
+          System.out.println("================= Frq data (L4 - Frequency) =================");
+          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level)));
           System.out.println("================= Ref data (L4 - Frequency) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Frequency);
         }
     );
   }
 
-  private static float[] from(double[] in) {
-    float[] out = new float[in.length];
+  private static FloatBuffer from(double[] in) {
+    FloatBuffer out = floatBuffer(in.length);
     for (int i = 0; i < in.length; i++) {
-      out[i] = (float) in[i];
+      out.put(i, (float) in[i]);
     }
     return out;
   }
 
-  private static void print2d(float[][] in) {
+  private static void print2d(FloatBuffer[] in) {
     for (int i = 0; i < in.length; i++) {
-      float[] data = in[i];
-      for (int k = 0; k < data.length; k++) {
-        System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
+      FloatBuffer data = in[i];
+      for (int k = 0; k < data.capacity(); k++) {
+        System.out.printf("[%s, %s, %s], %n", i, k, data.get(k));
       }
     }
   }

@@ -1,5 +1,8 @@
 package io.vacco.volach.wavelet;
 
+import java.nio.FloatBuffer;
+import static io.vacco.volach.audioio.VlArrays.*;
+
 public abstract class VlWavelet {
 
   /**
@@ -25,18 +28,21 @@ public abstract class VlWavelet {
   /**
    * Perform forward transform from time domain to Hilbert domain.
    */
-  public float[] forward(float[] arrTime, int arrTimeLength) {
-    float[] arrHilb = new float[arrTimeLength];
-    int h = arrHilb.length >> 1;
+  public FloatBuffer forward(FloatBuffer arrTime, int arrTimeLength) {
+    FloatBuffer arrHilb = floatBuffer(arrTimeLength);
+    int h = arrHilb.capacity() >> 1;
     for (int i = 0; i < h; i++) {
-      arrHilb[i] = arrHilb[i + h] = 0;
+      arrHilb.put(i + h, 0);
+      arrHilb.put(i, 0);
       for (int j = 0; j < motherWavelength; j++) {
         int k = (i << 1) + j;
-        while (k >= arrHilb.length) {
-          k -= arrHilb.length;
+        while (k >= arrHilb.capacity()) {
+          k -= arrHilb.capacity();
         }
-        arrHilb[i] += arrTime[k] * scalingDeCom[j]; // low pass filter energy approximation
-        arrHilb[i + h] += arrTime[k] * waveletDeCom[j]; // high pass filter for detail
+        float lowPass = arrHilb.get(i) + arrTime.get(k) * scalingDeCom[j]; // low pass filter energy approximation
+        float highPass = arrHilb.get(i + h) + arrTime.get(k) * waveletDeCom[j]; // high pass filter for detail
+        arrHilb.put(i, lowPass);
+        arrHilb.put(i + h, highPass);
       }
     }
     return arrHilb;

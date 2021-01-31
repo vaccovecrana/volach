@@ -1,30 +1,31 @@
 package io.vacco.volach.wavelet;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.stream;
+import static io.vacco.volach.audioio.VlArrays.*;
 
 public class VlWaveletPacketTransform {
 
-  private static List<float[]> split(float[] in, int chunkSize) {
-    List<float[]> out = new ArrayList<>();
-    for (int i = 0; i < in.length; i += chunkSize) {
-      float[] chunk = Arrays.copyOfRange(in, i, Math.min(in.length, i + chunkSize));
+  private static List<FloatBuffer> split(FloatBuffer in, int chunkSize) {
+    List<FloatBuffer> out = new ArrayList<>();
+    for (int i = 0; i < in.capacity(); i += chunkSize) {
+      FloatBuffer chunk = copyOfRange(in, i, Math.min(in.capacity(), i + chunkSize));
       out.add(chunk);
     }
     return out;
   }
 
-  public static void naturalTreeTail(float[] signal, int level, int maxLevel, VlWavelet wavelet, VlWpNode ... parents) {
+  public static void naturalTreeTail(FloatBuffer signal, int level, int maxLevel, VlWavelet wavelet, VlWpNode ... parents) {
     if (level == maxLevel) return;
     int lN = level + 1;
     int children = parents.length * 2;
-    int sliceLength = signal.length / children;
+    int sliceLength = signal.capacity() / children;
     if (sliceLength < wavelet.motherWavelength) return;
 
-    List<float[]> splits = split(VlWaveletTransform.forward(signal, lN, wavelet), sliceLength);
+    List<FloatBuffer> splits = split(VlWaveletTransform.forward(signal, lN, wavelet), sliceLength);
     VlWpNode[] wpc = new VlWpNode[splits.size()];
 
     for (int i = 0; i < splits.size(); i++) {
@@ -40,14 +41,14 @@ public class VlWaveletPacketTransform {
     naturalTreeTail(signal, lN, maxLevel, wavelet, wpc);
   }
 
-  public static VlWpNode naturalTree(float[] signal, VlWavelet wavelet, int maxLevel) {
+  public static VlWpNode naturalTree(FloatBuffer signal, VlWavelet wavelet, int maxLevel) {
     VlWpNode result = new VlWpNode(0, 0, VlWpNode.Type.Approximation, signal, null);
     naturalTreeTail(signal, 0, maxLevel, wavelet, result);
     return result;
   }
 
-  public static float[][] extractCoefficients(VlWpNode[] nodes) {
-    return stream(nodes).map(n -> n.coefficients).toArray(float[][]::new);
+  public static FloatBuffer[] extractCoefficients(VlWpNode[] nodes) {
+    return stream(nodes).map(n -> n.coefficients).toArray(FloatBuffer[]::new);
   }
 
   public static VlWpNode[] collect(VlWpNode root, int level) {

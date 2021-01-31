@@ -1,6 +1,8 @@
 package io.vacco.volach.wavelet;
 
+import java.nio.FloatBuffer;
 import static java.lang.String.format;
+import static io.vacco.volach.audioio.VlArrays.*;
 
 public class VlWaveletTransform {
 
@@ -27,28 +29,29 @@ public class VlWaveletTransform {
   /**
    * Performs a 1-D forward transform from time domain to Hilbert domain.
    */
-  public static float[] forward(float[] arrTime, int level, VlWavelet wavelet) {
-    if (!isBinary(arrTime.length)) {
-      throw new IllegalArgumentException(format("Array of length [%s] is not 2^p", arrTime.length));
+  public static FloatBuffer forward(FloatBuffer arrTime, int level, VlWavelet wavelet) {
+    int length = arrTime.capacity();
+    if (!isBinary(length)) {
+      throw new IllegalArgumentException(format("Array of length [%s] is not 2^p", length));
     }
-    if (level < 0 || level > calcExponent(arrTime.length)) {
+    if (level < 0 || level > calcExponent(length)) {
       throw new IllegalArgumentException(format("Level [%s] is out of range for given array", level));
     }
 
-    float[] arrHilb = new float[arrTime.length];
-    System.arraycopy(arrTime, 0, arrHilb, 0, arrTime.length);
+    FloatBuffer arrHilb = floatBuffer(length);
+    copy(arrTime, 0, arrHilb, 0, length);
 
-    int k = arrTime.length;
-    int h = arrTime.length;
+    int k = length;
+    int h = length;
     int l = 0;
 
     while (h >= wavelet.transformWavelength && l < level) {
       int g = k / h;
       for (int p = 0; p < g; p++) {
-        float[] iBuf = new float[h];
-        System.arraycopy(arrHilb, p * h, iBuf, 0, h);
-        float[] oBuf = wavelet.forward(iBuf, h);
-        System.arraycopy(oBuf, 0, arrHilb, p * h, h);
+        FloatBuffer iBuf = floatBuffer(h);
+        copy(arrHilb, p * h, iBuf, 0, h);
+        FloatBuffer oBuf = wavelet.forward(iBuf, h);
+        copy(oBuf, 0, arrHilb, p * h, h);
       }
       h = h >> 1;
       l++;

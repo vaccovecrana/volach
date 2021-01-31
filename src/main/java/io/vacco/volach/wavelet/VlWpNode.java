@@ -1,5 +1,6 @@
 package io.vacco.volach.wavelet;
 
+import java.nio.FloatBuffer;
 import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
@@ -8,7 +9,7 @@ public class VlWpNode {
 
   public enum Type { Approximation, Detail }
 
-  public final float[] coefficients;
+  public final FloatBuffer coefficients;
   public int level, levelId;
   public final Type type;
   public final String idLabel;
@@ -16,7 +17,7 @@ public class VlWpNode {
   public final VlWpNode parent;
   public VlWpNode left, right;
 
-  public VlWpNode(int levelId, int level, Type type, float[] coefficients, VlWpNode parent) {
+  public VlWpNode(int levelId, int level, Type type, FloatBuffer coefficients, VlWpNode parent) {
     this.levelId = levelId;
     this.type = type;
     this.level = level;
