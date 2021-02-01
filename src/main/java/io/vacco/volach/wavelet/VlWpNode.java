@@ -46,9 +46,7 @@ public class VlWpNode {
 
   /**
    * - TODO this could be optimized to preserve a single set of coefficient values when creating a new analysis node.
-   * - TODO calling this method for the first time in a fresh root node will yield the sequency (frequency)
-   *   ordered tree mutation, but calling it a second time (from the root) does not restore the tree back
-   *   to a naturally ordered mutation.
+   * - TODO implement method to reverse into naturally ordered mutation.
    */
   private void sequencyMutationTail(VlWpNode root) {
     if (root.left == null || root.right == null) { return; }
