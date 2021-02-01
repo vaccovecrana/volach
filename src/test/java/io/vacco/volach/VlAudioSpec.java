@@ -10,12 +10,13 @@ import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 
 import javax.sound.sampled.AudioInputStream;
-
 import java.nio.FloatBuffer;
 
 import static io.vacco.volach.audioio.VlArrays.*;
 import static io.vacco.volach.audioio.VlMonoAudioInputStream.loadPcm16Le;
 import static j8spec.J8Spec.it;
+
+import static org.junit.Assert.*;
 
 @DefinedOrder
 @RunWith(J8SpecRunner.class)
@@ -36,23 +37,33 @@ public class VlAudioSpec {
           System.err.printf("Read %s bytes%n", total);
         });
     it(
-        "Can normalize audio data",
+        "Can perform wavelet packet transform analysis on audio data",
         () -> {
-          FloatBuffer samples = from(VlChirpSignal.samplesD); // VlSignalExtractor.apply(url);
+          FloatBuffer samples = from(VlChirpSignal.samplesD);
           FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);
           int level = 4;
 
           VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
 
           System.out.println("================= Frq data (L4 - Natural) =================");
-          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, 4)));
+          FloatBuffer[] coeffNatural = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
+          print2d(coeffNatural);
+
           System.out.println("================= Ref data (L4 - Natural) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Natural);
+
+          assertTrue(coeffNatural[0].get(0) > 0.8984);
+          assertTrue(coeffNatural[coeffNatural.length - 1].get(0) < -0.0015);
 
           root.asSequencyMutation();
 
           System.out.println("================= Frq data (L4 - Frequency) =================");
-          print2d(VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level)));
+          FloatBuffer[] coeffFreq = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
+          print2d(coeffFreq);
+
+          assertTrue(coeffFreq[0].get(0) > 0.8984);
+          assertTrue(coeffFreq[coeffFreq.length - 1].get(0) < -0.0826);
+
           System.out.println("================= Ref data (L4 - Frequency) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Frequency);
         }
