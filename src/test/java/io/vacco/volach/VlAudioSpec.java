@@ -1,15 +1,14 @@
 package io.vacco.volach;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.VlCoiflet2;
-import io.vacco.volach.wavelet.VlWaveletPacketTransform;
-import io.vacco.volach.wavelet.VlHaar1;
-import io.vacco.volach.wavelet.VlWpNode;
+import io.vacco.volach.wavelet.*;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 
 import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.net.URL;
 import java.nio.FloatBuffer;
 
 import static io.vacco.volach.audioio.VlArrays.*;
@@ -37,7 +36,7 @@ public class VlAudioSpec {
           System.err.printf("Read %s bytes%n", total);
         });
     it(
-        "Can perform wavelet packet transform analysis on audio data",
+        "Can perform wavelet packet transform analysis on an audio signal",
         () -> {
           FloatBuffer samples = from(VlChirpSignal.samplesD);
           FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);
@@ -45,11 +44,11 @@ public class VlAudioSpec {
 
           VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
 
-          System.out.println("================= Frq data (L4 - Natural) =================");
+          System.out.println("================= Audio signal - Frq data (L4 - Natural) =================");
           FloatBuffer[] coeffNatural = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
           print2d(coeffNatural);
 
-          System.out.println("================= Ref data (L4 - Natural) =================");
+          System.out.println("================= Audio signal - Ref data (L4 - Natural) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Natural);
 
           assertTrue(coeffNatural[0].get(0) > 0.8984);
@@ -57,15 +56,33 @@ public class VlAudioSpec {
 
           root.asSequencyMutation();
 
-          System.out.println("================= Frq data (L4 - Frequency) =================");
+          System.out.println("================= Audio signal - Frq data (L4 - Frequency) =================");
           FloatBuffer[] coeffFreq = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
           print2d(coeffFreq);
 
           assertTrue(coeffFreq[0].get(0) > 0.8984);
           assertTrue(coeffFreq[coeffFreq.length - 1].get(0) < -0.0826);
 
-          System.out.println("================= Ref data (L4 - Frequency) =================");
+          System.out.println("================= Audio signal - Ref data (L4 - Frequency) =================");
           print2d(VlChirpSignal.refCoefficientsLevel4Frequency);
+        }
+    );
+    it(
+        "Can extract frequency data from audio content",
+        () -> {
+          int level = 8;
+          File f = new File("/home/jjzazuet/Desktop/test.mp3");
+          URL url = VlAudioSpec.class.getResource("/mactonite-piano-piece-6-winter-lights.mp3"); // f.toURI().toURL()
+          VlSignalExtractor.from(url).forEach(chunk -> {
+            VlWpNode root = VlWaveletPacketTransform.naturalTree(chunk.data, new VlDaubechies4(), level);
+            root.asSequencyMutation();
+            System.out.println(chunk);
+            if (chunk.id == 1) {
+              System.out.println("================= Audio content - Frq data (Frequency) =================");
+              FloatBuffer[] coeffFreq = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
+              print2d(coeffFreq);
+            }
+          });
         }
     );
   }

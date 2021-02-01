@@ -98,21 +98,4 @@ public class VlMonoAudioInputStream extends AudioInputStream {
       throw new IllegalStateException(e);
     }
   }
-
-  public static void processPcm16Le(URL url, Consumer<Integer> onSample) {
-    VlMonoAudioInputStream in = loadPcm16Le(url);
-    byte[] buffer = new byte[2];
-    try {
-      while (in.read(buffer, 0, buffer.length) >= 0) {
-        onSample.accept(readSignedLe(buffer));
-      }
-      in.close();
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
-    }
-  }
-
-  private static int readSignedLe(byte[] in) {
-    return (in[0] & 0xff) | (short) (in[1] << 8);
-  }
 }

@@ -1,28 +1,61 @@
 package io.vacco.volach.audioio;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.FloatBuffer;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import static io.vacco.volach.audioio.VlMonoAudioInputStream.processPcm16Le;
+import static io.vacco.volach.audioio.VlMonoAudioInputStream.*;
 import static io.vacco.volach.audioio.VlArrays.*;
 
-/**
- * TODO this class could use enhancements, namely the capability
- * to read, normalize and provide sample data in a streaming fashion
- * (for longer audio content).
- */
-public class VlSignalExtractor {
+public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignalChunk> {
 
-  public static FloatBuffer apply(URL url) {
-    int[] counters = new int[2];
-    processPcm16Le(url, sample -> counters[0] = counters[0] + 1);
-    FloatBuffer signal = floatBuffer(counters[0]);
-    processPcm16Le(url, sample -> {
-      float val = sample; // (((sample * 2) + 1) / (float) 65535);
-      signal.put(counters[1], val);
-      counters[1] = counters[1] + 1;
-    });
-    return signal;
+  private final byte[] sampleBuffer = new byte[2];
+
+  private final float[] zeroBuffer;
+  private final FloatBuffer signalBuffer;
+  private final VlMonoAudioInputStream input;
+
+  private final int bufferSize;
+  private int totalChunks;
+  private long totalSamples = 0;
+  private boolean eof = false;
+
+  public VlSignalExtractor(URL src) {
+    super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
+    this.input = loadPcm16Le(src);
+    this.bufferSize = nextPow2((int) (input.getFormat().getSampleRate() * 6));
+    this.zeroBuffer = new float[bufferSize];
+    this.signalBuffer = floatBuffer(bufferSize);
+  }
+
+  @Override
+  public boolean tryAdvance(Consumer<? super VlSignalChunk> onChunk) {
+    try {
+      int samplesRead;
+      signalBuffer.rewind();
+      signalBuffer.put(zeroBuffer);
+      for (int k = 0; k < bufferSize; k++) {
+        samplesRead = input.read(sampleBuffer, 0, sampleBuffer.length);
+        if (eof = samplesRead == -1) { break; }
+        float sample = (float) readSignedLe(sampleBuffer);
+        // sample = (((sample * 2) + 1) / (float) 65535);
+        signalBuffer.put(k, sample);
+        totalSamples++;
+      }
+      onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks, totalSamples));
+      totalChunks++;
+      if (eof) {
+        input.close();
+      }
+      return !eof;
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   public static FloatBuffer padPow2(FloatBuffer in) {
@@ -31,8 +64,15 @@ public class VlSignalExtractor {
     return out;
   }
 
-  public static int nextPow2(int x) {
+  private static int nextPow2(int x) {
     return x == 1 ? 1 : Integer.highestOneBit(x - 1) * 2;
   }
 
+  private static int readSignedLe(byte[] in) {
+    return (in[0] & 0xff) | (short) (in[1] << 8);
+  }
+
+  public static Stream<VlSignalChunk> from(URL src) {
+    return StreamSupport.stream(new VlSignalExtractor(src), false);
+  }
 }
