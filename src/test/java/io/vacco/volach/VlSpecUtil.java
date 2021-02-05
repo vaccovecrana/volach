@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.nio.FloatBuffer;
+import java.util.Arrays;
 import java.util.function.Consumer;
-
-import static io.vacco.volach.audioio.VlArrays.floatBuffer;
 
 public class VlSpecUtil {
 
@@ -34,5 +33,26 @@ public class VlSpecUtil {
         System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
       }
     }
+  }
+
+  public static void writeCoefficients(File target, FloatBuffer[] coefficients) throws FileNotFoundException {
+    float[] range = new float[2];
+    float[][] buffer = new float[1][];
+
+    withWriter(target, out -> {
+      for (FloatBuffer floatBuffer : coefficients) {
+        if (buffer[0] == null) {
+          buffer[0] = new float[floatBuffer.capacity()];
+        }
+        floatBuffer.get(buffer[0]);
+        out.println(Arrays.toString(buffer[0]).replace("[", "").replace("]", ""));
+        for (float v : buffer[0]) {
+          if (v < range[0]) range[0] = v;
+          if (v > range[1]) range[1] = v;
+        }
+      }
+    });
+
+    System.out.printf("vmin=%s, vmax=%s", range[0] / 8, range[1] / 8);
   }
 }
