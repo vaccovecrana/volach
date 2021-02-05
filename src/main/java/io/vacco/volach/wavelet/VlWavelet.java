@@ -30,19 +30,19 @@ public abstract class VlWavelet {
    */
   public FloatBuffer forward(FloatBuffer arrTime, int arrTimeLength) {
     FloatBuffer arrHilb = floatBuffer(arrTimeLength);
-    int h = arrHilb.capacity() >> 1;
-    for (int i = 0; i < h; i++) {
-      arrHilb.put(i + h, 0);
-      arrHilb.put(i, 0);
+    int hp = arrHilb.capacity() >> 1;
+    for (int lp = 0; lp < hp; lp++) {
+      arrHilb.put(lp + hp, 0);
+      arrHilb.put(lp, 0);
       for (int j = 0; j < motherWavelength; j++) {
-        int k = (i << 1) + j;
+        int k = (lp << 1) + j;
         while (k >= arrHilb.capacity()) {
           k -= arrHilb.capacity();
         }
-        float lowPass = arrHilb.get(i) + arrTime.get(k) * scalingDeCom[j]; // low pass filter energy approximation
-        float highPass = arrHilb.get(i + h) + arrTime.get(k) * waveletDeCom[j]; // high pass filter for detail
-        arrHilb.put(i, lowPass);
-        arrHilb.put(i + h, highPass);
+        float lowPass = arrHilb.get(lp) + arrTime.get(k) * scalingDeCom[j]; // low pass filter energy approximation
+        float highPass = arrHilb.get(lp + hp) + arrTime.get(k) * waveletDeCom[j]; // high pass filter for detail
+        arrHilb.put(lp, lowPass);
+        arrHilb.put(lp + hp, highPass);
       }
     }
     return arrHilb;
