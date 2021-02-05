@@ -28,7 +28,7 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
   public VlSignalExtractor(URL src) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
     this.input = loadPcm16Le(src);
-    this.bufferSize = nextPow2((int) input.getFormat().getSampleRate()); // TODO buffer size in seconds should be a parameter.
+    this.bufferSize = nextPow2((int) input.getFormat().getSampleRate());
     this.zeroBuffer = new float[bufferSize];
     this.signalBuffer = floatBuffer(bufferSize);
   }
@@ -36,7 +36,7 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
   @Override
   public boolean tryAdvance(Consumer<? super VlSignalChunk> onChunk) {
     try {
-      int samplesRead = 0;
+      int samplesRead;
       signalBuffer.rewind();
       signalBuffer.put(zeroBuffer);
       for (int k = 0; k < bufferSize; k++) {
@@ -47,11 +47,10 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
         signalBuffer.put(k, sample);
         totalSamples++;
       }
-      onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks, totalSamples));
+      onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks, (long) totalChunks * bufferSize));
       totalChunks++;
       if (eof) {
         input.close();
-        System.out.printf("Total samples read: [%s]", totalSamples);
       }
       return !eof;
     } catch (IOException e) {

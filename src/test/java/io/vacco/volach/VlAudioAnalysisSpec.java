@@ -16,7 +16,7 @@ import static io.vacco.volach.VlSpecUtil.*;
 
 @DefinedOrder
 @RunWith(J8SpecRunner.class)
-public class VlAudioSpec {
+public class VlAudioAnalysisSpec {
 
   static {
     it(
@@ -27,7 +27,7 @@ public class VlAudioSpec {
           int level = 4;
 
           VlWavelet wavelet = new VlHaar1();
-          URL url = VlAudioSpec.class.getResource("/eas.mp3");
+          URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File values = new File("./build/coefficients-eas-l4-natural.txt");
 
           withWriter(values, out -> VlSignalExtractor.from(url).forEach(chunk -> {
@@ -46,7 +46,7 @@ public class VlAudioSpec {
             }
           }));
 
-          System.out.printf("vmin=%s, vmax=%s", range[0] / 8, range[1] / 8);
+          System.out.printf("vmin=%s, vmax=%s%n", range[0] / 8, range[1] / 8);
         }
     );
   }
