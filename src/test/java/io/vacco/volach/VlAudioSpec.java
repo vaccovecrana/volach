@@ -28,7 +28,7 @@ public class VlAudioSpec {
 
           VlWavelet wavelet = new VlHaar1();
           URL url = VlAudioSpec.class.getResource("/eas.mp3");
-          File values = new File("/home/jjzazuet/Desktop/values.txt");
+          File values = new File("./build/coefficients-eas-l4-natural.txt");
 
           withWriter(values, out -> VlSignalExtractor.from(url).forEach(chunk -> {
             VlWpNode root = VlWaveletPacketTransform.naturalTree(chunk.data, wavelet, level);
