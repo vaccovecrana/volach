@@ -25,7 +25,8 @@ public class VlWaveletPacketTransform {
     int sliceLength = signal.capacity() / children;
     if (sliceLength < wavelet.motherWavelength) return;
 
-    List<FloatBuffer> splits = split(VlWaveletTransform.forward(signal, lN, wavelet), sliceLength);
+    FloatBuffer raw = VlWaveletTransform.forward(signal, lN, wavelet);
+    List<FloatBuffer> splits = split(raw, sliceLength);
     VlWpNode[] wpc = new VlWpNode[splits.size()];
 
     for (int i = 0; i < splits.size(); i++) {

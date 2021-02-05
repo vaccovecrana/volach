@@ -17,10 +17,12 @@ public class VlArrays {
   // TODO this needs to be optimized :P
   public static void copy(FloatBuffer src, int srcPos, FloatBuffer dest, int destPos, int length) {
     int srcIdx, dstIdx;
+    float value;
     for (int k = 0; k < length; k++) {
       srcIdx = k + srcPos;
       dstIdx = k + destPos;
-      dest.put(dstIdx, src.get(srcIdx));
+      value = src.get(srcIdx);
+      dest.put(dstIdx, value);
     }
   }
 

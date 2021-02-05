@@ -15,6 +15,6 @@ public class VlSignalChunk {
 
   @Override
   public String toString() {
-    return String.format("chunk[id: %s, offset: %s]", id, offset);
+    return String.format("chunk[id: %s, length: %s, offset: %s]", id, data.capacity(), offset);
   }
 }

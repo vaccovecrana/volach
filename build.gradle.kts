@@ -23,4 +23,5 @@ val api by configurations
 
 dependencies {
   testImplementation("io.vacco.jlame:jlame:3.100.0")
+  testImplementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
 }
