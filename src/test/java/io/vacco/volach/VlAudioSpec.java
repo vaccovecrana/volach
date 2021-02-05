@@ -27,8 +27,7 @@ public class VlAudioSpec {
           int level = 4;
 
           VlWavelet wavelet = new VlHaar1();
-          File f = new File("/home/jjzazuet/Desktop/24k-magic.mp3");
-          URL url = VlAudioSpec.class.getResource("/eas-sample.mp3"); // f.toURI().toURL()
+          URL url = VlAudioSpec.class.getResource("/eas.mp3");
           File values = new File("/home/jjzazuet/Desktop/values.txt");
 
           withWriter(values, out -> VlSignalExtractor.from(url).forEach(chunk -> {
