@@ -31,7 +31,7 @@ public class VlEasSignalSpec {
           System.out.println("================= Audio signal - Frq data (L4 - Natural) =================");
           print2d(coeffNatural);
 
-          writeCoefficients(new File("./build/coefficients-eas-l4-natural.txt"), coeffNatural);
+          writeCoefficients(new File("./build/coefficients-eas-sample-l4-natural.txt"), coeffNatural);
         }
     );
   }
