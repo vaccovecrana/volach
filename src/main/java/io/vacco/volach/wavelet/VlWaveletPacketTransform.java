@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.stream;
-import static io.vacco.volach.audioio.VlArrays.*;
+import static io.vacco.volach.util.VlArrays.*;
 
 public class VlWaveletPacketTransform {
 

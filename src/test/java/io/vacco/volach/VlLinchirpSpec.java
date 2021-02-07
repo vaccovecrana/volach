@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.nio.FloatBuffer;
 
-import static io.vacco.volach.audioio.VlArrays.*;
+import static io.vacco.volach.util.VlArrays.*;
 import static io.vacco.volach.VlSpecUtil.*;
 import static j8spec.J8Spec.it;
 import static org.junit.Assert.*;

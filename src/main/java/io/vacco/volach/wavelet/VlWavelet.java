@@ -1,33 +1,25 @@
 package io.vacco.volach.wavelet;
 
 import java.nio.FloatBuffer;
-import static io.vacco.volach.audioio.VlArrays.*;
+import java.util.Arrays;
+
+import static io.vacco.volach.util.VlArrays.*;
 
 public abstract class VlWavelet {
 
-  /**
-   * Wavelength of the mother wavelet and its matching scaling function.
-   */
+  /** Wavelength of the mother wavelet and its matching scaling function. */
   public int motherWavelength;
 
-  /**
-   * Minimal wavelength of a signal that can be transformed.
-   */
+  /** Minimal wavelength of a signal that can be transformed. */
   public int transformWavelength;
 
-  /**
-   * The coefficients of the mother wavelet scaling (low pass filter) for decomposition.
-   */
+  /** The coefficients of the mother wavelet scaling (low pass filter) for decomposition. */
   public float[] scalingDeCom;
 
-  /**
-   * The coefficients of the mother wavelet (high pass filter) for decomposition.
-   */
+  /** The coefficients of the mother wavelet (high pass filter) for decomposition. */
   public float[] waveletDeCom;
 
-  /**
-   * Perform forward transform from time domain to Hilbert domain.
-   */
+  /** Perform forward transform from time domain to Hilbert domain. */
   public FloatBuffer forward(FloatBuffer arrTime, int arrTimeLength) {
     FloatBuffer arrHilb = floatBuffer(arrTimeLength);
     int hp = arrHilb.capacity() >> 1;
@@ -61,4 +53,6 @@ public abstract class VlWavelet {
         waveletDeCom[i] = -scalingDeCom[(motherWavelength - 1) - i];
       }
   }
+
+  @Override public String toString() { return getClass().getSimpleName(); }
 }

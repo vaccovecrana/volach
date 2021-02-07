@@ -1,4 +1,4 @@
-package io.vacco.volach.audioio;
+package io.vacco.volach.util;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -35,5 +35,9 @@ public class VlArrays {
       copy(original, from, copy, 0, Math.min(original.capacity() - from, newLength));
       return copy;
     }
+  }
+
+  public static int readSignedLe(byte[] in) {
+    return (in[0] & 0xff) | (short) (in[1] << 8);
   }
 }

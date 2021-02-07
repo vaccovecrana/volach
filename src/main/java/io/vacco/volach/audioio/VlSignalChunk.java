@@ -3,18 +3,16 @@ package io.vacco.volach.audioio;
 import java.nio.FloatBuffer;
 
 public class VlSignalChunk {
-  public FloatBuffer data;
-  public int id;
-  public long offset;
+  public final FloatBuffer data;
+  public final long offset;
 
-  public VlSignalChunk(FloatBuffer data, int id, long offset) {
-    this.id = id;
+  public VlSignalChunk(FloatBuffer data, long offset) {
     this.data = data;
     this.offset = offset;
   }
 
   @Override
   public String toString() {
-    return String.format("chunk[id: %s, length: %s, offset: %s]", id, data.capacity(), offset);
+    return String.format("chunk[length: %s, offset: %s]", data.capacity(), offset);
   }
 }

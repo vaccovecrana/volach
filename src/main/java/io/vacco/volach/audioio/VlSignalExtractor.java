@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static io.vacco.volach.audioio.VlMonoAudioInputStream.*;
-import static io.vacco.volach.audioio.VlArrays.*;
+import static io.vacco.volach.util.VlArrays.*;
+import static io.vacco.volach.util.VlMath.*;
 
 public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignalChunk> {
 
@@ -20,15 +21,15 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
   private final FloatBuffer signalBuffer;
   private final VlMonoAudioInputStream input;
 
-  private final int bufferSize;
-  private int totalChunks;
-  private long totalSamples = 0;
-  private boolean eof = false;
+  public boolean eof = false;
+  public final int bufferSize;
+  public int totalChunks;
+  public long totalSamples;
 
-  public VlSignalExtractor(URL src) {
+  public VlSignalExtractor(URL src, int analysisSampleSize) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
     this.input = loadPcm16Le(src);
-    this.bufferSize = nextPow2((int) input.getFormat().getSampleRate());
+    this.bufferSize = nextPow2(analysisSampleSize);
     this.zeroBuffer = new float[bufferSize];
     this.signalBuffer = floatBuffer(bufferSize);
   }
@@ -47,11 +48,9 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
         signalBuffer.put(k, sample);
         totalSamples++;
       }
-      onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks, (long) totalChunks * bufferSize));
+      if (eof) { input.close(); }
       totalChunks++;
-      if (eof) {
-        input.close();
-      }
+      onChunk.accept(new VlSignalChunk(signalBuffer, (long) totalChunks * bufferSize));
       return !eof;
     } catch (IOException e) {
       throw new IllegalStateException(e);
@@ -64,15 +63,8 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
     return out;
   }
 
-  private static int nextPow2(int x) {
-    return x == 1 ? 1 : Integer.highestOneBit(x - 1) * 2;
+  public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize) {
+    return StreamSupport.stream(new VlSignalExtractor(src, analysisSampleSize), false);
   }
 
-  private static int readSignedLe(byte[] in) {
-    return (in[0] & 0xff) | (short) (in[1] << 8);
-  }
-
-  public static Stream<VlSignalChunk> from(URL src) {
-    return StreamSupport.stream(new VlSignalExtractor(src), false);
-  }
 }

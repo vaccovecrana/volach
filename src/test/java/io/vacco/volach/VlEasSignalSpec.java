@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.nio.FloatBuffer;
 
-import static io.vacco.volach.audioio.VlArrays.*;
+import static io.vacco.volach.util.VlArrays.*;
 import static io.vacco.volach.VlSpecUtil.*;
 import static j8spec.J8Spec.it;
 
@@ -27,9 +27,6 @@ public class VlEasSignalSpec {
           VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
           VlWpNode[] nodes = VlWaveletPacketTransform.collect(root, level);
           FloatBuffer[] coeffNatural = VlWaveletPacketTransform.extractCoefficients(nodes);
-
-          System.out.println("================= Audio signal - Frq data (L4 - Natural) =================");
-          print2d(coeffNatural);
 
           writeCoefficients(new File("./build/coefficients-eas-sample-l4-natural.txt"), coeffNatural);
         }

@@ -53,6 +53,6 @@ public class VlSpecUtil {
       }
     });
 
-    System.out.printf("vmin=%s, vmax=%s", range[0] / 8, range[1] / 8);
+    System.out.printf("vmin=%s, vmax=%s%n", range[0] / 8, range[1] / 8);
   }
 }

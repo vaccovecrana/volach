@@ -8,6 +8,7 @@ import static java.util.Objects.requireNonNull;
 public class VlWpNode {
 
   public enum Type { Approximation, Detail }
+  public enum Order { Natural, Sequency }
 
   public final FloatBuffer coefficients;
   public int level, levelId;
@@ -46,7 +47,7 @@ public class VlWpNode {
 
   /**
    * - TODO this could be optimized to preserve a single set of coefficient values when creating a new analysis node.
-   * - TODO implement method to reverse into naturally ordered mutation.
+   * - TODO implement method to reverse back into natural order mutation.
    */
   private void sequencyMutationTail(VlWpNode root) {
     if (root.left == null || root.right == null) { return; }

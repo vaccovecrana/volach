@@ -2,7 +2,6 @@ package io.vacco.volach.audioio;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.function.Consumer;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -82,17 +81,12 @@ public class VlMonoAudioInputStream extends AudioInputStream {
     try {
       AudioInputStream in = AudioSystem.getAudioInputStream(url);
       AudioFormat in_format = in.getFormat();
-      AudioFormat decoded_format =
-          new AudioFormat(
-              AudioFormat.Encoding.PCM_SIGNED,
-              in_format.getSampleRate(),
-              16,
-              in_format.getChannels(),
-              in_format.getChannels() * (16 / 8),
-              in_format.getFrameRate(),
-              false);
-      VlMonoAudioInputStream min =
-          new VlMonoAudioInputStream(AudioSystem.getAudioInputStream(decoded_format, in));
+      AudioFormat decoded_format = new AudioFormat(
+          AudioFormat.Encoding.PCM_SIGNED, in_format.getSampleRate(), 16,
+          in_format.getChannels(), in_format.getChannels() * (16 / 8),
+          in_format.getFrameRate(), false
+      );
+      VlMonoAudioInputStream min = new VlMonoAudioInputStream(AudioSystem.getAudioInputStream(decoded_format, in));
       return min;
     } catch (Exception e) {
       throw new IllegalStateException(e);

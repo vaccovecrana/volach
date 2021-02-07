@@ -1,41 +1,22 @@
 package io.vacco.volach.wavelet;
 
+import io.vacco.volach.util.VlException;
+
 import java.nio.FloatBuffer;
-import static java.lang.String.format;
-import static io.vacco.volach.audioio.VlArrays.*;
+import static io.vacco.volach.util.VlArrays.*;
+import static io.vacco.volach.util.VlMath.*;
 
 public class VlWaveletTransform {
 
-  public static boolean isBinary(int number) {
-    boolean isBinary = false;
-    int power = (int) (Math.log(number) / Math.log(2));
-    double result = Math.pow(2, power);
-    if (result == number)
-      isBinary = true;
-    return isBinary;
-  }
-
-  public static int getExponent(double f) {
-    return (int) (Math.log(f) / Math.log(2));
-  }
-
-  protected static int calcExponent(int number) {
-    if (!isBinary(number)) {
-      throw new IllegalArgumentException(format("[%s] is not binary", number));
-    }
-    return getExponent(number);
-  }
-
-  /**
-   * Performs a 1-D forward transform from time domain to Hilbert domain.
-   */
+  /** Performs a 1-D forward transform from time domain to Hilbert domain. */
   public static FloatBuffer forward(FloatBuffer arrTime, int level, VlWavelet wavelet) {
     int length = arrTime.capacity();
     if (!isBinary(length)) {
-      throw new IllegalArgumentException(format("Array of length [%s] is not 2^p", length));
+      throw new VlException.VlNonPowerOfTwoException(length);
     }
+    int exponent = calcExponent(length);
     if (level < 0 || level > calcExponent(length)) {
-      throw new IllegalArgumentException(format("Level [%s] is out of range for given array", level));
+      throw new VlException.VlLevelOutOfRangeException(level, length, exponent);
     }
 
     FloatBuffer arrHilb = floatBuffer(length);
@@ -57,5 +38,28 @@ public class VlWaveletTransform {
       l++;
     }
     return arrHilb;
+  }
+
+  /**
+   * Given an input signal and a wavelet, determine if a target analysis level is defined.
+   *
+   * @param sampleSize the input signal size
+   * @param level the desired analysis level
+   * @param wavelet the target analysis wavelet
+   *
+   * @throws io.vacco.volach.util.VlException.VlUndefinedDecompositionLevelException
+   *  if the sample size/level/wavelet combination is invalid.
+   */
+  public static void validate(int sampleSize, int level, VlWavelet wavelet) {
+    if (!isBinary(sampleSize)) {
+      throw new VlException.VlNonPowerOfTwoException(sampleSize);
+    }
+    int test = sampleSize;
+    for (int i = 0; i < level; i++) {
+      test = test >> 1;
+    }
+    if (test < wavelet.motherWavelength) {
+      throw new VlException.VlUndefinedDecompositionLevelException(level, sampleSize, wavelet);
+    }
   }
 }
