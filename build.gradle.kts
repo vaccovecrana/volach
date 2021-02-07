@@ -1,24 +1,13 @@
-plugins { id("io.vacco.common-build") version "0.5.3" }
+plugins { id("io.vacco.common-build") version "0.5.3" apply(false) }
 
-repositories {
-  maven {
-    url = uri("https://dl.bintray.com/vaccovecrana/vacco-oss")
+subprojects {
+  apply(plugin = "io.vacco.common-build")
+  group = "io.vacco.volach"
+  version = "0.1.0"
+
+  configure<io.vacco.common.CbPluginProfileExtension> {
+    addJ8Spec()
+    addClasspathHell()
+    setPublishingUrlTransform { repo -> "${repo.url}/${project.name}" }
   }
-}
-
-group = "io.vacco.volach"
-version = "0.1.0"
-
-configure<io.vacco.common.CbPluginProfileExtension> {
-  addJ8Spec()
-  addClasspathHell()
-  setPublishingUrlTransform { repo -> "${repo.url}/${project.name}" }
-  sharedLibrary()
-}
-
-val api by configurations
-
-dependencies {
-  testImplementation("io.vacco.jlame:jlame:3.100.0")
-  testImplementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
 }
