@@ -37,7 +37,7 @@ public class VlWaveletPacketAnalysisExtractor extends Spliterators.AbstractSplit
       }
 
       VlWpNode[] nodes = VlWaveletPacketTransform.collect(root, level);
-      VlAnalysisSample[] analysisSamples = VlAnalysisSample.from(nodes);
+      VlAnalysisSample[] analysisSamples = VlAnalysisSample.from(totalAnalysisSamples, nodes);
 
       totalAnalysisSamples = totalAnalysisSamples + analysisSamples.length;
 

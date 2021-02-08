@@ -22,13 +22,13 @@ public class VlAudioAnalysisSpec {
         () -> {
           float[][] freqBands = new float[1][];
           float[] range = new float[2];
-          int level = 10;
-          VlWavelet wavelet = new VlCoiflet2();
+          int level = 12;
+          VlWavelet wavelet = new VlDaubechies4();
           // URL url = new File("/home/jjzazuet/Desktop/out.mp3").toURI().toURL();
           URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File values = new File("./build/coefficients-eas-l4-frequency.txt");
 
-          withWriter(values, out -> VlWaveletPacketAnalysisExtractor.from(url, 16384, level, wavelet, VlWpNode.Order.Sequency)
+          withWriter(values, out -> VlWaveletPacketAnalysisExtractor.from(url, 32768, level, wavelet, VlWpNode.Order.Sequency)
               .forEach(chunk -> {
                 System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
                 if (freqBands[0] == null) {

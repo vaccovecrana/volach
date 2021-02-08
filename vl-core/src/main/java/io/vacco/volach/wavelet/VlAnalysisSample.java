@@ -5,18 +5,10 @@ import static io.vacco.volach.util.VlArrays.*;
 
 public class VlAnalysisSample {
 
-  public int level;
+  public int hilbertOffset;
   public FloatBuffer freqPower;
 
-  public static VlAnalysisSample from(int level, FloatBuffer freqPower) {
-    VlAnalysisSample sample = new VlAnalysisSample();
-    sample.freqPower = freqPower;
-    sample.level = level;
-    return sample;
-  }
-
-  public static VlAnalysisSample[] from(VlWpNode[] packets) {
-    int level = packets[0].level;
+  public static VlAnalysisSample[] from(int hilbertOffset, VlWpNode[] packets) {
     int samples = packets[0].coefficients.capacity();
     int frequencies = packets.length;
     VlAnalysisSample[] out = new VlAnalysisSample[samples];
@@ -27,7 +19,10 @@ public class VlAnalysisSample {
         int idx = (frequencies - 1) - n;
         freqPower.put(idx, packets[n].coefficients.get(k));
       }
-      out[k] = VlAnalysisSample.from(level, freqPower);
+      VlAnalysisSample sample = new VlAnalysisSample();
+      sample.freqPower= freqPower;
+      sample.hilbertOffset = hilbertOffset + k;
+      out[k] = sample;
     }
     return out;
   }
