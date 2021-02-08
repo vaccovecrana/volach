@@ -16,7 +16,8 @@ import static j8spec.J8Spec.*;
 public class VlFingerPrintSpec {
   static {
     it("Can identify top frequency peaks per packet sample", () -> {
-      URL url = new File("/home/jjzazuet/Desktop/out.mp3").toURI().toURL();
+      URL url = VlFingerPrintSpec.class.getResource("/eas.mp3");
+      // URL url = new File("/home/jjzazuet/Desktop/out.mp3").toURI().toURL();
       VlXXHashFingerPrintExtractor.from(0.6,
           new VlWaveletPacketAnalysisExtractor(
               new VlSignalExtractor(url, 32768),
