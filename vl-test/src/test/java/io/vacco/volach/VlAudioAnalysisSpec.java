@@ -1,5 +1,6 @@
 package io.vacco.volach;
 
+import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.wavelet.*;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
@@ -28,8 +29,10 @@ public class VlAudioAnalysisSpec {
           URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File values = new File("./build/coefficients-eas-l4-frequency.txt");
 
-          withWriter(values, out -> VlWaveletPacketAnalysisExtractor.from(url, 32768, level, wavelet, VlWpNode.Order.Sequency)
-              .forEach(chunk -> {
+          withWriter(values, out ->
+              VlWaveletPacketAnalysisExtractor.from(
+                  new VlSignalExtractor(url, 32768), level, wavelet, VlWpNode.Order.Sequency
+              ).forEach(chunk -> {
                 System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
                 if (freqBands[0] == null) {
                   freqBands[0] = new float[chunk.samples[0].freqPower.capacity()];

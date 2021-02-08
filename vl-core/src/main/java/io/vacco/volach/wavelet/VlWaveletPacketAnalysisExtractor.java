@@ -56,11 +56,9 @@ public class VlWaveletPacketAnalysisExtractor extends Spliterators.AbstractSplit
     });
   }
 
-  public static Stream<VlAnalysisChunk> from(URL src, int analysisSampleSize, int level, VlWavelet wavelet, VlWpNode.Order order) {
+  public static Stream<VlAnalysisChunk> from(VlSignalExtractor signalExtractor, int level, VlWavelet wavelet, VlWpNode.Order order) {
     return StreamSupport.stream(
-        new VlWaveletPacketAnalysisExtractor(
-            new VlSignalExtractor(src, analysisSampleSize), level, wavelet, order
-        ), false
+        new VlWaveletPacketAnalysisExtractor(signalExtractor, level, wavelet, order), false
     );
   }
 }
