@@ -1,7 +1,7 @@
 package io.vacco.volach;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.VlHaar1;
+import io.vacco.volach.wavelet.type.VlHaar1;
 import io.vacco.volach.wavelet.VlWaveletPacketTransform;
 import io.vacco.volach.wavelet.VlWpNode;
 import j8spec.junit.J8SpecRunner;

@@ -1,6 +1,6 @@
 package io.vacco.volach.util;
 
-import io.vacco.volach.wavelet.VlWavelet;
+import io.vacco.volach.wavelet.type.VlWavelet;
 
 import static java.lang.String.format;
 

@@ -1,5 +1,7 @@
 package io.vacco.volach.wavelet;
 
+import io.vacco.volach.wavelet.type.VlWavelet;
+
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;

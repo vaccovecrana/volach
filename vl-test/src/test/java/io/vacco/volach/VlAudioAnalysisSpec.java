@@ -2,6 +2,11 @@ package io.vacco.volach;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.wavelet.*;
+import io.vacco.volach.wavelet.dto.VlAnalysisSample;
+import io.vacco.volach.wavelet.type.VlCoiflet2;
+import io.vacco.volach.wavelet.type.VlDaubechies16;
+import io.vacco.volach.wavelet.type.VlHaar1;
+import io.vacco.volach.wavelet.type.VlWavelet;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
@@ -23,10 +28,10 @@ public class VlAudioAnalysisSpec {
         () -> {
           float[][] freqBands = new float[1][];
           float[] range = new float[2];
-          int level = 12;
-          VlWavelet wavelet = new VlDaubechies4();
-          // URL url = new File("/home/jjzazuet/Desktop/out.mp3").toURI().toURL();
-          URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
+          int level = 8;
+          VlWavelet wavelet = new VlHaar1();
+          URL url = new File("/home/jjzazuet/Desktop/out-comp-stereo.mp3").toURI().toURL();
+          // URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File values = new File("./build/coefficients-eas-l4-frequency.txt");
 
           withWriter(values, out ->
@@ -48,7 +53,7 @@ public class VlAudioAnalysisSpec {
               })
           );
 
-          System.out.printf("vmin=%s, vmax=%s%n", range[0] / 8, range[1] / 8);
+          System.out.printf("vmin=%s, vmax=%s%n", range[0] / 32, range[1] / 32);
         }
     );
   }

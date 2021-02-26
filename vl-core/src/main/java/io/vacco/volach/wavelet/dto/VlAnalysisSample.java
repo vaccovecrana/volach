@@ -1,4 +1,6 @@
-package io.vacco.volach.wavelet;
+package io.vacco.volach.wavelet.dto;
+
+import io.vacco.volach.wavelet.VlWpNode;
 
 import java.nio.FloatBuffer;
 import static io.vacco.volach.util.VlArrays.*;

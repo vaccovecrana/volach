@@ -1,4 +1,4 @@
-package io.vacco.volach.wavelet;
+package io.vacco.volach.wavelet.type;
 
 /**
  * Ingrid Daubechies' orthonormal Coiflet wavelet of 12 coefficients.

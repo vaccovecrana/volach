@@ -1,4 +1,4 @@
-package io.vacco.volach.wavelet;
+package io.vacco.volach.wavelet.type;
 
 public class VlDaubechies16 extends VlWavelet {
 

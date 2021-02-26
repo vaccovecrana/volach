@@ -1,4 +1,4 @@
-package io.vacco.volach.wavelet;
+package io.vacco.volach.wavelet.dto;
 
 import io.vacco.volach.audioio.VlSignalChunk;
 

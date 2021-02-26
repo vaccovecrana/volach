@@ -1,6 +1,7 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.util.VlException;
+import io.vacco.volach.wavelet.type.VlWavelet;
 
 import java.nio.FloatBuffer;
 import static io.vacco.volach.util.VlArrays.*;

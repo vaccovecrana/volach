@@ -1,6 +1,7 @@
 package io.vacco.volach;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vacco.volach.util.VlArrays;
 
 import java.io.*;
 import java.nio.FloatBuffer;
@@ -10,6 +11,12 @@ import java.util.function.Consumer;
 public class VlSpecUtil {
 
   public static final ObjectMapper mapper = new ObjectMapper();
+
+  public static FloatBuffer from(float[] values) {
+    FloatBuffer b = VlArrays.floatBuffer(values.length);
+    b.put(values);
+    return b;
+  }
 
   public static void withWriter(File output, Consumer<PrintWriter> writerConsumer) throws FileNotFoundException {
     try (PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output)))) {

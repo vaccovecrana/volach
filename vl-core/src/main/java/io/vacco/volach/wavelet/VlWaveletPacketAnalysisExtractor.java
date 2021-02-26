@@ -1,8 +1,10 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
+import io.vacco.volach.wavelet.dto.VlAnalysisChunk;
+import io.vacco.volach.wavelet.dto.VlAnalysisSample;
+import io.vacco.volach.wavelet.type.VlWavelet;
 
-import java.net.URL;
 import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators;

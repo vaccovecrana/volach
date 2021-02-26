@@ -1,4 +1,4 @@
-package io.vacco.volach.wavelet;
+package io.vacco.volach.wavelet.type;
 
 /**
  * Ingrid Daubechies' orthonormal wavelet of eight coefficients and the scales;
