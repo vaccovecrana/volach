@@ -30,13 +30,13 @@ public class VlAudioAnalysisSpec {
           float[] range = new float[2];
           int level = 8;
           VlWavelet wavelet = new VlHaar1();
-          URL url = new File("/home/jjzazuet/Desktop/out-comp-stereo.mp3").toURI().toURL();
-          // URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
+          // URL url = new File("/home/jjzazuet/Desktop/out-comp-stereo.mp3").toURI().toURL();
+          URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File values = new File("./build/coefficients-eas-l4-frequency.txt");
 
           withWriter(values, out ->
               VlWaveletPacketAnalysisExtractor.from(
-                  new VlSignalExtractor(url, 32768), level, wavelet, VlWpNode.Order.Sequency
+                  new VlSignalExtractor(url, 32768, true), level, wavelet, VlWpNode.Order.Sequency
               ).forEach(chunk -> {
                 System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
                 if (freqBands[0] == null) {

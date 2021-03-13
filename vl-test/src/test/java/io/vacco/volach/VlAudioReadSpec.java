@@ -21,7 +21,7 @@ public class VlAudioReadSpec {
         () -> {
           URL url = VlAudioAnalysisSpec.class.getResource("/eas.mp3");
           File rawData = new File("./build/samples-raw.txt");
-          withWriter(rawData, out -> VlSignalExtractor.from(url, 4096).forEach(chunk -> {
+          withWriter(rawData, out -> VlSignalExtractor.from(url, 4096, true).forEach(chunk -> {
             System.out.println(chunk);
             for (int k = 0; k < chunk.data.capacity(); k++) {
               out.println(chunk.data.get(k));

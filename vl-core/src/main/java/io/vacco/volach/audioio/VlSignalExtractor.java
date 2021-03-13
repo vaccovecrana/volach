@@ -21,17 +21,18 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
   private final FloatBuffer signalBuffer;
   private final VlMonoAudioInputStream input;
 
-  public boolean eof = false;
+  public boolean eof = false, normalize;
   public final int bufferSize;
   public int totalChunks;
   public long totalSamples;
 
-  public VlSignalExtractor(URL src, int analysisSampleSize) {
+  public VlSignalExtractor(URL src, int analysisSampleSize, boolean normalize) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
     this.input = loadPcm16Le(src);
     this.bufferSize = nextPow2(analysisSampleSize);
     this.zeroBuffer = new float[bufferSize];
     this.signalBuffer = floatBuffer(bufferSize);
+    this.normalize = normalize;
   }
 
   @Override
@@ -44,13 +45,13 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
         samplesRead = input.read(sampleBuffer, 0, sampleBuffer.length);
         if (eof = samplesRead == -1) { break; }
         float sample = (float) readSignedLe(sampleBuffer);
-        sample = (((sample * 2) + 1) / (float) 65535);
+        sample = normalize ? (((sample * 2) + 1) / (float) 65535) : sample;
         signalBuffer.put(k, sample);
         totalSamples++;
       }
       if (eof) { input.close(); }
       totalChunks++;
-      onChunk.accept(new VlSignalChunk(signalBuffer, (long) totalChunks * bufferSize));
+      onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks * bufferSize));
       return !eof;
     } catch (IOException e) {
       throw new IllegalStateException(e);
@@ -63,8 +64,8 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
     return out;
   }
 
-  public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize) {
-    return StreamSupport.stream(new VlSignalExtractor(src, analysisSampleSize), false);
+  public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize, boolean normalize) {
+    return StreamSupport.stream(new VlSignalExtractor(src, analysisSampleSize, normalize), false);
   }
 
 }

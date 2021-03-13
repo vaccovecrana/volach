@@ -1,13 +1,12 @@
-plugins { id("io.vacco.common-build") version "0.5.3" apply(false) }
+plugins { id("io.vacco.oss") version "1.0.1" apply(false) }
 
 subprojects {
-  apply(plugin = "io.vacco.common-build")
+  apply(plugin = "io.vacco.oss")
   group = "io.vacco.volach"
   version = "0.1.0"
 
-  configure<io.vacco.common.CbPluginProfileExtension> {
+  configure<io.vacco.oss.CbPluginProfileExtension> {
     addJ8Spec()
     addClasspathHell()
-    setPublishingUrlTransform { repo -> "${repo.url}/${project.name}" }
   }
 }

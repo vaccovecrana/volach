@@ -4,9 +4,9 @@ import java.nio.FloatBuffer;
 
 public class VlSignalChunk {
   public final FloatBuffer data;
-  public final long offset;
+  public final int offset;
 
-  public VlSignalChunk(FloatBuffer data, long offset) {
+  public VlSignalChunk(FloatBuffer data, int offset) {
     this.data = data;
     this.offset = offset;
   }

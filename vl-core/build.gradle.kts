@@ -1,1 +1,1 @@
-configure<io.vacco.common.CbPluginProfileExtension> { sharedLibrary() }
+configure<io.vacco.oss.CbPluginProfileExtension> { sharedLibrary(true, false) }
