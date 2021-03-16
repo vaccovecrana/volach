@@ -10,8 +10,7 @@ matrix = np.rot90(matrix)
 
 plt.imshow(
     matrix, cmap='viridis', interpolation='nearest',
-    origin='lower', extent=[0,100,0,1], aspect='auto',
-    vmin=0.0, vmax=0.4496070485402015
+    origin='lower', aspect='auto',
+    vmin=-0.5785469, vmax=0.5843904
 )
-# plt.yscale('log')
 plt.show()
