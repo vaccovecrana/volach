@@ -42,24 +42,4 @@ public class VlSpecUtil {
     }
   }
 
-  public static void writeCoefficients(File target, FloatBuffer[] coefficients) throws FileNotFoundException {
-    float[] range = new float[2];
-    float[][] buffer = new float[1][];
-
-    withWriter(target, out -> {
-      for (FloatBuffer floatBuffer : coefficients) {
-        if (buffer[0] == null) {
-          buffer[0] = new float[floatBuffer.capacity()];
-        }
-        floatBuffer.get(buffer[0]);
-        out.println(Arrays.toString(buffer[0]).replace("[", "").replace("]", ""));
-        for (float v : buffer[0]) {
-          if (v < range[0]) range[0] = v;
-          if (v > range[1]) range[1] = v;
-        }
-      }
-    });
-
-    System.out.printf("vmin=%s, vmax=%s%n", range[0] / 8, range[1] / 8);
-  }
 }

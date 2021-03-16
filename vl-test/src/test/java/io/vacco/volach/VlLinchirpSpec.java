@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.nio.FloatBuffer;
+import java.util.Arrays;
 
 import static io.vacco.volach.util.VlArrays.*;
 import static io.vacco.volach.VlSpecUtil.*;
@@ -56,7 +57,12 @@ public class VlLinchirpSpec {
           System.out.println("================= Audio signal - Ref data (L4 - Frequency) =================");
           print2d(refCoefficientsLevel4Frequency);
 
-          writeCoefficients(new File("./build/coefficients-linchirp-l4-frequency.txt"), coeffFreq);
+          VlUpdateListener listener = new VlUpdateListener();
+          withWriter(
+              new File("./build/coefficients-linchirp-l4-frequency.txt"),
+              out -> Arrays.stream(coeffFreq).forEach(b -> listener.onData(b, out))
+          );
+          listener.done();
         }
     );
   }

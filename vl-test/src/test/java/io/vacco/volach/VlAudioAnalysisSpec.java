@@ -9,7 +9,6 @@ import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 
 import java.io.*;
-import java.util.Arrays;
 
 import static j8spec.J8Spec.it;
 import static io.vacco.volach.VlSpecUtil.*;
@@ -28,27 +27,16 @@ public class VlAudioAnalysisSpec {
               new File("/Users/jjzazuet/Desktop/sample.mp3").toURI().toURL(),
               65535, 10, true, new VlHaar1(), VlWpNode.Order.Sequency
           );
-          float[][] freqBands = new float[1][];
-          float[] range = new float[2];
-
+          VlUpdateListener listener = new VlUpdateListener();
           withWriter(values, out ->
               VlWaveletPacketAnalysisExtractor.from(params).forEach(chunk -> {
                 System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
-                if (freqBands[0] == null) {
-                  freqBands[0] = new float[chunk.samples[0].freqPower.capacity()];
-                }
                 for (VlAnalysisSample analysisSample : chunk.samples) {
-                  analysisSample.freqPower.get(freqBands[0]);
-                  out.println(Arrays.toString(freqBands[0]).replace("[", "").replace("]", ""));
-                  for (float v : freqBands[0]) {
-                    if (v < range[0]) range[0] = v;
-                    if (v > range[1]) range[1] = v;
-                  }
+                  listener.onData(analysisSample.freqPower, out);
                 }
               })
           );
-
-          System.out.printf("vmin=%s, vmax=%s%n", range[0] / 32, range[1] / 32);
+          listener.done();
         }
     );
   }

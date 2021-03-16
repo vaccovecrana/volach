@@ -28,8 +28,13 @@ public class VlEasSignalSpec {
           VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
           VlWpNode[] nodes = VlWaveletPacketTransform.collect(root, level);
           FloatBuffer[] coeffNatural = VlWaveletPacketTransform.extractCoefficients(nodes);
+          VlUpdateListener listener = new VlUpdateListener();
 
-          writeCoefficients(new File("./build/coefficients-eas-sample-l4-natural.txt"), coeffNatural);
+          withWriter(new File("./build/coefficients-eas-sample-l4-natural.txt"), out -> {
+            for (FloatBuffer b : coeffNatural) {
+              listener.onData(b, out);
+            }
+          });
         }
     );
   }
