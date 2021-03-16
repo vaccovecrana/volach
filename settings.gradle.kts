@@ -5,4 +5,4 @@ pluginManagement {
   }
 }
 
-include("vl-core", "vl-fprint-nn", "vl-test")
+include("vl-core", "vl-fprint-pk", "vl-test")
