@@ -42,3 +42,7 @@ For the Daubechies16 wavelet:
 
 The `motherWavelength` attribute of the wavelet describes the amount of samples
 that can be decomposed for some amount of input data.
+
+## TODO
+
+- Explain the internal data layout for wavelet packets (frequencies are stored from low to high).

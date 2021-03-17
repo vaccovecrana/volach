@@ -9,8 +9,8 @@ matrix = np.loadtxt(f, delimiter=',')
 matrix = np.rot90(matrix)
 
 plt.imshow(
-    matrix, cmap='viridis', interpolation='bicubic',
-    origin='lower', aspect='auto',
-    vmin=0.0, vmax=1081.3359
+    matrix, cmap='viridis', interpolation='nearest',
+    origin='upper', aspect='auto',
+    vmin=0.0, vmax=981.23206
 )
 plt.show()

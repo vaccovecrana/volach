@@ -20,8 +20,7 @@ public class VlAnalysisSample {
     for (int k = 0; k < samples; k++) {
       FloatBuffer freqPower = floatBuffer(frequencies);
       for (int n = 0; n < frequencies; n++) {
-        int idx = (frequencies - 1) - n;
-        freqPower.put(idx, packets[n].coefficients.get(k));
+        freqPower.put(n, packets[n].coefficients.get(k));
       }
       VlAnalysisSample sample = new VlAnalysisSample();
       sample.packets = packets;
