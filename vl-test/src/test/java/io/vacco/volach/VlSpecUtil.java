@@ -13,6 +13,10 @@ import java.util.function.Consumer;
 
 public class VlSpecUtil {
 
+  public static final String
+      src5 = "/Users/jjzazuet/Desktop/sample-05.mp3",
+      src6 = "/Users/jjzazuet/Desktop/sample-06.mp3";
+
   public static final ObjectMapper mapper = new ObjectMapper();
 
   public static final VlAnalysisParameters analysisParams = VlAnalysisParameters.from(

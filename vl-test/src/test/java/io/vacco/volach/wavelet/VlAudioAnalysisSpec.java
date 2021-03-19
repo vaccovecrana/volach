@@ -1,5 +1,6 @@
-package io.vacco.volach;
+package io.vacco.volach.wavelet;
 
+import io.vacco.volach.VlUpdateListener;
 import io.vacco.volach.wavelet.*;
 import io.vacco.volach.wavelet.dto.VlAnalysisParameters;
 import io.vacco.volach.wavelet.dto.VlAnalysisSample;

@@ -4,4 +4,5 @@ val api by configurations
 
 dependencies {
   api(project(":vl-core"))
+  api("io.vacco.jtinn:jtinn:2.0.0")
 }

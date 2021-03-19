@@ -1,7 +1,7 @@
-package io.vacco.volach;
+package io.vacco.volach.wavelet;
 
+import io.vacco.volach.VlUpdateListener;
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.*;
 import io.vacco.volach.wavelet.type.VlHaar1;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;

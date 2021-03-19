@@ -1,6 +1,7 @@
-package io.vacco.volach;
+package io.vacco.volach.audioio;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
+import io.vacco.volach.wavelet.VlAudioAnalysisSpec;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
