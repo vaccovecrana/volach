@@ -15,14 +15,8 @@ import java.util.stream.StreamSupport;
 public class VlPeakAnalysisExtractor extends Spliterators.AbstractSpliterator<float[][]> {
 
   private final VlWaveletPacketAnalysisExtractor extractor;
-  private final VlKernel33 gaussian = VlKernel33.from(
-      1/32f, 1/16f, 1/32f,
-      1/16f, 1/4f, 1/16f,
-      1/32f, 1/16f, 1/32f
-  );
-
   private final int freqBands;
-  private float[][] freqBuffer, kernelBuffer;
+  private float[][] freqBuffer;
 
   public VlPeakAnalysisExtractor(VlWaveletPacketAnalysisExtractor extractor, int freqBands) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
@@ -33,12 +27,10 @@ public class VlPeakAnalysisExtractor extends Spliterators.AbstractSpliterator<fl
   private void readToLimit(VlAnalysisSample[] in) {
     if (freqBuffer == null) {
       freqBuffer = new float[in.length][freqBands];
-      kernelBuffer = new float[in.length][freqBands];
     }
     for (int k = 0; k < in.length; k++) {
       for (int j = 0; j < freqBands; j++) {
         freqBuffer[k][j] = Math.abs(in[k].freqPower.get(j));
-        kernelBuffer[k][j] = 0f;
       }
     }
   }
@@ -46,8 +38,7 @@ public class VlPeakAnalysisExtractor extends Spliterators.AbstractSpliterator<fl
   @Override public boolean tryAdvance(Consumer<? super float[][]> action) {
     return extractor.tryAdvance(chunk -> {
       readToLimit(chunk.samples);
-      gaussian.apply(freqBuffer, kernelBuffer);
-      action.accept(kernelBuffer);
+      action.accept(freqBuffer);
     });
   }
 

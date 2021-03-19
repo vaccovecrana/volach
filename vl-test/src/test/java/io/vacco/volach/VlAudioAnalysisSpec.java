@@ -3,7 +3,6 @@ package io.vacco.volach;
 import io.vacco.volach.wavelet.*;
 import io.vacco.volach.wavelet.dto.VlAnalysisParameters;
 import io.vacco.volach.wavelet.dto.VlAnalysisSample;
-import io.vacco.volach.wavelet.type.*;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
@@ -22,17 +21,16 @@ public class VlAudioAnalysisSpec {
         "Can extract frequency data from audio content",
         () -> {
           File values = new File("./build/coefficients-eas-l4-frequency.txt");
-          VlAnalysisParameters params = VlAnalysisParameters.from(
-              // VlAudioAnalysisSpec.class.getResource("/eas.mp3");
-              new File("/Users/jjzazuet/Desktop/sample.mp3").toURI().toURL(),
-              65535, 10, true, new VlHaar1(), VlWpNode.Order.Sequency
-          );
+          VlAnalysisParameters params = analysisParams;
           VlUpdateListener listener = new VlUpdateListener();
+
+          params.src = new File("/Users/jjzazuet/Desktop/sample-06.mp3").toURI().toURL();
+
           withWriter(values, out ->
               VlWaveletPacketAnalysisExtractor.from(params).forEach(chunk -> {
                 System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
                 for (VlAnalysisSample analysisSample : chunk.samples) {
-                  listener.onData(analysisSample.freqPower, out);
+                  listener.onData(analysisSample.freqPower, out, true);
                 }
               })
           );

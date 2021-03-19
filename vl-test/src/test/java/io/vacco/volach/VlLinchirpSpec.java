@@ -60,7 +60,7 @@ public class VlLinchirpSpec {
           VlUpdateListener listener = new VlUpdateListener();
           withWriter(
               new File("./build/coefficients-linchirp-l4-frequency.txt"),
-              out -> Arrays.stream(coeffFreq).forEach(b -> listener.onData(b, out))
+              out -> Arrays.stream(coeffFreq).forEach(b -> listener.onData(b, out, false))
           );
           listener.done();
         }

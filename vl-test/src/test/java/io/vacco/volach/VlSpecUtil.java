@@ -2,15 +2,28 @@ package io.vacco.volach;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vacco.volach.util.VlArrays;
+import io.vacco.volach.wavelet.VlWpNode;
+import io.vacco.volach.wavelet.dto.VlAnalysisParameters;
+import io.vacco.volach.wavelet.type.VlBattle23;
+import io.vacco.volach.wavelet.type.VlHaar1;
 
 import java.io.*;
 import java.nio.FloatBuffer;
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class VlSpecUtil {
 
   public static final ObjectMapper mapper = new ObjectMapper();
+
+  public static final VlAnalysisParameters analysisParams = VlAnalysisParameters.from(
+      null, 65535, 10, true,
+      new VlHaar1(), VlWpNode.Order.Sequency
+  );
+
+  public static final VlAnalysisParameters trainingParams = VlAnalysisParameters.from(
+      null, 131_071, 9, false,
+      new VlBattle23(), VlWpNode.Order.Sequency
+  );
 
   public static FloatBuffer from(float[] values) {
     FloatBuffer b = VlArrays.floatBuffer(values.length);
@@ -18,7 +31,7 @@ public class VlSpecUtil {
     return b;
   }
 
-  public static void withWriter(File output, Consumer<PrintWriter> writerConsumer) throws FileNotFoundException {
+  public static void withWriter(File output, Consumer<PrintWriter> writerConsumer) throws IOException {
     try (PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output)))) {
       writerConsumer.accept(out);
     }

@@ -32,7 +32,7 @@ public class VlEasSignalSpec {
 
           withWriter(new File("./build/coefficients-eas-sample-l4-natural.txt"), out -> {
             for (FloatBuffer b : coeffNatural) {
-              listener.onData(b, out);
+              listener.onData(b, out, false);
             }
           });
         }
