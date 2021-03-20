@@ -12,18 +12,18 @@ class Formatter(object):
     return 'x=%i, y=%i, z=%.4f' % (x, y, z)
 
 
-f = './build/sample-05.mp3-spectrum.csv'
-# f = './build/coefficients-eas-l4-frequency.txt'
-# f = './build/coefficients-linchirp-l4-frequency.txt'
+f = '../build/sample-004.mp3-spectrum.csv'
+# f = '../build/coefficients-eas-l4-frequency.txt'
+# f = '../build/coefficients-linchirp-l4-frequency.txt'
 
 matrix = np.loadtxt(f, delimiter=',')
-# matrix = np.rot90(matrix)
+matrix = np.rot90(matrix)
 
 fig, ax = plt.subplots()
 im = plt.imshow(
-  matrix, cmap='viridis', interpolation='nearest',
+  matrix, cmap='viridis', interpolation='bilinear',
   origin='upper', aspect='auto',
-  vmin=0.0, vmax=1213.5682
+  vmin=0.0, vmax=0.036407076
 )
 ax.format_coord = Formatter(im)
 cursor = mplcursors.cursor(hover=True)

@@ -21,7 +21,7 @@ public class VlEasSignalSpec {
         () -> {
           int level = 4;
 
-          float[] rawSamples = mapper.readValue(VlLinchirpSpec.class.getResource("/samples-eas.json"), float[].class);
+          float[] rawSamples = mapper.readValue(VlLinchirpSpec.class.getResource("/sample-data/samples-eas.json"), float[].class);
           FloatBuffer samples = floatBuffer(rawSamples.length).put(rawSamples);
           FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);
 

@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "file": "./build/sample-001.mp3-spectrum.json",
+      "anchors": [
+        {"x": 1371, "y": 16, "type": "Tonal"}
+      ]
+    },
+    {
+      "file": "./build/sample-002.mp3-spectrum.json",
+      "anchors": [
+        {"x": 1371, "y": 16, "type": "Tonal"}
+      ]
+    },
+    {
+      "file": "./build/sample-003.mp3-spectrum.json",
+      "anchors": [
+        {"x": 20,   "y": 25, "type": "TonalStraight"},
+        {"x": 45,   "y": 16, "type": "TonalStraight"},
+        {"x": 551,  "y": 34, "type": "TonalStraight"},
+        {"x": 2385, "y": 16, "type": "TonalStraight"},
+
+        {"x": 440,  "y": 46, "type": "TonalShift"},
+        {"x": 440,  "y": 16, "type": "TonalShift"},
+        {"x": 1455, "y": 21, "type": "TonalShift"},
+        {"x": 1723, "y": 36, "type": "TonalShift"},
+        {"x": 2649, "y": 20, "type": "TonalShift"},
+        {"x": 2883, "y": 21, "type": "TonalShift"}
+      ]
+    },
+    {
+      "file": "./build/sample-004.mp3-spectrum.json",
+      "anchors": [
+        {"x": 838,  "y": 20, "type": "TonalStraight"},
+        {"x": 1449, "y": 32, "type": "TonalStraight"},
+        {"x": 1585, "y": 16, "type": "TonalStraight"},
+        {"x": 1664, "y": 43, "type": "TonalStraight"},
+        {"x": 1952, "y": 20, "type": "TonalStraight"},
+        {"x": 2020, "y": 16, "type": "TonalStraight"},
+        {"x": 2120, "y": 67, "type": "TonalStraight"},
+        {"x": 2441, "y": 32, "type": "TonalStraight"},
+
+        {"x": 2521, "y": 22, "type": "TonalShift"},
+
+        {"x": 805,  "y": 43, "type": "Transient"},
+        {"x": 1573, "y": 71, "type": "Transient"},
+        {"x": 2433, "y": 71, "type": "Transient"},
+        {"x": 2457, "y": 16, "type": "Transient"},
+        {"x": 2648, "y": 71, "type": "Transient"}
+      ]
+    }
+  ]
+}

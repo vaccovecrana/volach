@@ -1,7 +1,6 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.VlUpdateListener;
-import io.vacco.volach.wavelet.*;
 import io.vacco.volach.wavelet.dto.VlAnalysisParameters;
 import io.vacco.volach.wavelet.dto.VlAnalysisSample;
 import j8spec.annotation.DefinedOrder;
@@ -25,7 +24,7 @@ public class VlAudioAnalysisSpec {
           VlAnalysisParameters params = analysisParams;
           VlUpdateListener listener = new VlUpdateListener();
 
-          params.src = new File("/Users/jjzazuet/Desktop/sample-06.mp3").toURI().toURL();
+          params.src = VlAudioAnalysisSpec.class.getResource("/sample-data/eas.mp3");
 
           withWriter(values, out ->
               VlWaveletPacketAnalysisExtractor.from(params).forEach(chunk -> {

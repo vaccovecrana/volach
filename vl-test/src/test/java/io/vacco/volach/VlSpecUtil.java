@@ -13,9 +13,12 @@ import java.util.function.Consumer;
 
 public class VlSpecUtil {
 
-  public static final String
-      src5 = "/Users/jjzazuet/Desktop/sample-05.mp3",
-      src6 = "/Users/jjzazuet/Desktop/sample-06.mp3";
+  public static final String[][] sources = {
+      {"/Users/jjzazuet/Desktop/sample-001.mp3", "./vl-test/build/sample-001.mp3-spectrum.json", "./vl-test/build/sample-001.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-002.mp3", "./vl-test/build/sample-002.mp3-spectrum.json", "./vl-test/build/sample-002.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-003.mp3", "./vl-test/build/sample-003.mp3-spectrum.json", "./vl-test/build/sample-003.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-004.mp3", "./vl-test/build/sample-004.mp3-spectrum.json", "./vl-test/build/sample-004.mp3-spectrum.csv"}
+  };
 
   public static final ObjectMapper mapper = new ObjectMapper();
 
@@ -25,7 +28,7 @@ public class VlSpecUtil {
   );
 
   public static final VlAnalysisParameters trainingParams = VlAnalysisParameters.from(
-      null, 131_071, 9, false,
+      null, 131_071, 9, true,
       new VlBattle23(), VlWpNode.Order.Sequency
   );
 
@@ -36,7 +39,7 @@ public class VlSpecUtil {
   }
 
   public static void withWriter(File output, Consumer<PrintWriter> writerConsumer) throws IOException {
-    try (PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output)))) {
+    try (PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output, false)))) {
       writerConsumer.accept(out);
     }
   }
@@ -56,6 +59,15 @@ public class VlSpecUtil {
       for (int k = 0; k < data.length; k++) {
         System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
       }
+    }
+  }
+
+  public static void regionSquare(float[][] in, int i, int j, float[][] out) {
+    int size = out.length;
+    int half = size / 2;
+    int tl0 = i - half, tl1 = j - half;
+    for (int k = 0; k < size; k++) {
+      System.arraycopy(in[k + tl0], tl1, out[k], 0, size);
     }
   }
 
