@@ -1,0 +1,11 @@
+{
+  "name": "peak-training",
+  "main": "index.js",
+  "dependencies": {
+    "echarts": "4.8.0",
+    "preact": "10.5.13"
+  },
+  "devDependencies": {
+    "@types/echarts": "4.9.0"
+  }
+}

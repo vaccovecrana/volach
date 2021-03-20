@@ -5,3 +5,5 @@
 gradle/
 gradlew*
 build/
+
+node_modules/
