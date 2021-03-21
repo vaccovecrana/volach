@@ -12,7 +12,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static io.vacco.volach.VlSpecUtil.*;
 
-public class VlPeakSamplingTask { // "Generates JSON training data from input samples"
+public class VlPeakAnalysisTask { // "Generates JSON training data from input samples"
 
   public static void main(String[] args) throws Exception {
     List<float[]> freqSamples = new ArrayList<>();

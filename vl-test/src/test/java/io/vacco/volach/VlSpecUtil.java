@@ -14,10 +14,10 @@ import java.util.function.Consumer;
 public class VlSpecUtil {
 
   public static final String[][] sources = {
-      {"/Users/jjzazuet/Desktop/sample-001.mp3", "./vl-test/build/sample-001.mp3-spectrum.json", "./vl-test/build/sample-001.mp3-spectrum.csv"},
-      {"/Users/jjzazuet/Desktop/sample-002.mp3", "./vl-test/build/sample-002.mp3-spectrum.json", "./vl-test/build/sample-002.mp3-spectrum.csv"},
-      {"/Users/jjzazuet/Desktop/sample-003.mp3", "./vl-test/build/sample-003.mp3-spectrum.json", "./vl-test/build/sample-003.mp3-spectrum.csv"},
-      {"/Users/jjzazuet/Desktop/sample-004.mp3", "./vl-test/build/sample-004.mp3-spectrum.json", "./vl-test/build/sample-004.mp3-spectrum.csv"}
+      {"/Users/jjzazuet/Desktop/sample-001.mp3", "./vl-test/peak-training/sample-001.mp3-spectrum.json", "./vl-test/build/sample-001.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-002.mp3", "./vl-test/peak-training/sample-002.mp3-spectrum.json", "./vl-test/build/sample-002.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-003.mp3", "./vl-test/peak-training/sample-003.mp3-spectrum.json", "./vl-test/build/sample-003.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-004.mp3", "./vl-test/peak-training/sample-004.mp3-spectrum.json", "./vl-test/build/sample-004.mp3-spectrum.csv"}
   };
 
   public static final ObjectMapper mapper = new ObjectMapper();
