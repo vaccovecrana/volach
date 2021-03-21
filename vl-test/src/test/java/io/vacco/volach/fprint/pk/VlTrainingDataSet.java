@@ -8,6 +8,7 @@ public class VlTrainingDataSet {
     public int x, y;
     public float[][] region;
     public VlPeakType type;
+    public boolean valid;
     @Override public String toString() {
       return String.format("[x: %s, y: %s, t: %s]", x, y, type);
     }

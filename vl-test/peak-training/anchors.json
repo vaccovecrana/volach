@@ -31,22 +31,22 @@
     {
       "file": "./vl-test/build/sample-004.mp3-spectrum.json",
       "anchors": [
-        {"x": 838,  "y": 20, "type": "TonalStraight"},
-        {"x": 1449, "y": 32, "type": "TonalStraight"},
-        {"x": 1585, "y": 16, "type": "TonalStraight"},
-        {"x": 1664, "y": 43, "type": "TonalStraight"},
-        {"x": 1952, "y": 20, "type": "TonalStraight"},
-        {"x": 2020, "y": 16, "type": "TonalStraight"},
-        {"x": 2120, "y": 67, "type": "TonalStraight"},
-        {"x": 2441, "y": 32, "type": "TonalStraight"},
+        {"x": 838,  "y": 20, "type": "TonalStraight", "valid": true},
+        {"x": 1449, "y": 32, "type": "TonalStraight", "valid": true},
+        {"x": 1585, "y": 16, "type": "TonalStraight", "valid": true},
+        {"x": 1664, "y": 43, "type": "TonalStraight", "valid": true},
+        {"x": 1952, "y": 20, "type": "TonalStraight", "valid": true},
+        {"x": 2020, "y": 16, "type": "TonalStraight", "valid": true},
+        {"x": 2120, "y": 67, "type": "TonalStraight", "valid": true},
+        {"x": 2441, "y": 32, "type": "TonalStraight", "valid": true},
+        {"x": 2457, "y": 16, "type": "TonalStraight", "valid": true},
 
-        {"x": 2521, "y": 22, "type": "TonalShift"},
+        {"x": 2521, "y": 22, "type": "TonalShift", "valid": true},
 
-        {"x": 805,  "y": 43, "type": "Transient"},
-        {"x": 1573, "y": 71, "type": "Transient"},
-        {"x": 2433, "y": 71, "type": "Transient"},
-        {"x": 2457, "y": 16, "type": "Transient"},
-        {"x": 2648, "y": 71, "type": "Transient"}
+        {"x": 805,  "y": 43, "type": "Transient", "valid": true},
+        {"x": 1573, "y": 71, "type": "Transient", "valid": true},
+        {"x": 2433, "y": 71, "type": "Transient", "valid": true},
+        {"x": 2648, "y": 71, "type": "Transient", "valid": true}
       ]
     }
   ]

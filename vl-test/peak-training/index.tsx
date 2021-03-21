@@ -25,7 +25,7 @@ class App extends React.Component<{}, {trainData: any}> {
           </div>
         </div>
         <div style="margin-bottom: 32px;">
-          {anchor.x}, {anchor.y}/{y1} - {anchor.type}
+          {anchor.valid ? `✅` : `❌`} {anchor.x}, {anchor.y}/{y1} - {anchor.type}
         </div>
       </div>
     )
