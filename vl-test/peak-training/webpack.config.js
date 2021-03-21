@@ -3,6 +3,7 @@ const path = require("path")
 const nodeModules = path.resolve(__dirname, "node_modules")
 const buildPath = path.resolve(__dirname, ".")
 const wpc = {
+  mode: "development",
   entry: {main: "./index.tsx"},
   devtool: "source-map",
   output: {filename: "[name].js", path: buildPath},

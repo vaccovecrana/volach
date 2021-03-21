@@ -1,9 +1,11 @@
 {
   "name": "peak-training",
   "main": "index.js",
-  "scripts": {"start": "node webpack-watch.js"},
+  "scripts": {
+    "start": "node webpack-watch.js"
+  },
   "dependencies": {
-    "echarts": "4.8.0",
+    "echarts": "5.0.2",
     "preact": "10.5.5"
   },
   "devDependencies": {

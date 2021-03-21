@@ -8,14 +8,23 @@ import static io.vacco.volach.VlSpecUtil.*;
 public class VlPeakExtractionTask {
 
   public static void main(String[] args) throws Exception {
-    File f5 = new File(sources[0][1]);
-    VlTrainingDataSet.VlSampleSource s5 = mapper.readValue(f5, VlTrainingDataSet.VlSampleSource.class);
+    File anchorsFile = new File("./vl-test/peak-training/anchors.json");
+    VlTrainingDataSet ds = mapper.readValue(anchorsFile, VlTrainingDataSet.class);
 
-    int x = 1371, y = 16;
-    float[][] patch = new float[32][32];
-    regionSquare(s5.spectrum, x, y, patch);
-    print2d(patch);
-    System.out.printf("%s, %s%n", s5.min, s5.max);
+    for (VlTrainingDataSet.VlTrainingSource tSrc : ds.sources) {
+      File spectrumFile = new File(tSrc.file);
+      System.out.printf("Reading [%s] anchor values from [%s]%n", tSrc.anchors.size(), spectrumFile.getAbsolutePath());
+
+      VlTrainingDataSet.VlSampleSource sSrc = mapper.readValue(spectrumFile, VlTrainingDataSet.VlSampleSource.class);
+      for (VlTrainingDataSet.VlAnchorPoint anchor : tSrc.anchors) {
+        float[][] region = new float[trainingRegionSize][trainingRegionSize];
+        regionSquare(sSrc.spectrum, anchor.x, anchor.y, region);
+        anchor.region = region;
+      }
+    }
+
+    File trainData = new File("./vl-test/peak-training/peaks.json");
+    mapper.writerWithDefaultPrettyPrinter().writeValue(trainData, ds);
   }
 
 }

@@ -1,19 +1,19 @@
 {
   "sources": [
     {
-      "file": "./sample-001.mp3-spectrum.json",
+      "file": "./vl-test/build/sample-001.mp3-spectrum.json",
       "anchors": [
-        {"x": 1371, "y": 16, "type": "Tonal"}
+        {"x": 1371, "y": 16, "type": "TonalStraight"}
       ]
     },
     {
-      "file": "./build/sample-002.mp3-spectrum.json",
+      "file": "./vl-test/build/sample-002.mp3-spectrum.json",
       "anchors": [
-        {"x": 1371, "y": 16, "type": "Tonal"}
+        {"x": 1371, "y": 16, "type": "TonalStraight"}
       ]
     },
     {
-      "file": "./sample-003.mp3-spectrum.json",
+      "file": "./vl-test/build/sample-003.mp3-spectrum.json",
       "anchors": [
         {"x": 20,   "y": 25, "type": "TonalStraight"},
         {"x": 45,   "y": 16, "type": "TonalStraight"},
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "file": "./sample-004.mp3-spectrum.json",
+      "file": "./vl-test/build/sample-004.mp3-spectrum.json",
       "anchors": [
         {"x": 838,  "y": 20, "type": "TonalStraight"},
         {"x": 1449, "y": 32, "type": "TonalStraight"},
