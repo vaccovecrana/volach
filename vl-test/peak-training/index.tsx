@@ -32,7 +32,7 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
     const y1 = 127 - anchor.y
     return (
       <div>
-        <div id={this.idOf(src, anchor)} style="width: 256px; height: 256px; margin-left: auto; margin-right: auto">
+        <div id={this.idOf(src, anchor)} style="width: 240px; height: 256px; margin-left: auto; margin-right: auto">
           <div style="padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
             <canvas></canvas>
           </div>

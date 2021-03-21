@@ -12,7 +12,7 @@ class Formatter(object):
         return 'x=%i, y=%i, z=%.4f' % (x, 127 - y, z)
 
 
-f = '../build/sample-001.mp3-spectrum.csv'
+f = '../build/sample-006.mp3-spectrum.csv'
 # f = '../build/coefficients-eas-l4-frequency.txt'
 # f = '../build/coefficients-linchirp-l4-frequency.txt'
 
@@ -23,7 +23,7 @@ fig, ax = plt.subplots()
 im = plt.imshow(
   matrix, cmap='viridis', interpolation='bilinear',
   origin='upper', aspect='auto',
-  vmin=0.0, vmax=0.03
+  vmin=0.0, vmax=0.06
 )
 ax.format_coord = Formatter(im)
 cursor = mplcursors.cursor(hover=True)

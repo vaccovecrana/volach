@@ -20,7 +20,8 @@ public class VlSpecUtil {
       {"/Users/jjzazuet/Desktop/sample-002.mp3", "./vl-test/build/sample-002.mp3-spectrum.json", "./vl-test/build/sample-002.mp3-spectrum.csv"},
       {"/Users/jjzazuet/Desktop/sample-003.mp3", "./vl-test/build/sample-003.mp3-spectrum.json", "./vl-test/build/sample-003.mp3-spectrum.csv"},
       {"/Users/jjzazuet/Desktop/sample-004.mp3", "./vl-test/build/sample-004.mp3-spectrum.json", "./vl-test/build/sample-004.mp3-spectrum.csv"},
-      {"/Users/jjzazuet/Desktop/sample-005.mp3", "./vl-test/build/sample-005.mp3-spectrum.json", "./vl-test/build/sample-005.mp3-spectrum.csv"}
+      {"/Users/jjzazuet/Desktop/sample-005.mp3", "./vl-test/build/sample-005.mp3-spectrum.json", "./vl-test/build/sample-005.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-006.mp3", "./vl-test/build/sample-006.mp3-spectrum.json", "./vl-test/build/sample-006.mp3-spectrum.csv"}
   };
 
   public static final ObjectMapper mapper = new ObjectMapper();
