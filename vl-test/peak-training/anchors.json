@@ -9,23 +9,27 @@
     {
       "file": "./vl-test/build/sample-002.mp3-spectrum.json",
       "anchors": [
-        {"x": 1371, "y": 16, "type": "TonalStraight"}
+        {"x": 28,   "y": 49, "type": "TonalShift", "valid": true},
+        {"x": 653,  "y": 63, "type": "TonalShift", "valid": true},
+        {"x": 1110, "y": 43, "type": "TonalShift", "valid": true},
+        {"x": 1100, "y": 57, "type": "TonalShift", "valid": true},
+        {"x": 1126, "y": 57, "type": "TonalShift", "valid": true}
       ]
     },
     {
       "file": "./vl-test/build/sample-003.mp3-spectrum.json",
       "anchors": [
-        {"x": 20,   "y": 25, "type": "TonalStraight"},
-        {"x": 45,   "y": 16, "type": "TonalStraight"},
-        {"x": 551,  "y": 34, "type": "TonalStraight"},
-        {"x": 2385, "y": 16, "type": "TonalStraight"},
+        {"x": 20,   "y": 25, "type": "TonalStraight", "valid": true},
+        {"x": 45,   "y": 16, "type": "TonalStraight", "valid": true},
+        {"x": 551,  "y": 34, "type": "TonalStraight", "valid": true},
+        {"x": 2385, "y": 16, "type": "TonalStraight", "valid": true},
 
-        {"x": 440,  "y": 46, "type": "TonalShift"},
-        {"x": 440,  "y": 16, "type": "TonalShift"},
-        {"x": 1455, "y": 21, "type": "TonalShift"},
-        {"x": 1723, "y": 36, "type": "TonalShift"},
-        {"x": 2649, "y": 20, "type": "TonalShift"},
-        {"x": 2883, "y": 21, "type": "TonalShift"}
+        {"x": 440,  "y": 46, "type": "TonalShift", "valid": true},
+        {"x": 440,  "y": 16, "type": "TonalShift", "valid": true},
+        {"x": 1455, "y": 21, "type": "TonalShift", "valid": true},
+        {"x": 1723, "y": 36, "type": "TonalShift", "valid": true},
+        {"x": 2649, "y": 20, "type": "TonalShift", "valid": true},
+        {"x": 2883, "y": 21, "type": "TonalShift", "valid": true}
       ]
     },
     {

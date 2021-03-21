@@ -9,10 +9,10 @@ class Formatter(object):
 
     def __call__(self, x, y):
         z = self.im.get_array()[int(y), int(x)]
-        return 'x=%i, y=%i, z=%.4f' % (x, y, z)
+        return 'x=%i, y=%i, z=%.4f' % (x, 127 - y, z)
 
 
-f = '../build/sample-004.mp3-spectrum.csv'
+f = '../build/sample-002.mp3-spectrum.csv'
 # f = '../build/coefficients-eas-l4-frequency.txt'
 # f = '../build/coefficients-linchirp-l4-frequency.txt'
 
@@ -23,7 +23,7 @@ fig, ax = plt.subplots()
 im = plt.imshow(
   matrix, cmap='viridis', interpolation='bilinear',
   origin='upper', aspect='auto',
-  vmin=0.0, vmax=0.036407076
+  vmin=0.0, vmax=0.03
 )
 ax.format_coord = Formatter(im)
 cursor = mplcursors.cursor(hover=True)
