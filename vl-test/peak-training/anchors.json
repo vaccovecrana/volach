@@ -3,7 +3,8 @@
     {
       "file": "./vl-test/build/sample-001.mp3-spectrum.json",
       "anchors": [
-        {"x": 1371, "y": 16, "type": "TonalStraight"}
+        {"x": 718,  "y": 35, "type": "TonalShift", "valid": true},
+        {"x": 1380, "y": 71, "type": "TonalShift", "valid": true}
       ]
     },
     {
@@ -13,7 +14,8 @@
         {"x": 653,  "y": 63, "type": "TonalShift", "valid": true},
         {"x": 1110, "y": 43, "type": "TonalShift", "valid": true},
         {"x": 1100, "y": 57, "type": "TonalShift", "valid": true},
-        {"x": 1126, "y": 57, "type": "TonalShift", "valid": true}
+        {"x": 1126, "y": 57, "type": "TonalShift", "valid": true},
+        {"x": 1154, "y": 16, "type": "TonalShift", "valid": true}
       ]
     },
     {

@@ -5,10 +5,23 @@ import * as echarts from "echarts"
 const req: RequestInit = {headers: {"Content-Type": "application/json", "Accept": "application/json"}}
 
 const load = (path: string) => fetch(path, req).then(res => res.json())
-class App extends React.Component<{}, {trainData: any}> {
+class App extends React.Component<{}, {trainData: any, counts: Map<string, number>}> {
 
   public componentDidMount() {
-    load("./peaks.json").then(trainData => this.setState({trainData}))
+    load("./peaks.json").then(trainData => {
+      const sources: any[] = trainData.sources
+      const anchors = sources.flatMap(src => src.anchors as any[])
+      const counts = new Map<string, number>()
+
+      counts.set("Transient", 0)
+      counts.set("TonalStraight", 0)
+      counts.set("TonalShift", 0)
+      anchors.forEach(anc => {
+        const i = counts.get(anc.type)
+        counts.set(anc.type, i + 1)
+      })
+      this.setState({trainData, counts})
+    })
   }
 
   private idOf(src: any, anchor: any) {
@@ -51,7 +64,6 @@ class App extends React.Component<{}, {trainData: any}> {
     const anchors: any[] = src.anchors
     anchors.forEach(anc => {
       const dom = document.getElementById(this.idOf(src, anc)) as HTMLDivElement
-      
       if (dom) {
         const chart: any = echarts.init(dom)
         const data = []
@@ -82,6 +94,16 @@ class App extends React.Component<{}, {trainData: any}> {
         chart.setOption(option)
       }
     })
+
+    const countsDom = document.getElementById("counts") as HTMLDivElement
+    if (countsDom) {
+      const countsChart: any = echarts.init(countsDom)
+      countsChart.setOption({
+        xAxis: {type: "category", data: [...this.state.counts.keys()]},
+        yAxis: {type: "value"},
+        series: [{data: [...this.state.counts.values()], type: "bar"}]
+      })  
+    }
   }
 
   public render() {
@@ -95,6 +117,7 @@ class App extends React.Component<{}, {trainData: any}> {
           <button style="margin-right: 0px; margin-left: auto" onClick={() => this.forceUpdate()}>
             Update
           </button>
+          <div id="counts" style="width: 800px; height: 256px; margin-left: auto; margin-right: auto"/>
           {divs}
         </div>
       )
