@@ -16,10 +16,16 @@ class App extends React.Component<{}, {trainData: any}> {
   }
 
   private renderAnchor(src: any, anchor: any) {
+    const y1 = 127 - anchor.y
     return (
-      <div id={this.idOf(src, anchor)} style="width: 256px; height: 256px; margin-left: auto; margin-right: auto">
-        <div style="padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
-          <canvas></canvas>
+      <div>
+        <div id={this.idOf(src, anchor)} style="width: 256px; height: 256px; margin-left: auto; margin-right: auto">
+          <div style="padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+            <canvas></canvas>
+          </div>
+        </div>
+        <div style="margin-bottom: 32px;">
+          {anchor.x}, {anchor.y}/{y1} - {anchor.type}
         </div>
       </div>
     )
@@ -68,8 +74,7 @@ class App extends React.Component<{}, {trainData: any}> {
           },  
           series: [{
             name: `${anc.x}, ${anc.y} - ${anc.type}`,
-            type: "heatmap",
-            data,
+            type: "heatmap", data,
             emphasis: {itemStyle: {borderColor: "#333", borderWidth: 1}},
             animation: false
           }]

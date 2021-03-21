@@ -4,12 +4,12 @@ import mplcursors
 
 
 class Formatter(object):
-  def __init__(self, im):
-    self.im = im
+    def __init__(self, im):
+        self.im = im
 
-  def __call__(self, x, y):
-    z = self.im.get_array()[int(y), int(x)]
-    return 'x=%i, y=%i, z=%.4f' % (x, y, z)
+    def __call__(self, x, y):
+        z = self.im.get_array()[int(y), int(x)]
+        return 'x=%i, y=%i, z=%.4f' % (x, y, z)
 
 
 f = '../build/sample-004.mp3-spectrum.csv'
