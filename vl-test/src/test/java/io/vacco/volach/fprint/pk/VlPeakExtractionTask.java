@@ -13,7 +13,7 @@ public class VlPeakExtractionTask {
 
     for (VlTrainingDataSet.VlTrainingSource tSrc : ds.sources) {
       File spectrumFile = new File(tSrc.file);
-      System.out.printf("Reading [%s] anchor values from [%s]%n", tSrc.anchors.size(), spectrumFile.getAbsolutePath());
+      System.out.printf("%nReading [%s] anchor values from [%s]%n", tSrc.anchors.size(), spectrumFile.getAbsolutePath());
 
       VlTrainingDataSet.VlSampleSource sSrc = mapper.readValue(spectrumFile, VlTrainingDataSet.VlSampleSource.class);
       for (VlTrainingDataSet.VlAnchorPoint anchor : tSrc.anchors) {

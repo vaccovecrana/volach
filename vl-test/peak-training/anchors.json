@@ -67,12 +67,17 @@
     {
       "file": "./vl-test/build/sample-005.mp3-spectrum.json",
       "anchors": [
-        {"x": 933,  "y": 36, "type": "TonalShift", "valid": true},
-        {"x": 941,  "y": 16, "type": "TonalShift", "valid": true},
-        {"x": 1604, "y": 37, "type": "TonalShift", "valid": true},
-        {"x": 1613, "y": 26, "type": "TonalShift", "valid": true},
-        {"x": 1954, "y": 21, "type": "TonalShift", "valid": true},
-        {"x": 2042, "y": 28, "type": "TonalShift", "valid": true}
+        {"x": 1684, "y": 26, "type": "TonalShift", "valid": true},
+        {"x": 2168, "y": 22, "type": "TonalShift", "valid": true},
+        {"x": 2420, "y": 20, "type": "TonalShift", "valid": true},
+        {"x": 3094, "y": 23, "type": "TonalShift", "valid": true},
+        {"x": 3606, "y": 26, "type": "TonalShift", "valid": true},
+        {"x": 4222, "y": 40, "type": "TonalShift", "valid": true},
+
+        {"x": 5166, "y": 16, "type": "Transient", "valid": true},
+        {"x": 5484, "y": 33, "type": "Transient", "valid": true},
+        {"x": 5897, "y": 29, "type": "Transient", "valid": true},
+        {"x": 5998, "y": 33, "type": "Transient", "valid": true}
       ]
     },
     {
@@ -82,11 +87,16 @@
         {"x": 2019, "y": 20, "type": "TonalShift", "valid": true},
         {"x": 2709, "y": 20, "type": "TonalShift", "valid": true},
 
+        {"x": 523,  "y": 38, "type": "Transient", "valid": true},
         {"x": 557,  "y": 16, "type": "Transient", "valid": true},
         {"x": 696,  "y": 16, "type": "Transient", "valid": true},
+        {"x": 1017, "y": 47, "type": "Transient", "valid": true},
         {"x": 1040, "y": 16, "type": "Transient", "valid": true},
         {"x": 1213, "y": 33, "type": "Transient", "valid": true},
-        {"x": 1932, "y": 18, "type": "Transient", "valid": true}
+        {"x": 1266, "y": 67, "type": "Transient", "valid": true},
+        {"x": 1932, "y": 18, "type": "Transient", "valid": true},
+        {"x": 2273, "y": 18, "type": "Transient", "valid": true},
+        {"x": 2394, "y": 33, "type": "Transient", "valid": true}
       ]
     }
   ]

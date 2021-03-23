@@ -32,7 +32,7 @@ public class VlPeakAnalysisTask { // "Generates JSON training data from input sa
         freqSamples.clear();
 
         withWriter(analysisData, out -> {
-          VlPeakAnalysisExtractor.from(trainParams, 128).forEach(chunk -> {
+          VlPeakAnalysisExtractor.from(trainParams, cutoffFreqBands).forEach(chunk -> {
             System.out.printf("Extracting [%s] wavelet packet samples%n", chunk.length);
             for (float[] buffer : chunk) {
               listener.onData(buffer, out, true);
