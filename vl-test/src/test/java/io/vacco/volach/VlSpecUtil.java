@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 public class VlSpecUtil {
 
   public static final int trainingRegionSize = 32;
+  public static final int cutoffFreqBands = 128;
 
   public static final String[][] sources = {
       {"/Users/jjzazuet/Desktop/sample-001.mp3", "./vl-test/build/sample-001.mp3-spectrum.json", "./vl-test/build/sample-001.mp3-spectrum.csv"},
@@ -21,10 +22,12 @@ public class VlSpecUtil {
       {"/Users/jjzazuet/Desktop/sample-003.mp3", "./vl-test/build/sample-003.mp3-spectrum.json", "./vl-test/build/sample-003.mp3-spectrum.csv"},
       {"/Users/jjzazuet/Desktop/sample-004.mp3", "./vl-test/build/sample-004.mp3-spectrum.json", "./vl-test/build/sample-004.mp3-spectrum.csv"},
       {"/Users/jjzazuet/Desktop/sample-005.mp3", "./vl-test/build/sample-005.mp3-spectrum.json", "./vl-test/build/sample-005.mp3-spectrum.csv"},
-      {"/Users/jjzazuet/Desktop/sample-006.mp3", "./vl-test/build/sample-006.mp3-spectrum.json", "./vl-test/build/sample-006.mp3-spectrum.csv"}
+      {"/Users/jjzazuet/Desktop/sample-006.mp3", "./vl-test/build/sample-006.mp3-spectrum.json", "./vl-test/build/sample-006.mp3-spectrum.csv"},
+      {"/Users/jjzazuet/Desktop/sample-007.mp3", "./vl-test/build/sample-007.mp3-spectrum.json", "./vl-test/build/sample-007.mp3-spectrum.csv"}
   };
 
   public static final ObjectMapper mapper = new ObjectMapper();
+  private static final StringBuilder sb = new StringBuilder();
 
   public static final VlAnalysisParameters analysisParams = VlAnalysisParameters.from(
       null, 65535, 10, true,
@@ -57,6 +60,14 @@ public class VlSpecUtil {
     }
   }
 
+  public static String toString1d(double[] in) {
+    sb.setLength(0);
+    sb.append("[");
+    for (double v : in) { sb.append(String.format("%.6f ", v)); }
+    sb.append("]");
+    return sb.toString();
+  }
+
   public static void print2d(float[][] in) {
     for (int i = 0; i < in.length; i++) {
       float[] data = in[i];
@@ -75,4 +86,9 @@ public class VlSpecUtil {
     }
   }
 
+  public static void copy(float[][] in, float[][] out) {
+    for (int i = 0; i < in.length; i++) {
+      System.arraycopy(in[i], 0, out[i], 0, in[0].length);
+    }
+  }
 }
