@@ -6,9 +6,6 @@ import io.vacco.volach.wavelet.type.VlBattle23;
 
 public class VlFprintSpecUtil {
 
-  public static final int trainingRegionSize = 32;
-  public static final int cutoffFreqBands = 128;
-
   public static final String[][] sources = {
       {"/Users/jjzazuet/Desktop/sample-001.mp3", "./vl-fprint-pk/build/sample-001.mp3-spectrum.json", "./vl-fprint-pk/build/sample-001.mp3-spectrum.csv"},
       {"/Users/jjzazuet/Desktop/sample-002.mp3", "./vl-fprint-pk/build/sample-002.mp3-spectrum.json", "./vl-fprint-pk/build/sample-002.mp3-spectrum.csv"},

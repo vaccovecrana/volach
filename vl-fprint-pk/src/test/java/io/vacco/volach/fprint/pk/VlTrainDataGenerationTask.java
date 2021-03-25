@@ -11,6 +11,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static io.vacco.volach.fprint.pk.VlFprintSpecUtil.*;
 import static io.vacco.volach.VlAnalysisUtil.*;
+import static io.vacco.volach.fprint.pk.dto.VlAnalysisRegion.*;
 
 public class VlTrainDataGenerationTask { // "Generates JSON training data from input samples"
 
@@ -33,9 +34,9 @@ public class VlTrainDataGenerationTask { // "Generates JSON training data from i
         freqSamples.clear();
 
         withWriter(analysisData, out -> {
-          VlPeakAnalysisExtractor.from(trainParams, cutoffFreqBands).forEach(chunk -> {
-            System.out.printf("Extracting [%s] wavelet packet samples%n", chunk.length);
-            for (float[] buffer : chunk) {
+          VlPeakAnalysisExtractor.from(trainParams, CutoffFreqBands).forEach(region -> {
+            System.out.printf("Extracting [%s] wavelet packet samples%n", region.samples.length);
+            for (float[] buffer : region.spectrum) {
               listener.onData(buffer, out, true);
               float[] copy = new float[buffer.length];
               System.arraycopy(buffer, 0, copy, 0, buffer.length);

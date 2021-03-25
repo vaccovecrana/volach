@@ -7,6 +7,7 @@ import io.vacco.volach.fprint.pk.dto.VlPeakType;
 import io.vacco.volach.util.VlArrays;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ public class VlAnchorTrainingSupplier implements JtPredictionSampleSupplier {
   private final List<VlTrainingDataSet.VlAnchorPoint> points;
   private final JtPredictionSample[] samples;
 
-  public VlAnchorTrainingSupplier(ObjectMapper m, File peaksJson) throws Exception {
+  public VlAnchorTrainingSupplier(ObjectMapper m, File peaksJson) throws IOException {
     VlTrainingDataSet dataSet = m.readValue(peaksJson, VlTrainingDataSet.class);
     this.points = dataSet.sources.stream().flatMap(src -> src.anchors.stream()).collect(Collectors.toList());
     this.samples = new JtPredictionSample[points.size()];
