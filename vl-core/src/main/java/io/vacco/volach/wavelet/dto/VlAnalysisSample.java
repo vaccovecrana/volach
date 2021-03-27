@@ -9,7 +9,6 @@ public class VlAnalysisSample {
 
   public int hilbertOffset;
   public FloatBuffer freqPower;
-  public VlWpNode[] packets;
 
   public static VlAnalysisSample[] from(int hilbertOffset, VlWpNode[] packets) {
     int samples = packets[0].coefficients.capacity();
@@ -23,7 +22,6 @@ public class VlAnalysisSample {
         freqPower.put(n, packets[n].coefficients.get(k));
       }
       VlAnalysisSample sample = new VlAnalysisSample();
-      sample.packets = packets;
       sample.freqPower= freqPower;
       sample.hilbertOffset = hilbertOffset + k;
       out[k] = sample;
@@ -31,4 +29,12 @@ public class VlAnalysisSample {
     return out;
   }
 
+  @Override
+  public String toString() {
+    return String.format(
+        "smp[@h: %d, f: %d]",
+        hilbertOffset,
+        freqPower != null ? freqPower.capacity() : -1
+    );
+  }
 }

@@ -1,6 +1,7 @@
 package io.vacco.volach.fprint.pk;
 
 import io.vacco.volach.VlUpdateListener;
+import io.vacco.volach.fprint.pk.dto.VlTrainingDataSet;
 import io.vacco.volach.wavelet.dto.VlAnalysisParameters;
 
 import java.io.File;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
+import static io.vacco.volach.fprint.pk.VlPeakAnalysisExtractor.referenceParams;
 import static io.vacco.volach.fprint.pk.VlFprintSpecUtil.*;
 import static io.vacco.volach.VlAnalysisUtil.*;
 import static io.vacco.volach.fprint.pk.dto.VlAnalysisRegion.*;
@@ -26,16 +28,15 @@ public class VlTrainDataGenerationTask { // "Generates JSON training data from i
       File analysisData = new File(format(src[2], f.getName()));
 
       VlTrainingDataSet.VlSampleSource ts = new VlTrainingDataSet.VlSampleSource();
-      VlAnalysisParameters trainParams = trainingParams;
 
       if (!trainingData.exists()) {
         System.out.printf(">>> Generating training data from [%s]%n", f.getAbsolutePath());
-        trainParams.src = f.toURI().toURL();
+        referenceParams.src = f.toURI().toURL();
         freqSamples.clear();
 
         withWriter(analysisData, out -> {
-          VlPeakAnalysisExtractor.from(trainParams, CutoffFreqBands).forEach(region -> {
-            System.out.printf("Extracting [%s] wavelet packet samples%n", region.samples.length);
+          VlPeakAnalysisExtractor.from(referenceParams, CutoffFreqBands).forEach(region -> {
+            System.out.printf("Extracting [%s] wavelet packet samples%n", region.chunk.samples.length);
             for (float[] buffer : region.spectrum) {
               listener.onData(buffer, out, true);
               float[] copy = new float[buffer.length];

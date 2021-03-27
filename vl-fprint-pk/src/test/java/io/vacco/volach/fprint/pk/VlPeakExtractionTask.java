@@ -1,5 +1,8 @@
 package io.vacco.volach.fprint.pk;
 
+import io.vacco.volach.fprint.pk.dto.VlAnchorPoint;
+import io.vacco.volach.fprint.pk.dto.VlTrainingDataSet;
+
 import java.io.File;
 
 import static io.vacco.volach.VlAnalysisUtil.*;
@@ -18,7 +21,7 @@ public class VlPeakExtractionTask {
       System.out.printf("%nReading [%s] anchor values from [%s]%n", tSrc.anchors.size(), spectrumFile.getAbsolutePath());
 
       VlTrainingDataSet.VlSampleSource sSrc = mapper.readValue(spectrumFile, VlTrainingDataSet.VlSampleSource.class);
-      for (VlTrainingDataSet.VlAnchorPoint anchor : tSrc.anchors) {
+      for (VlAnchorPoint anchor : tSrc.anchors) {
         float[][] region = new float[RegionSize][RegionSize];
         System.out.printf("Extracting anchor point: [%s, %s]%n", anchor.x, anchor.y);
         regionSquare(sSrc.spectrum, anchor.x, anchor.y, region);

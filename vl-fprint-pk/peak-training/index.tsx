@@ -25,7 +25,7 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
   }
 
   private idOf(src: any, anchor: any) {
-    return `${src.file}-${anchor.x}-${anchor.y}`
+    return `${src.file}-${anchor.xOff + anchor.x}-${anchor.yOff + anchor.y}`
   }
 
   private renderAnchor(src: any, anchor: any) {

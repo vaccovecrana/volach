@@ -25,7 +25,7 @@ public class VlPeakTrainingTask {
     );
 
     JtTrainer trainer = new JtTrainer(net, (n, epoch, error) -> {
-      System.out.printf("Epoch: [%s], error: [%.6f]%n", epoch, error);
+      System.out.printf("Epoch: [%s], error: [%.9f]%n", epoch, error);
       return error != -1 && error < 0.0002;
     }, new VlAnchorTrainingSupplier(mapper, new File("./vl-fprint-pk/peak-training/peaks.json")));
 
