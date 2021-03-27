@@ -40,7 +40,7 @@ public class VlAnchorExtractionSpec {
       File outSpectrum = new File("./build/test-spec.csv");
 
       withWriter(outSpectrum, out -> VlPeakAnchorExtractor.from(
-          referenceParams, net, VlAnalysisRegion.CutoffFreqBands, 0.07
+          referenceParams, net, VlAnalysisRegion.CutoffFreqBands, 0.025
       ).forEach(region -> {
         outSrc.anchors.addAll(region.anchorPoints);
         region.anchorPoints.forEach(System.out::println);

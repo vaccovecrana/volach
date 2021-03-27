@@ -24,11 +24,19 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
     })
   }
 
+  private absCoords(anc: any) {
+    const xA = anc.xOff + anc.x
+    const yA = anc.yOff + anc.y
+    return [xA, yA]
+  }
+
   private idOf(src: any, anchor: any) {
-    return `${src.file}-${anchor.xOff + anchor.x}-${anchor.yOff + anchor.y}`
+    const abs = this.absCoords(anchor)
+    return `${src.file}-${abs[0]}-${abs[1]}`
   }
 
   private renderAnchor(src: any, anchor: any) {
+    const abs = this.absCoords(anchor)
     const y1 = 127 - anchor.y
     return (
       <div>
@@ -38,7 +46,7 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
           </div>
         </div>
         <div style="margin-bottom: 32px;">
-          {anchor.valid ? `✅` : `❌`} {anchor.x}, {anchor.y}/{y1} - {anchor.type}
+          {anchor.valid ? `✅` : `❌`} {abs[0]}, {abs[1]}/{y1} - {anchor.type}
         </div>
       </div>
     )

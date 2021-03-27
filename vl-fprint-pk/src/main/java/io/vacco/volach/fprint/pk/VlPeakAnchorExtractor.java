@@ -41,11 +41,7 @@ public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAn
       int regionOffset = region.chunk.samples[0].hilbertOffset;
 
       for (int j = HalfReg; j < regionLength - HalfReg; j += HalfReg) {
-
         for (int k = HalfReg; k < region.spectrum[0].length - HalfReg; k += YSlide) {
-
-          System.out.printf("[%06d, %06d] -> [%06d, %06d] -> [%.9f]%n", regionOffset, j, regionOffset + j, k, region.spectrum[j][k]);
-
           regionSquare(region.spectrum, j, k, spectrumBuffer);
           flatten(spectrumBuffer, feature);
 
