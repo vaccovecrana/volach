@@ -1,18 +1,14 @@
 package io.vacco.volach.fprint.pk.net;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.vacco.jtinn.net.JtPredictionSample;
-import io.vacco.jtinn.net.JtPredictionSampleSupplier;
-import io.vacco.volach.fprint.pk.dto.VlAnchorPoint;
-import io.vacco.volach.fprint.pk.dto.VlPeakType;
-import io.vacco.volach.fprint.pk.dto.VlTrainingDataSet;
-import io.vacco.volach.util.VlArrays;
+import io.vacco.jtinn.net.*;
+import io.vacco.volach.fprint.pk.dto.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static io.vacco.volach.fprint.pk.VlFprintArrays.*;
 
 public class VlAnchorTrainingSupplier implements JtPredictionSampleSupplier {
 
@@ -38,7 +34,7 @@ public class VlAnchorTrainingSupplier implements JtPredictionSampleSupplier {
     for (int i = 0; i < samples.length; i++) {
       JtPredictionSample smp = samples[i];
       VlAnchorPoint p = points.get(i);
-      VlArrays.flatten(p.region, smp.features);
+      flatten(p.region, smp.features);
       smp.labels = p.type.flags;
     }
     return samples;

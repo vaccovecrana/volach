@@ -17,4 +17,16 @@ public class VlFprintArrays {
     }
   }
 
+  public static void flatten(float[][] in, double[] out) {
+    double val;
+    int idx;
+    for (int j = 0; j < in.length; j++) {
+      for (int k = 0; k < in[0].length; k++) {
+        idx = (j * in.length) + k;
+        val = in[j][k];
+        out[idx] = val;
+      }
+    }
+  }
+
 }

@@ -32,10 +32,10 @@ public class VlWaveletPacketAnalysisSpec {
       withWriter(values, out -> VlWaveletPacketAnalysisExtractor.from(params).forEach(chunk -> {
         System.out.printf("Extracted [%s] wavelet packet samples from %s%n", chunk.samples.length, chunk.signal);
         for (VlAnalysisSample analysisSample : chunk.samples) {
+          System.out.println(analysisSample);
           listener.onData(analysisSample.freqPower, out, true);
         }
-      })
-      );
+      }));
       listener.done();
     });
   }

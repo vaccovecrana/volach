@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import java.util.stream.*;
 
 import static io.vacco.volach.fprint.pk.VlFprintArrays.*;
-import static io.vacco.volach.util.VlArrays.flatten;
 
 public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAnalysisRegion> {
 
