@@ -3,11 +3,9 @@ package io.vacco.volach.audioio;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.FloatBuffer;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.stream.*;
 
 import static io.vacco.volach.audioio.VlMonoAudioInputStream.*;
 import static io.vacco.volach.util.VlArrays.*;
@@ -17,35 +15,39 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
 
   private final byte[] sampleBuffer = new byte[2];
 
+  private final float normalizationOffset;
   private final float[] zeroBuffer;
   private final FloatBuffer signalBuffer;
   private final VlMonoAudioInputStream input;
 
-  public boolean eof = false, normalize;
+  public boolean eof = false, scaleToUnit;
   public final int bufferSize;
   public int totalChunks;
   public long totalSamples;
 
-  public VlSignalExtractor(URL src, int analysisSampleSize, boolean normalize) {
+  public VlSignalExtractor(URL src, int analysisSampleSize, boolean scaleToUnit, float normalizationOffset) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
     this.input = loadPcm16Le(src);
     this.bufferSize = nextPow2(analysisSampleSize);
     this.zeroBuffer = new float[bufferSize];
     this.signalBuffer = floatBuffer(bufferSize);
-    this.normalize = normalize;
+    this.scaleToUnit = scaleToUnit;
+    this.normalizationOffset = normalizationOffset;
   }
 
   @Override
   public boolean tryAdvance(Consumer<? super VlSignalChunk> onChunk) {
     try {
       int samplesRead;
+      float sample;
       signalBuffer.rewind();
       signalBuffer.put(zeroBuffer);
       for (int k = 0; k < bufferSize; k++) {
         samplesRead = input.read(sampleBuffer, 0, sampleBuffer.length);
         if (eof = samplesRead == -1) { break; }
-        float sample = (float) readSignedLe(sampleBuffer);
-        sample = normalize ? (((sample * 2) + 1) / (float) 65535) : sample;
+        sample = (float) readSignedLe(sampleBuffer);
+        sample = scaleToUnit ? (((sample * 2) + 1) / (float) 65535) : sample;
+        sample = sample > 0 ? sample + normalizationOffset : sample - normalizationOffset;
         signalBuffer.put(k, sample);
         totalSamples++;
       }
@@ -64,8 +66,8 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
     return out;
   }
 
-  public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize, boolean normalize) {
-    return StreamSupport.stream(new VlSignalExtractor(src, analysisSampleSize, normalize), false);
+  public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize, boolean scaleToUnit, float normalizationFactor) {
+    return StreamSupport.stream(new VlSignalExtractor(src, analysisSampleSize, scaleToUnit, normalizationFactor), false);
   }
 
 }

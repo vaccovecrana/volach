@@ -13,7 +13,6 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
       const anchors = sources.flatMap(src => src.anchors as any[])
       const counts = new Map<string, number>()
 
-      counts.set("Transient", 0)
       counts.set("TonalStraight", 0)
       counts.set("TonalShift", 0)
       anchors.forEach(anc => {
@@ -83,7 +82,7 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
         const option = {
           tooltip: {}, xAxis: {type: "category"}, yAxis: {type: "category"},
           visualMap: {
-            show: false, min: 0, max: 0.25,
+            show: false, min: 0, max: 0.5,
             calculable: true,
             inRange: {
               color: [

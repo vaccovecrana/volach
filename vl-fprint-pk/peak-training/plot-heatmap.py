@@ -11,7 +11,9 @@ class Formatter(object):
         return 'x=%i, y=%i/%i, z=%.9f' % (x, 127 - y, y, z)
 
 
-f = '../build/test-anc.csv'
+# f = '../build/extraction-anc.csv'
+f = '../build/extraction-spec.csv'
+# f = '../build/sample-004.mp3-spectrum.csv'
 # f = '../build/coefficients-eas-l4-frequency.txt'
 # f = '../build/coefficients-linchirp-l4-frequency.txt'
 
@@ -20,9 +22,10 @@ matrix = np.rot90(matrix)
 
 fig, ax = plt.subplots()
 im = plt.imshow(
-  matrix, cmap='viridis', interpolation='nearest',
-  origin='upper', aspect='auto',
-  vmin=0.0, vmax=0.06
+    matrix, cmap='viridis', interpolation='nearest',
+    origin='upper', aspect='auto',
+    vmin=0.0, vmax=0.06
 )
 ax.format_coord = Formatter(im)
+
 plt.show()

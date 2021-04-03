@@ -16,6 +16,12 @@ public class VlAnalysisUtil {
     }
   }
 
+  public static void print1d(double[] in) {
+    int k;
+    for(k = 0; k < in.length; k++) System.out.printf("%.03f ", in[k]);
+    System.out.println();
+  }
+
   public static void print2d(FloatBuffer[] in) {
     for (int i = 0; i < in.length; i++) {
       FloatBuffer data = in[i];
@@ -28,6 +34,15 @@ public class VlAnalysisUtil {
   public static void print2d(float[][] in) {
     for (int i = 0; i < in.length; i++) {
       float[] data = in[i];
+      for (int k = 0; k < data.length; k++) {
+        System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
+      }
+    }
+  }
+
+  public static void print2d(double[][] in) {
+    for (int i = 0; i < in.length; i++) {
+      double[] data = in[i];
       for (int k = 0; k < data.length; k++) {
         System.out.printf("[%s, %s, %s], %n", i, k, data[k]);
       }

@@ -43,6 +43,11 @@ For the Daubechies16 wavelet:
 The `motherWavelength` attribute of the wavelet describes the amount of samples
 that can be decomposed for some amount of input data.
 
+Training data gets recovered with [age](https://github.com/FiloSottile/age).
+
 ## TODO
 
 - Explain the internal data layout for wavelet packets (frequencies are stored from low to high).
+- Extract better quality training examples.
+- For more accurate detection, consider more than one peak per anchor region. The hope is that this will catch more anchor point frequencies inside the musical region of interest.
+- Implement multi-threaded fingerprinting (parallel stream processing).

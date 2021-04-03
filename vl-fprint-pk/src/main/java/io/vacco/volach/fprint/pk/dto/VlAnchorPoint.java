@@ -39,6 +39,10 @@ public class VlAnchorPoint {
   public int xA() { return xOff + x; }
   public int yA() { return yOff + y; }
 
+  public double distanceTo(VlAnchorPoint p) {
+    return Math.hypot(Math.abs(p.yA() - yA()), Math.abs(p.xA() - xA()));
+  }
+
   @Override
   public String toString() {
     return String.format(
@@ -47,5 +51,5 @@ public class VlAnchorPoint {
     );
   }
 
-  public String sortKey() { return String.format("%06d%06d", xOff + x, yOff + y); }
+  public String sortKey() { return String.format("%06d%06d", xA(), yA()); }
 }

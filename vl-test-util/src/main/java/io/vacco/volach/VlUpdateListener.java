@@ -35,6 +35,6 @@ public class VlUpdateListener {
   }
 
   public void done() {
-    System.out.printf("vmin=%s, vmax=%s%n", range[0] / 16, range[1] / 16);
+    System.out.printf("vmin=%s, vmax=%s%n", range[0] / 8, range[1] / 8);
   }
 }

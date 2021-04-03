@@ -1,4 +1,5 @@
 .DS_Store
+data.tar.gz
 
 .idea/
 .gradle/
@@ -9,3 +10,6 @@ build/
 node_modules/
 main.js
 main.js.map
+
+query-set-*/
+training-set-*/
