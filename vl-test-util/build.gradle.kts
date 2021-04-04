@@ -1,4 +1,4 @@
-configure<io.vacco.oss.CbPluginProfileExtension> { sharedLibrary(false, false) }
+configure<io.vacco.oss.CbPluginProfileExtension> { sharedLibrary(false, true) }
 
 val api by configurations
 
