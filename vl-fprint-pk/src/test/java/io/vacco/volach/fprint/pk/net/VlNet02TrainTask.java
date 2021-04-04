@@ -1,6 +1,5 @@
 package io.vacco.volach.fprint.pk.net;
 
-import com.esotericsoftware.yamlbeans.YamlWriter;
 import io.vacco.jtinn.activation.*;
 import io.vacco.jtinn.error.*;
 import io.vacco.jtinn.net.*;
@@ -29,14 +28,12 @@ public class VlNet02TrainTask {
     JtTrainer trainer = new JtTrainer(net, (n, epoch, error) -> {
       System.out.printf("Epoch: [%s], error: [%.9f]%n", epoch, error);
       return error != -1 && error < 0.0002;
-    }, new VlAnchorTrainingSupplier(mapper, new File("./vl-fprint-pk/peak-training/peaks.json")));
+    }, new VlAnchorTrainingSupplier(json, new File("./vl-fprint-pk/peak-training/peaks.json")));
 
-    File out = new File("./vl-fprint-pk/src/main/resources/io/vacco/volach/fprint/pk/net.yml");
-    YamlWriter w = new YamlWriter(new FileWriter(out));
+    File out = new File("./vl-fprint-pk/src/main/resources/io/vacco/volach/fprint/pk/net.json");
 
     trainer.start();
-    w.write(net);
-    w.close();
+    json.toJson(net, out);
     System.out.println("done");
   }
 

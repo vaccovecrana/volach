@@ -4,5 +4,5 @@ val api by configurations
 
 dependencies {
   api("io.vacco.jlame:jlame:3.100.2")
-  api("com.fasterxml.jackson.core:jackson-databind:2.12.2")
+  api("io.vacco.jsonbeans:jsonbeans:0.9.1")
 }

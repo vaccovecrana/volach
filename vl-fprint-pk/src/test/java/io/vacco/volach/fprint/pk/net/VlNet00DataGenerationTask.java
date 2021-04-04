@@ -47,8 +47,7 @@ public class VlNet00DataGenerationTask { // Generates JSON training data from in
           ts.max = listener.range[1];
           ts.spectrum = freqSamples.toArray(float[][]::new);
 
-          try { mapper.writerWithDefaultPrettyPrinter().writeValue(trainingData, ts); }
-          catch (IOException e) { throw new IllegalStateException(e); }
+          json.toJson(ts, trainingData);
         });
       }
     }

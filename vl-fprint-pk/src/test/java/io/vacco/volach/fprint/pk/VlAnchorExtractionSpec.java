@@ -48,7 +48,7 @@ public class VlAnchorExtractionSpec {
       }));
 
       System.out.println("Writing peak detection JSON dataset...");
-      mapper.writerWithDefaultPrettyPrinter().writeValue(detected, outDs);
+      json.toJson(outDs, detected);
 
       System.out.printf("Found [%d] anchors%n", outSrc.anchors.size());
       Map<Integer, List<VlAnchorPoint>> pointMap = outSrc.anchors.stream().collect(Collectors.groupingBy(VlAnchorPoint::xA));

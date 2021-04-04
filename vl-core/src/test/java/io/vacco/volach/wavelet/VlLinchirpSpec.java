@@ -24,9 +24,9 @@ public class VlLinchirpSpec {
         () -> {
           int level = 4;
 
-          float[] rawSamples = mapper.readValue(VlLinchirpSpec.class.getResource("/samples-linchirp.json"), float[].class);
-          float[][] refCoefficientsLevel4Natural = mapper.readValue(VlLinchirpSpec.class.getResource("/coefficients-linchirp-l4-natural.json"), float[][].class);
-          float[][] refCoefficientsLevel4Frequency = mapper.readValue(VlLinchirpSpec.class.getResource("/coefficients-linchirp-l4-frequency.json"), float[][].class);
+          float[] rawSamples = loadJson("/samples-linchirp.json", float[].class);
+          float[][] refCoefficientsLevel4Natural = loadJson("/coefficients-linchirp-l4-natural.json", float[][].class);
+          float[][] refCoefficientsLevel4Frequency = loadJson("/coefficients-linchirp-l4-frequency.json", float[][].class);
 
           FloatBuffer samples = floatBuffer(rawSamples.length).put(rawSamples);
           FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);

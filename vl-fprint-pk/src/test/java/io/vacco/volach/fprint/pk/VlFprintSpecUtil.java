@@ -1,16 +1,15 @@
 package io.vacco.volach.fprint.pk;
 
-import com.esotericsoftware.yamlbeans.YamlReader;
 import io.vacco.jtinn.net.JtNetwork;
-
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
+
+import static io.vacco.volach.VlAnalysisUtil.*;
 
 public class VlFprintSpecUtil {
 
-  public static interface VlUnsafeConsumer<T> {
+  public interface VlUnsafeConsumer<T> {
     void accept(T t) throws Exception;
   }
 
@@ -37,8 +36,7 @@ public class VlFprintSpecUtil {
   };
 
   public static JtNetwork loadNet() throws IOException {
-    URL netUrl = VlPairExtractionSpec.class.getResource("/io/vacco/volach/fprint/pk/net.yml");
-    return new YamlReader(new InputStreamReader(netUrl.openStream())).read(JtNetwork.class);
+    return loadJson("/io/vacco/volach/fprint/pk/net.json", JtNetwork.class);
   }
 
   public static final File outSpectrum = new File("./build/extraction-spec.csv");

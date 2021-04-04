@@ -30,7 +30,7 @@ public class VlPairExtractionSpec {
     it("It extracts anchors from sample dataset", () -> {
       File dbJson = new File("./build/query-db.json");
       File dbBin = new File("./build/query-db.ser");
-      VlDatabase database = dbJson.exists() ? mapper.readValue(dbJson.toURI().toURL(), VlDatabase.class) : new VlDatabase();
+      VlDatabase database = dbJson.exists() ? json.fromJson(VlDatabase.class, dbJson) : new VlDatabase();
 
       withAudio(querySources[10][1], audio -> {
 
@@ -50,7 +50,7 @@ public class VlPairExtractionSpec {
             pairs.stream().collect(Collectors.groupingBy(VlPeakPair::id)).forEach(database::put);
             System.out.printf("Fingerprint index contains [%03d] reference hashes%n", database.size());
           }
-          mapper.writerWithDefaultPrettyPrinter().writeValue(dbJson, database);
+          json.toJson(database, dbJson);
           new ObjectOutputStream(new FileOutputStream(dbBin)).writeObject(database);
           System.out.printf("Fingerprint JSON index saved at [%s]%n", dbJson.getAbsolutePath());
           System.out.printf("Fingerprint Binary index saved at [%s]%n", dbBin.getAbsolutePath());

@@ -1,6 +1,6 @@
 package io.vacco.volach.fprint.pk.net;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.esotericsoftware.jsonbeans.Json;
 import io.vacco.jtinn.net.*;
 import io.vacco.volach.fprint.pk.dto.*;
 
@@ -15,8 +15,8 @@ public class VlAnchorTrainingSupplier implements JtPredictionSampleSupplier {
   private final List<VlAnchorPoint> points;
   private final JtPredictionSample[] samples;
 
-  public VlAnchorTrainingSupplier(ObjectMapper m, File peaksJson) throws IOException {
-    VlTrainingDataSet dataSet = m.readValue(peaksJson, VlTrainingDataSet.class);
+  public VlAnchorTrainingSupplier(Json j, File peaksJson) throws IOException {
+    VlTrainingDataSet dataSet = j.fromJson(VlTrainingDataSet.class, peaksJson);
     this.points = dataSet.sources.stream().flatMap(src -> src.anchors.stream()).collect(Collectors.toList());
     this.samples = new JtPredictionSample[points.size()];
     int squareSize = points.get(0).region.length;

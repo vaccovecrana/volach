@@ -24,8 +24,8 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
   }
 
   private absCoords(anc: any) {
-    const xA = anc.xOff + anc.x
-    const yA = anc.yOff + anc.y
+    const xA = anc.xOff + (anc.x || 0)
+    const yA = anc.yOff + (anc.y || 0)
     return [xA, yA]
   }
 
@@ -82,7 +82,7 @@ class App extends React.Component<{}, {trainData: any, counts: Map<string, numbe
         const option = {
           tooltip: {}, xAxis: {type: "category"}, yAxis: {type: "category"},
           visualMap: {
-            show: false, min: 0, max: 0.5,
+            show: false, min: 0, max: 0.25,
             calculable: true,
             inRange: {
               color: [
