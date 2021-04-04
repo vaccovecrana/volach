@@ -5,7 +5,7 @@ public enum VlPeakType {
   TonalStraight(new double[] {0, 1}),
   TonalShift(new double[]    {1, 0});
 
-  public static final double Threshold = 0.9;
+  public static final double Threshold = 0.99;
 
   public final double[] flags;
 
