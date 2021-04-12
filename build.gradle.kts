@@ -1,11 +1,11 @@
-plugins { id("io.vacco.oss") version "1.0.1" apply(false) }
+plugins { id("io.vacco.oss.gitflow") version "0.9.3" apply(false) }
 
 subprojects {
-  apply(plugin = "io.vacco.oss")
+  apply(plugin = "io.vacco.oss.gitflow")
   group = "io.vacco.volach"
   version = "0.1.0"
 
-  configure<io.vacco.oss.CbPluginProfileExtension> {
+  configure<io.vacco.oss.gitflow.GsPluginProfileExtension> {
     addJ8Spec()
     addClasspathHell()
   }

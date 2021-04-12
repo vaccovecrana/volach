@@ -1,4 +1,4 @@
-configure<io.vacco.oss.CbPluginProfileExtension> { sharedLibrary(true, true) }
+configure<io.vacco.oss.gitflow.GsPluginProfileExtension> { sharedLibrary(true, true) }
 
 val api by configurations
 
