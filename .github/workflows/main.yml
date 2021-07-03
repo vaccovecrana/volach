@@ -9,6 +9,6 @@ jobs:
         with:
           orgConfig: https://vacco-oss.s3.us-east-2.amazonaws.com/vacco-oss.json
         env:
-          VACCO_CI_USER: ${{secrets.VACCO_CI_USER}}
-          VACCO_CI_TOKEN: ${{secrets.VACCO_CI_TOKEN}}
+          SONATYPE_USER: ${{secrets.SONATYPE_USER}}
+          SONATYPE_PASSWORD: ${{secrets.SONATYPE_PASSWORD}}
           MAVEN_SIGNING_PRV: ${{secrets.MAVEN_SIGNING_PRV}}
