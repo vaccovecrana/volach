@@ -1,4 +1,4 @@
-plugins { id("io.vacco.oss.gitflow") version "0.9.7" apply(false) }
+plugins { id("io.vacco.oss.gitflow") version "0.9.8" apply(false) }
 
 subprojects {
   apply(plugin = "io.vacco.oss.gitflow")

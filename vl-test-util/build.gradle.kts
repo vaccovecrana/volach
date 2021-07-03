@@ -1,4 +1,4 @@
-configure<io.vacco.oss.gitflow.GsPluginProfileExtension> { sharedLibrary(false, true) }
+configure<io.vacco.oss.gitflow.GsPluginProfileExtension> { sharedLibrary(false, false) }
 
 val api by configurations
 
