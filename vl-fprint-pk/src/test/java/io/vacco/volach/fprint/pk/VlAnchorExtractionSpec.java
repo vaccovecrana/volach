@@ -1,7 +1,6 @@
 package io.vacco.volach.fprint.pk;
 
 import io.vacco.volach.VlUpdateListener;
-import io.vacco.volach.audioio.VlSampleNormalizer;
 import io.vacco.volach.fprint.pk.dto.*;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
@@ -31,10 +30,8 @@ public class VlAnchorExtractionSpec {
       outDs.sources = new ArrayList<>();
       outDs.sources.add(outSrc);
 
-      analysisParams.network = loadNet();
+      analysisParams.network = VlPeakPairExtractor.loadDefaultNet();
       audioIoParams.src = audio.toURI().toURL();
-      audioIoParams.normalizationOffset = queryType > 0 ? // normalize non-reference audio files
-          new VlSampleNormalizer(audioIoParams, analysisParams.sampleNormalizationLimit).getOffset() : 0;
 
       VlUpdateListener listener = new VlUpdateListener();
       File detected = new File("./peak-training/peaks-detected.json");

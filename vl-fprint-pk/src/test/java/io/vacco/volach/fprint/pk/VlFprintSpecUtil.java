@@ -1,11 +1,7 @@
 package io.vacco.volach.fprint.pk;
 
-import io.vacco.jtinn.net.JtNetwork;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-
-import static io.vacco.volach.VlAnalysisUtil.*;
 
 public class VlFprintSpecUtil {
 
@@ -34,10 +30,6 @@ public class VlFprintSpecUtil {
       {"/query-set-00/09-reference-recording.mp3"},
       {"/query-set-00/10-reference-recording.mp3", "/query-set-00/10-live-recording-00.mp3"}
   };
-
-  public static JtNetwork loadNet() throws IOException {
-    return loadJson("/io/vacco/volach/fprint/pk/net.json", JtNetwork.class);
-  }
 
   public static final File outSpectrum = new File("./build/extraction-spec.csv");
   public static final File outAnchors = new File("./build/extraction-anc.csv");

@@ -9,6 +9,7 @@ public class VlPeakPair implements Serializable {
   public byte  f0, f1;
   public short hilbertDelta;
   public int   hilbertOffset;
+  public int   sampleOffset;
   public int   trackId = -1;
 
   public static VlPeakPair from(VlAnchorPoint p0, VlAnchorPoint p1) {
@@ -17,6 +18,7 @@ public class VlPeakPair implements Serializable {
     p.f1 = (byte) p1.yA();
     p.hilbertDelta = (short) (p1.xA() - p0.xA());
     p.hilbertOffset = p0.xA();
+    p.sampleOffset = p0.smpOff;
     return p;
   }
 

@@ -1,10 +1,11 @@
 package io.vacco.volach.fprint.pk;
 
+import com.esotericsoftware.jsonbeans.Json;
+import io.vacco.jtinn.net.JtNetwork;
 import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.fprint.pk.dto.*;
 import io.vacco.volach.wavelet.VlWaveletPacketAnalysisExtractor;
 import io.vacco.volach.wavelet.dto.VlAudioIOParameters;
-
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.*;
@@ -50,12 +51,55 @@ public class VlPeakPairExtractor extends Spliterators.AbstractSpliterator<List<V
                 new VlPeakRegionExtractor(
                     new VlWaveletPacketAnalysisExtractor(
                         new VlSignalExtractor(
-                            p.src, p.analysisSampleSize, p.scaleToUnit, p.normalizationOffset
+                            p.src, p.analysisSampleSize, p.scaleToUnit
                         ), p.level, p.wavelet, p.order
                     ), ap
                 ), ap
             ), ap.peakDistanceMin, ap.peakDistanceMax
         ), false
+    );
+  }
+
+  public static Stream<VlPeakPair> fromFlat(VlAudioIOParameters p, VlAnalysisParameters ap) {
+    return VlPeakPairExtractor.from(p, ap)
+        .flatMap(Collection::stream)
+        .sorted(Comparator.comparingInt(pt -> pt.hilbertOffset));
+  }
+
+  public static Map<Integer, Map<String, VlPeakPair>> align(List<VlPeakPair> smpPairs, Map<String, List<VlPeakPair>> database) {
+    Map<Integer, Map<String, VlPeakPair>> diffIdx = new TreeMap<>();
+    for (VlPeakPair p : smpPairs) {
+      List<VlPeakPair> dbMatches = database.get(p.id());
+      if (dbMatches != null) {
+        for (VlPeakPair dp : dbMatches) {
+          int dT = dp.hilbertOffset - p.hilbertOffset;
+          Map<String, VlPeakPair> diffPairs = diffIdx.computeIfAbsent(dT, diff -> new TreeMap<>());
+          diffPairs.put(dp.id(), dp);
+        }
+      }
+    }
+    return new TreeMap<>(
+        diffIdx.entrySet().stream()
+            .filter(e -> e.getValue().size() > 3)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+    );
+  }
+
+  public static Map<Integer, Integer> countMatches(Map<Integer, Map<String, VlPeakPair>> diffIdx) {
+    Map<Integer, Integer> matchIdx = new TreeMap<>();
+    diffIdx.forEach((k, v) -> {
+      for (VlPeakPair p : v.values()) {
+        int matches = matchIdx.computeIfAbsent(p.trackId, tid -> 0);
+        matchIdx.put(p.trackId, matches + 1);
+      }
+    });
+    return matchIdx;
+  }
+
+  public static JtNetwork loadDefaultNet() {
+    return new Json().fromJson(
+        JtNetwork.class,
+        VlPeakPairExtractor.class.getResourceAsStream("/io/vacco/volach/fprint/pk/net.json")
     );
   }
 

@@ -6,7 +6,6 @@ import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
-import static io.vacco.volach.util.VlArrays.*;
 import static io.vacco.volach.fprint.pk.VlFprintArrays.*;
 import static j8spec.J8Spec.*;
 import static org.junit.Assert.*;
@@ -62,9 +61,9 @@ public class VlMatrixSpec {
     });
 
     it("Finds a local peak, indicating it's absolute offset", () -> {
-      System.out.println(VlAnchorPoint.maxLocal(expected)); // TODO add matrix processing constraint annotations (i.e. @AssumesMatrixIsSquare, 90 deg rot, etc).
-      System.out.println(VlAnchorPoint.maxLocal(offsetNw));
-      System.out.println(VlAnchorPoint.maxLocal(offsetSe));
+      System.out.println(VlAnchorPoint.maxLocal(expected, 0)); // TODO add matrix processing constraint annotations (i.e. @AssumesMatrixIsSquare, 90 deg rot, etc).
+      System.out.println(VlAnchorPoint.maxLocal(offsetNw, 0));
+      System.out.println(VlAnchorPoint.maxLocal(offsetSe, 0));
     });
 
     it("Can flatten a matrix array", () -> {

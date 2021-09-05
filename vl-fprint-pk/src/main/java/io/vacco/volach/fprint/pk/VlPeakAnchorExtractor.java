@@ -17,7 +17,6 @@ public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAn
   private final VlPeakRegionExtractor extractor;
   private final VlAnalysisParameters params;
 
-
   private final float[][] spectrumBuffer;
   private final double[] feature;
 
@@ -42,7 +41,7 @@ public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAn
           regionSquare(region.spectrum, j, k, spectrumBuffer);
           flatten(spectrumBuffer, feature);
 
-          VlAnchorPoint lp = VlAnchorPoint.maxLocal(spectrumBuffer);
+          VlAnchorPoint lp = VlAnchorPoint.maxLocal(spectrumBuffer, region.chunk.signal.offset);
           lp.type = VlPeakType.fromRaw(params.network.estimate(feature));
           lp.xOff = regionOffset + j;
           lp.yOff = k;
@@ -76,7 +75,7 @@ public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAn
             new VlPeakRegionExtractor(
                 new VlWaveletPacketAnalysisExtractor(
                     new VlSignalExtractor(
-                        p.src, p.analysisSampleSize, p.scaleToUnit, p.normalizationOffset
+                        p.src, p.analysisSampleSize, p.scaleToUnit
                     ), p.level, p.wavelet, p.order
                 ), ap
             ), ap

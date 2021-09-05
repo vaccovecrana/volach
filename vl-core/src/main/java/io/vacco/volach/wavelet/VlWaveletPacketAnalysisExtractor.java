@@ -1,17 +1,12 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.dto.VlAnalysisChunk;
-import io.vacco.volach.wavelet.dto.VlAudioIOParameters;
-import io.vacco.volach.wavelet.dto.VlAnalysisSample;
+import io.vacco.volach.wavelet.dto.*;
 import io.vacco.volach.wavelet.type.VlWavelet;
 
-import java.util.Objects;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.stream.*;
 
 public class VlWaveletPacketAnalysisExtractor extends Spliterators.AbstractSpliterator<VlAnalysisChunk> {
 
@@ -62,7 +57,7 @@ public class VlWaveletPacketAnalysisExtractor extends Spliterators.AbstractSplit
   public static Stream<VlAnalysisChunk> from(VlAudioIOParameters p) {
     return StreamSupport.stream(
         new VlWaveletPacketAnalysisExtractor(
-            new VlSignalExtractor(p.src, p.analysisSampleSize, p.scaleToUnit, p.normalizationOffset),
+            new VlSignalExtractor(p.src, p.analysisSampleSize, p.scaleToUnit),
             p.level, p.wavelet, p.order
         ), false
     );

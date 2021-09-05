@@ -3,7 +3,7 @@ package io.vacco.volach.fprint.pk.dto;
 public class VlAnchorPoint {
 
   public int x, xh, y, yh;
-  public int xOff, yOff;
+  public int xOff, yOff, smpOff;
 
   public float magnitude;
   public float[][] region;
@@ -11,12 +11,13 @@ public class VlAnchorPoint {
   public VlPeakType type;
   public boolean valid;
 
-  public static VlAnchorPoint maxLocal(float[][] in) {
+  public static VlAnchorPoint maxLocal(float[][] in, int sampleOffset) {
     VlAnchorPoint p = new VlAnchorPoint();
     p.x = 0;
     p.y = 0;
     p.xh = in.length / 2;
     p.yh = in[0].length / 2;
+    p.smpOff = sampleOffset;
 
     for (int j = 0; j < in.length; j++) {
       for (int k = 0; k < in[0].length; k++) {

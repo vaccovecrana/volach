@@ -44,7 +44,7 @@ public class VlPeakRegionExtractor extends Spliterators.AbstractSpliterator<VlAn
     return StreamSupport.stream(
         new VlPeakRegionExtractor(
             new VlWaveletPacketAnalysisExtractor(
-                new VlSignalExtractor(iop.src, iop.analysisSampleSize, iop.scaleToUnit, iop.normalizationOffset),
+                new VlSignalExtractor(iop.src, iop.analysisSampleSize, iop.scaleToUnit),
                 iop.level, iop.wavelet, iop.order
             ), ap
         ), false

@@ -1,8 +1,7 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.VlUpdateListener;
-import io.vacco.volach.wavelet.dto.VlAudioIOParameters;
-import io.vacco.volach.wavelet.dto.VlAnalysisSample;
+import io.vacco.volach.wavelet.dto.*;
 import io.vacco.volach.wavelet.type.VlHaar1;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
@@ -18,7 +17,7 @@ import static io.vacco.volach.VlAnalysisUtil.*;
 public class VlWaveletPacketAnalysisSpec {
 
   public static final VlAudioIOParameters samplingParams = VlAudioIOParameters.from(
-      null, 65535, 10, true, 0, new VlHaar1(), VlWpNode.Order.Sequency
+      null, 65535, 10, true, new VlHaar1(), VlWpNode.Order.Sequency
   );
 
   static {

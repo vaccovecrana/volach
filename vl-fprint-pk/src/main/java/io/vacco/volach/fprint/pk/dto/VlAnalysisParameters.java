@@ -7,7 +7,6 @@ import io.vacco.volach.wavelet.type.VlBattle23;
 
 public class VlAnalysisParameters {
 
-  public float sampleNormalizationLimit;
   public double peakMagnitudeThreshold, peakDistanceMin, peakDistanceMax;
   public int frequencyCutoff;
 
@@ -17,15 +16,13 @@ public class VlAnalysisParameters {
 
   public JtNetwork network;
 
-  public static VlAnalysisParameters from(float sampleNormalizationLimit,
-                                          double peakMagnitudeThreshold,
+  public static VlAnalysisParameters from(double peakMagnitudeThreshold,
                                           double peakDistanceMin,
                                           double peakDistanceMax,
                                           int frequencyCutoff,
                                           int netRegionSize,
                                           int netYSlide) {
     VlAnalysisParameters p = new VlAnalysisParameters();
-    p.sampleNormalizationLimit = sampleNormalizationLimit;
     p.peakMagnitudeThreshold = peakMagnitudeThreshold;
     p.peakDistanceMin = peakDistanceMin;
     p.peakDistanceMax = peakDistanceMax;
@@ -37,14 +34,13 @@ public class VlAnalysisParameters {
   }
 
   private static final VlAnalysisParameters analysisParams = from(
-      0.95f,
       0, 40, 120,
       128,
       24, 4
   );
 
   public static final VlAudioIOParameters audioIoParams = VlAudioIOParameters.from(
-      null, 262_144, 9, true, 0,
+      null, 262_144, 9, true,
       new VlBattle23(), VlWpNode.Order.Sequency
   );
 

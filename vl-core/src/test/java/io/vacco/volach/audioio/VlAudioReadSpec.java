@@ -18,7 +18,7 @@ public class VlAudioReadSpec {
     it("Can read mp3 stereo audio data, down-mixing to mono", () -> {
       URL url = VlAudioReadSpec.class.getResource("/eas.mp3");
       File rawData = new File("./build/samples-raw.txt");
-      withWriter(rawData, out -> VlSignalExtractor.from(url, 4096, true, 0)
+      withWriter(rawData, out -> VlSignalExtractor.from(url, 4096, true)
           .forEach(chunk -> {
             System.out.println(chunk);
             for (int k = 0; k < chunk.data.capacity(); k++) {

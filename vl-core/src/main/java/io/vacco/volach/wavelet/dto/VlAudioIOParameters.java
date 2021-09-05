@@ -9,12 +9,10 @@ public class VlAudioIOParameters {
   public URL src;
   public boolean scaleToUnit;
   public int analysisSampleSize, level;
-  public float normalizationOffset;
   public VlWavelet wavelet;
   public VlWpNode.Order order;
 
-  public static VlAudioIOParameters from(URL src, int analysisSampleSize, int level,
-                                         boolean scaleToUnit, float normalizationOffset,
+  public static VlAudioIOParameters from(URL src, int analysisSampleSize, int level, boolean scaleToUnit,
                                          VlWavelet wavelet, VlWpNode.Order order) {
     VlAudioIOParameters p = new VlAudioIOParameters();
     p.src = src;
@@ -23,7 +21,6 @@ public class VlAudioIOParameters {
     p.wavelet = wavelet;
     p.order = order;
     p.scaleToUnit = scaleToUnit;
-    p.normalizationOffset = normalizationOffset;
     return p;
   }
 }
