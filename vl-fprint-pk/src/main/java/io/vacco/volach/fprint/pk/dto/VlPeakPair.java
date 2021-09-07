@@ -22,7 +22,8 @@ public class VlPeakPair implements Serializable {
     return p;
   }
 
-  public String id() { return String.format("%03d%03d%04d", f0, f1, hilbertDelta); }
+  public String freqId() { return String.format("%03d%03d%04d", f0, f1, hilbertDelta); }
+  public String timeId() { return String.format("%s-%08d", freqId(), hilbertOffset); }
 
   @Override
   public String toString() {

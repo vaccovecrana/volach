@@ -37,7 +37,7 @@ public class VlPairExtractionSpec {
             audioIoParams.src = VlPairExtractionSpec.class.getResource(src[0]);
             List<VlPeakPair> pairs = VlPeakPairExtractor.fromFlat(audioIoParams, analysisParams).collect(Collectors.toList());
             for (VlPeakPair p : pairs) { p.trackId = i; }
-            database.putAll(pairs.stream().collect(Collectors.groupingBy(VlPeakPair::id)));
+            database.putAll(pairs.stream().collect(Collectors.groupingBy(VlPeakPair::freqId)));
             System.out.printf("index contains [%03d] reference hashes%n", database.size());
             json.toJson(database, dbJson);
           }
@@ -56,7 +56,9 @@ public class VlPairExtractionSpec {
         System.out.printf("Extracted [%03d] recording hashes%n", smpPairs.size());
 
         Map<Integer, Map<String, VlPeakPair>> diffIdx = VlPeakPairExtractor.align(smpPairs, database);
-        System.out.println(VlPeakPairExtractor.countMatches(diffIdx));
+        Map<Integer, Integer> matchIdx = VlPeakPairExtractor.countMatches(diffIdx);
+
+        System.out.println(matchIdx);
       });
     });
   }

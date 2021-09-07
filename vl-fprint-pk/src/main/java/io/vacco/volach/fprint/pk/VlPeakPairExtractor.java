@@ -69,12 +69,12 @@ public class VlPeakPairExtractor extends Spliterators.AbstractSpliterator<List<V
   public static Map<Integer, Map<String, VlPeakPair>> align(List<VlPeakPair> smpPairs, Map<String, List<VlPeakPair>> database) {
     Map<Integer, Map<String, VlPeakPair>> diffIdx = new TreeMap<>();
     for (VlPeakPair p : smpPairs) {
-      List<VlPeakPair> dbMatches = database.get(p.id());
+      List<VlPeakPair> dbMatches = database.get(p.freqId());
       if (dbMatches != null) {
         for (VlPeakPair dp : dbMatches) {
           int dT = dp.hilbertOffset - p.hilbertOffset;
           Map<String, VlPeakPair> diffPairs = diffIdx.computeIfAbsent(dT, diff -> new TreeMap<>());
-          diffPairs.put(dp.id(), dp);
+          diffPairs.put(dp.timeId(), dp);
         }
       }
     }
@@ -87,10 +87,14 @@ public class VlPeakPairExtractor extends Spliterators.AbstractSpliterator<List<V
 
   public static Map<Integer, Integer> countMatches(Map<Integer, Map<String, VlPeakPair>> diffIdx) {
     Map<Integer, Integer> matchIdx = new TreeMap<>();
+    Set<String> pkIds = new TreeSet<>();
     diffIdx.forEach((k, v) -> {
       for (VlPeakPair p : v.values()) {
-        int matches = matchIdx.computeIfAbsent(p.trackId, tid -> 0);
-        matchIdx.put(p.trackId, matches + 1);
+        if (!pkIds.contains(p.timeId())) {
+          int matches = matchIdx.computeIfAbsent(p.trackId, tid -> 0);
+          matchIdx.put(p.trackId, matches + 1);
+          pkIds.add(p.timeId());
+        }
       }
     });
     return matchIdx;
