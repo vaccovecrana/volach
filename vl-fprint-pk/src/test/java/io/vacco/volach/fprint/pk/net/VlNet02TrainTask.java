@@ -3,6 +3,7 @@ package io.vacco.volach.fprint.pk.net;
 import io.vacco.jtinn.activation.*;
 import io.vacco.jtinn.error.*;
 import io.vacco.jtinn.net.*;
+import io.vacco.jtinn.util.JtIo;
 import io.vacco.volach.fprint.pk.dto.VlAnalysisParameters;
 import io.vacco.volach.fprint.pk.dto.VlPeakType;
 
@@ -30,10 +31,10 @@ public class VlNet02TrainTask {
       return error != -1 && error < 0.0002;
     }, new VlAnchorTrainingSupplier(json, new File("./vl-fprint-pk/peak-training/peaks.json")));
 
-    File out = new File("./vl-fprint-pk/src/main/resources/io/vacco/volach/fprint/pk/net.json");
+    File out = new File("./vl-fprint-pk/src/main/resources/io/vacco/volach/fprint/pk/net.ser");
 
     trainer.start();
-    json.toJson(net, out);
+    JtIo.writeNet(net, new FileOutputStream(out));
     System.out.println("done");
   }
 

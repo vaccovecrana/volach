@@ -1,7 +1,7 @@
 package io.vacco.volach.fprint.pk;
 
-import com.esotericsoftware.jsonbeans.Json;
 import io.vacco.jtinn.net.JtNetwork;
+import io.vacco.jtinn.util.JtIo;
 import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.fprint.pk.dto.*;
 import io.vacco.volach.wavelet.VlWaveletPacketAnalysisExtractor;
@@ -101,10 +101,7 @@ public class VlPeakPairExtractor extends Spliterators.AbstractSpliterator<List<V
   }
 
   public static JtNetwork loadDefaultNet() {
-    return new Json().fromJson(
-        JtNetwork.class,
-        VlPeakPairExtractor.class.getResourceAsStream("/io/vacco/volach/fprint/pk/net.json")
-    );
+    return JtIo.readNet(VlPeakPairExtractor.class.getResourceAsStream("/io/vacco/volach/fprint/pk/net.ser"));
   }
 
 }

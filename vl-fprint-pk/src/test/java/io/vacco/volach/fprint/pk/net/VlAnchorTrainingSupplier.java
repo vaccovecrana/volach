@@ -15,7 +15,7 @@ public class VlAnchorTrainingSupplier implements JtPredictionSampleSupplier {
   private final List<VlAnchorPoint> points;
   private final JtPredictionSample[] samples;
 
-  public VlAnchorTrainingSupplier(Json j, File peaksJson) throws IOException {
+  public VlAnchorTrainingSupplier(Json j, File peaksJson) {
     VlTrainingDataSet dataSet = j.fromJson(VlTrainingDataSet.class, peaksJson);
     this.points = dataSet.sources.stream().flatMap(src -> src.anchors.stream()).collect(Collectors.toList());
     this.samples = new JtPredictionSample[points.size()];
