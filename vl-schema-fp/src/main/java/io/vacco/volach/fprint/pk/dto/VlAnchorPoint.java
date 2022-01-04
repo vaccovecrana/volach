@@ -3,7 +3,7 @@ package io.vacco.volach.fprint.pk.dto;
 public class VlAnchorPoint {
 
   public int x, xh, y, yh;
-  public int xOff, yOff, smpOff;
+  public int xOff, yOff, sampleOffset;
 
   public float magnitude;
   public float[][] region;
@@ -17,7 +17,7 @@ public class VlAnchorPoint {
     p.y = 0;
     p.xh = in.length / 2;
     p.yh = in[0].length / 2;
-    p.smpOff = sampleOffset;
+    p.sampleOffset = sampleOffset;
 
     for (int j = 0; j < in.length; j++) {
       for (int k = 0; k < in[0].length; k++) {

@@ -23,7 +23,7 @@ public class VlRegionExtractionSpec {
         System.out.println("Writing spectrum data...");
 
         withWriter(outSpectrum, out -> VlPeakRegionExtractor.from(audioIoParams, analysisParams).forEach(region -> {
-          System.out.printf("Region [%s]%n", region.chunk.signal.offset);
+          System.out.printf("Region [%s]%n", region.chunk.signal.sampleOffset);
           for (float[] frq : region.spectrum) {
             listener.onData(frq, out, true);
           }

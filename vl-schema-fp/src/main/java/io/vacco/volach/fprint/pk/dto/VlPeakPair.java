@@ -18,7 +18,7 @@ public class VlPeakPair implements Serializable {
     p.f1 = (byte) p1.yA();
     p.hilbertDelta = (short) (p1.xA() - p0.xA());
     p.hilbertOffset = p0.xA();
-    p.sampleOffset = p0.smpOff;
+    p.sampleOffset = p0.sampleOffset;
     return p;
   }
 
