@@ -1,8 +1,9 @@
 package io.vacco.volach.audioio;
 
+import io.vacco.volach.schema.audio.VlSignalChunk;
+
 import java.io.IOException;
 import java.net.URL;
-import java.nio.FloatBuffer;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.*;
@@ -16,12 +17,12 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
   private final byte[] sampleBuffer = new byte[2];
 
   private final float[] zeroBuffer;
-  private final FloatBuffer signalBuffer;
+  private final float[] signalBuffer;
   private final VlMonoAudioInputStream input;
 
   public boolean eof = false, scaleToUnit;
   public final int bufferSize;
-  public int totalChunks;
+  public long totalChunks;
   public long totalSamples;
 
   public VlSignalExtractor(URL src, int analysisSampleSize, boolean scaleToUnit) {
@@ -29,39 +30,32 @@ public class VlSignalExtractor extends Spliterators.AbstractSpliterator<VlSignal
     this.input = loadPcm16Le(src);
     this.bufferSize = nextPow2(analysisSampleSize);
     this.zeroBuffer = new float[bufferSize];
-    this.signalBuffer = floatBuffer(bufferSize);
+    this.signalBuffer = new float[bufferSize];
     this.scaleToUnit = scaleToUnit;
+    Arrays.fill(zeroBuffer, 0);
   }
 
-  @Override
-  public boolean tryAdvance(Consumer<? super VlSignalChunk> onChunk) {
+  @Override public boolean tryAdvance(Consumer<? super VlSignalChunk> onChunk) {
     try {
       int samplesRead;
       float sample;
-      signalBuffer.rewind();
-      signalBuffer.put(zeroBuffer);
+      System.arraycopy(zeroBuffer, 0, signalBuffer, 0, signalBuffer.length);
       for (int k = 0; k < bufferSize; k++) {
         samplesRead = input.read(sampleBuffer, 0, sampleBuffer.length);
         eof = samplesRead == -1;
         if (eof) { break; }
         sample = (float) readSignedLe(sampleBuffer);
         sample = scaleToUnit ? (((sample * 2) + 1) / (float) 65535) : sample;
-        signalBuffer.put(k, sample);
+        signalBuffer[k] = sample;
         totalSamples++;
       }
       if (eof) { input.close(); }
-      totalChunks++;
       onChunk.accept(new VlSignalChunk(signalBuffer, totalChunks * bufferSize));
+      totalChunks++;
       return !eof;
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
-  }
-
-  public static FloatBuffer padPow2(FloatBuffer in) {
-    FloatBuffer out = floatBuffer(nextPow2(in.capacity()));
-    copy(in, 0, out, 0, in.capacity());
-    return out;
   }
 
   public static Stream<VlSignalChunk> from(URL src, int analysisSampleSize, boolean scaleToUnit) {

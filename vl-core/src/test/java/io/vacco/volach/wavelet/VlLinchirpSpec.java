@@ -1,13 +1,12 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.VlUpdateListener;
-import io.vacco.volach.audioio.VlSignalExtractor;
+import io.vacco.volach.schema.wavelet.VlWpNode;
 import io.vacco.volach.wavelet.type.VlHaar1;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.nio.FloatBuffer;
 import java.util.Arrays;
 
 import static io.vacco.volach.util.VlArrays.*;
@@ -27,13 +26,11 @@ public class VlLinchirpSpec {
           float[] rawSamples = loadJson("/samples-linchirp.json", float[].class);
           float[][] refCoefficientsLevel4Natural = loadJson("/coefficients-linchirp-l4-natural.json", float[][].class);
           float[][] refCoefficientsLevel4Frequency = loadJson("/coefficients-linchirp-l4-frequency.json", float[][].class);
-
-          FloatBuffer samples = floatBuffer(rawSamples.length).put(rawSamples);
-          FloatBuffer samplesP2 = VlSignalExtractor.padPow2(samples);
+          float[] samplesP2 = padPow2(rawSamples);
 
           VlWpNode root = VlWaveletPacketTransform.naturalTree(samplesP2, new VlHaar1(), level);
           VlWpNode[] nodes = VlWaveletPacketTransform.collect(root, level);
-          FloatBuffer[] coeffNatural = VlWaveletPacketTransform.extractCoefficients(nodes);
+          float[][] coeffNatural = VlWaveletPacketTransform.extractCoefficients(nodes);
 
           System.out.println("================= Audio signal - Frq data (L4 - Natural) =================");
           print2d(coeffNatural);
@@ -41,17 +38,17 @@ public class VlLinchirpSpec {
           System.out.println("================= Audio signal - Ref data (L4 - Natural) =================");
           print2d(refCoefficientsLevel4Natural);
 
-          assertTrue(coeffNatural[0].get(0) > 0.8984);
-          assertTrue(coeffNatural[coeffNatural.length - 1].get(0) < -0.0015);
+          assertTrue(coeffNatural[0][0] > 0.8984);
+          assertTrue(coeffNatural[coeffNatural.length - 1][0] < -0.0015);
 
           root.asSequencyMutation();
 
           System.out.println("================= Audio signal - Frq data (L4 - Frequency) =================");
-          FloatBuffer[] coeffFreq = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
+          float[][] coeffFreq = VlWaveletPacketTransform.extractCoefficients(VlWaveletPacketTransform.collect(root, level));
           print2d(coeffFreq);
 
-          assertTrue(coeffFreq[0].get(0) > 0.8984);
-          assertTrue(coeffFreq[coeffFreq.length - 1].get(0) < -0.0826);
+          assertTrue(coeffFreq[0][0] > 0.8984);
+          assertTrue(coeffFreq[coeffFreq.length - 1][0] < -0.0826);
 
           System.out.println("================= Audio signal - Ref data (L4 - Frequency) =================");
           print2d(refCoefficientsLevel4Frequency);

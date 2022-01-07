@@ -1,8 +1,8 @@
 package io.vacco.volach.fprint.pk.dto;
 
 import io.vacco.jtinn.net.JtNetwork;
-import io.vacco.volach.wavelet.VlWpNode;
-import io.vacco.volach.wavelet.dto.VlAudioIOParameters;
+import io.vacco.volach.schema.wavelet.VlWpNode;
+import io.vacco.volach.wavelet.VlAudioIOParameters;
 import io.vacco.volach.wavelet.type.VlBattle23;
 
 public class VlAnalysisParameters {

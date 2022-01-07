@@ -1,6 +1,6 @@
 package io.vacco.volach.fprint.pk;
 
-import io.vacco.volach.fprint.pk.dto.VlAnchorPoint;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;

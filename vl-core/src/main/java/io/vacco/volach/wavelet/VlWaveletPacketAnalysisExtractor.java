@@ -1,7 +1,9 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
-import io.vacco.volach.wavelet.dto.*;
+import io.vacco.volach.schema.wavelet.VlAnalysisChunk;
+import io.vacco.volach.schema.wavelet.VlAnalysisSample;
+import io.vacco.volach.schema.wavelet.VlWpNode;
 import io.vacco.volach.wavelet.type.VlWavelet;
 
 import java.util.*;
@@ -38,18 +40,6 @@ public class VlWaveletPacketAnalysisExtractor extends Spliterators.AbstractSplit
       VlAnalysisSample[] analysisSamples = VlAnalysisSample.from(totalAnalysisSamples, nodes);
 
       totalAnalysisSamples = totalAnalysisSamples + analysisSamples.length;
-
-      if (extractor.eof) {
-        long tn = extractor.totalSamples;
-        int tnp = extractor.totalChunks * extractor.bufferSize;
-        int wn = totalAnalysisSamples;
-        int cutIdx = (int) ((tn * wn) / tnp);
-        int diff = wn - cutIdx;
-        VlAnalysisSample[] truncatedSamples = new VlAnalysisSample[analysisSamples.length - diff];
-        System.arraycopy(analysisSamples, 0, truncatedSamples, 0, truncatedSamples.length);
-        analysisSamples = truncatedSamples;
-      }
-
       onAnalysisSamples.accept(new VlAnalysisChunk(chunk, analysisSamples));
     });
   }

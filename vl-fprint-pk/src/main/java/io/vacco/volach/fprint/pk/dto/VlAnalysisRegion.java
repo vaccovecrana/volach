@@ -1,6 +1,7 @@
 package io.vacco.volach.fprint.pk.dto;
 
-import io.vacco.volach.wavelet.dto.VlAnalysisChunk;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
+import io.vacco.volach.schema.wavelet.VlAnalysisChunk;
 import java.util.ArrayList;
 import java.util.List;
 

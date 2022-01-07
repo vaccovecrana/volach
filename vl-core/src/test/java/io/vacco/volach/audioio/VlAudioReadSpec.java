@@ -21,8 +21,8 @@ public class VlAudioReadSpec {
       withWriter(rawData, out -> VlSignalExtractor.from(url, 4096, true)
           .forEach(chunk -> {
             System.out.println(chunk);
-            for (int k = 0; k < chunk.data.capacity(); k++) {
-              out.println(chunk.data.get(k));
+            for (int k = 0; k < chunk.data.length; k++) {
+              out.println(chunk.data[k]);
             }
           })
       );

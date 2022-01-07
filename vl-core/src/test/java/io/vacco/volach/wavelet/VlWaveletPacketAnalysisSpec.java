@@ -1,7 +1,8 @@
 package io.vacco.volach.wavelet;
 
 import io.vacco.volach.VlUpdateListener;
-import io.vacco.volach.wavelet.dto.*;
+import io.vacco.volach.schema.wavelet.VlAnalysisSample;
+import io.vacco.volach.schema.wavelet.VlWpNode;
 import io.vacco.volach.wavelet.type.VlHaar1;
 import j8spec.annotation.DefinedOrder;
 import j8spec.junit.J8SpecRunner;

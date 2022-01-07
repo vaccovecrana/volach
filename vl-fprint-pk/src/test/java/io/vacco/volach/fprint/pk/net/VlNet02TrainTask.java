@@ -5,7 +5,7 @@ import io.vacco.jtinn.error.*;
 import io.vacco.jtinn.net.*;
 import io.vacco.jtinn.util.JtIo;
 import io.vacco.volach.fprint.pk.dto.VlAnalysisParameters;
-import io.vacco.volach.fprint.pk.dto.VlPeakType;
+import io.vacco.volach.schema.fprint.VlPeakType;
 
 import java.io.*;
 

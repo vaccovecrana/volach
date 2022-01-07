@@ -1,6 +1,6 @@
-package io.vacco.volach.wavelet.dto;
+package io.vacco.volach.wavelet;
 
-import io.vacco.volach.wavelet.VlWpNode;
+import io.vacco.volach.schema.wavelet.VlWpNode;
 import io.vacco.volach.wavelet.type.VlWavelet;
 import java.net.URL;
 

@@ -2,7 +2,7 @@ package io.vacco.volach.fprint.pk.net;
 
 import io.vacco.volach.VlUpdateListener;
 import io.vacco.volach.fprint.pk.VlPeakRegionExtractor;
-import io.vacco.volach.fprint.pk.dto.VlTrainingDataSet;
+import io.vacco.volach.schema.fprint.VlTrainingDataSet;
 
 import java.io.*;
 import java.net.URL;
@@ -42,7 +42,7 @@ public class VlNet00DataGenerationTask { // Generates JSON training data from in
           });
           listener.done();
 
-          ts.filePath = srcUrl.toString();
+          ts.filePath = Objects.requireNonNull(srcUrl).toString();
           ts.min = listener.range[0];
           ts.max = listener.range[1];
           ts.spectrum = freqSamples.toArray(float[][]::new);

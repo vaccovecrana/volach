@@ -2,8 +2,8 @@ package io.vacco.volach.fprint.pk;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.fprint.pk.dto.*;
+import io.vacco.volach.wavelet.VlAudioIOParameters;
 import io.vacco.volach.wavelet.VlWaveletPacketAnalysisExtractor;
-import io.vacco.volach.wavelet.dto.*;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -32,7 +32,7 @@ public class VlPeakRegionExtractor extends Spliterators.AbstractSpliterator<VlAn
       }
       for (int k = 0; k < chunk.samples.length; k++) {
         for (int j = 0; j < freqBands; j++) {
-          freqBuffer[k][j] = Math.abs(chunk.samples[k].freqPower.get(j));
+          freqBuffer[k][j] = Math.abs(chunk.samples[k].freqPower[j]);
         }
       }
       regionBuffer.chunk = chunk;

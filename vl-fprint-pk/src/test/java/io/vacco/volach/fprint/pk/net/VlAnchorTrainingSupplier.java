@@ -2,7 +2,9 @@ package io.vacco.volach.fprint.pk.net;
 
 import com.esotericsoftware.jsonbeans.Json;
 import io.vacco.jtinn.net.*;
-import io.vacco.volach.fprint.pk.dto.*;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
+import io.vacco.volach.schema.fprint.VlPeakType;
+import io.vacco.volach.schema.fprint.VlTrainingDataSet;
 
 import java.io.*;
 import java.util.*;

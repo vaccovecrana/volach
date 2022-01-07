@@ -1,25 +1,20 @@
-package io.vacco.volach.wavelet.dto;
-
-import io.vacco.volach.wavelet.VlWpNode;
-
-import java.nio.FloatBuffer;
-import static io.vacco.volach.util.VlArrays.*;
+package io.vacco.volach.schema.wavelet;
 
 public class VlAnalysisSample {
 
   public int hilbertOffset;
-  public FloatBuffer freqPower;
+  public float[] freqPower;
 
   public static VlAnalysisSample[] from(int hilbertOffset, VlWpNode[] packets) {
-    int samples = packets[0].coefficients.capacity();
+    int samples = packets[0].coefficients.length;
     int frequencies = packets.length;
 
     VlAnalysisSample[] out = new VlAnalysisSample[samples];
 
     for (int k = 0; k < samples; k++) {
-      FloatBuffer freqPower = floatBuffer(frequencies);
+      float[] freqPower = new float[frequencies];
       for (int n = 0; n < frequencies; n++) {
-        freqPower.put(n, packets[n].coefficients.get(k));
+        freqPower[n] = packets[n].coefficients[k];
       }
       VlAnalysisSample sample = new VlAnalysisSample();
       sample.freqPower= freqPower;
@@ -32,9 +27,9 @@ public class VlAnalysisSample {
   @Override
   public String toString() {
     return String.format(
-        "smp[@h: %d, f: %d]",
+        "smp[@hilbertOffset: %d, freqPow: %d]",
         hilbertOffset,
-        freqPower != null ? freqPower.capacity() : -1
+        freqPower != null ? freqPower.length : -1
     );
   }
 }

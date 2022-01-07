@@ -2,6 +2,8 @@ package io.vacco.volach.fprint.pk;
 
 import io.vacco.volach.VlUpdateListener;
 import io.vacco.volach.fprint.pk.dto.*;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
+import io.vacco.volach.schema.fprint.VlTrainingDataSet;
 import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 

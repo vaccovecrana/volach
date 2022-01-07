@@ -1,7 +1,6 @@
-package io.vacco.volach.wavelet.dto;
+package io.vacco.volach.schema.wavelet;
 
-import io.vacco.volach.audioio.VlSignalChunk;
-
+import io.vacco.volach.schema.audio.VlSignalChunk;
 import java.util.Objects;
 
 public class VlAnalysisChunk {

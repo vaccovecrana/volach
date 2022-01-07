@@ -1,7 +1,7 @@
 package io.vacco.volach.fprint.pk.net;
 
-import io.vacco.volach.fprint.pk.dto.VlAnchorPoint;
-import io.vacco.volach.fprint.pk.dto.VlTrainingDataSet;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
+import io.vacco.volach.schema.fprint.VlTrainingDataSet;
 
 import java.io.File;
 
@@ -11,7 +11,7 @@ import static io.vacco.volach.fprint.pk.dto.VlAnalysisParameters.*;
 
 public class VlNet01AnchorExtractionTask { // Extracts reference anchor points from JSON sample analysis data
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     File anchorsFile = new File("./vl-fprint-pk/peak-training/anchors.json");
     VlTrainingDataSet ds = json.fromJson(VlTrainingDataSet.class, anchorsFile);
     int rs = forReference().netRegionSize;

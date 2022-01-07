@@ -1,4 +1,4 @@
-package io.vacco.volach.fprint.pk.dto;
+package io.vacco.volach.schema.fprint;
 
 import java.util.ArrayList;
 import java.util.List;

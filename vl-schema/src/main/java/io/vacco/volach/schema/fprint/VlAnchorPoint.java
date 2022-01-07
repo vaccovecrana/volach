@@ -1,9 +1,10 @@
-package io.vacco.volach.fprint.pk.dto;
+package io.vacco.volach.schema.fprint;
 
 public class VlAnchorPoint {
 
   public int x, xh, y, yh;
-  public int xOff, yOff, sampleOffset;
+  public int xOff, yOff;
+  public long sampleOffset;
 
   public float magnitude;
   public float[][] region;
@@ -11,7 +12,7 @@ public class VlAnchorPoint {
   public VlPeakType type;
   public boolean valid;
 
-  public static VlAnchorPoint maxLocal(float[][] in, int sampleOffset) {
+  public static VlAnchorPoint maxLocal(float[][] in, long sampleOffset) {
     VlAnchorPoint p = new VlAnchorPoint();
     p.x = 0;
     p.y = 0;
@@ -47,8 +48,8 @@ public class VlAnchorPoint {
   @Override
   public String toString() {
     return String.format(
-        "{v: %.9f, xh(%04d) + x(%04d) = %04d, yh(%04d) + y(%04d) = %04d, xa: %04d, ya: %04d, sk: %s}",
-        magnitude, xh, x, xD(), yh, y, yD(), xA(), yA(), sortKey()
+        "{smp: %d, v: %.9f, xh(%04d) + x(%04d) = %04d, yh(%04d) + y(%04d) = %04d, xa: %04d, ya: %04d, sk: %s}",
+        sampleOffset, magnitude, xh, x, xD(), yh, y, yD(), xA(), yA(), sortKey()
     );
   }
 

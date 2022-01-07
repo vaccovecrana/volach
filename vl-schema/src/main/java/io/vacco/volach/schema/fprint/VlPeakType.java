@@ -1,4 +1,4 @@
-package io.vacco.volach.fprint.pk.dto;
+package io.vacco.volach.schema.fprint;
 
 public enum VlPeakType {
 

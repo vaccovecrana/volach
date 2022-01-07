@@ -2,16 +2,13 @@ package io.vacco.volach.wavelet;
 
 import io.vacco.volach.util.VlException;
 import io.vacco.volach.wavelet.type.VlWavelet;
-
-import java.nio.FloatBuffer;
-import static io.vacco.volach.util.VlArrays.*;
 import static io.vacco.volach.util.VlMath.*;
 
 public class VlWaveletTransform {
 
   /** Performs a 1-D forward transform from time domain to Hilbert domain. */
-  public static FloatBuffer forward(FloatBuffer arrTime, int level, VlWavelet wavelet) {
-    int length = arrTime.capacity();
+  public static float[] forward(float[] arrTime, int level, VlWavelet wavelet) {
+    int length = arrTime.length;
     if (!isBinary(length)) {
       throw new VlException.VlNonPowerOfTwoException(length);
     }
@@ -20,8 +17,9 @@ public class VlWaveletTransform {
       throw new VlException.VlLevelOutOfRangeException(level, length, exponent);
     }
 
-    FloatBuffer arrHilb = floatBuffer(length);
-    copy(arrTime, 0, arrHilb, 0, length);
+    float[] arrHilb = new float[length];
+
+    System.arraycopy(arrTime, 0, arrHilb, 0, length);
 
     int k = length;
     int h = length;
@@ -30,10 +28,10 @@ public class VlWaveletTransform {
     while (h >= wavelet.transformWavelength && l < level) {
       int g = k / h;
       for (int p = 0; p < g; p++) {
-        FloatBuffer iBuf = floatBuffer(h);
-        copy(arrHilb, p * h, iBuf, 0, h);
-        FloatBuffer oBuf = wavelet.forward(iBuf, h);
-        copy(oBuf, 0, arrHilb, p * h, h);
+        float[] iBuf = new float[h];
+        System.arraycopy(arrHilb, p * h, iBuf, 0, h);
+        float[] oBuf = wavelet.forward(iBuf, h);
+        System.arraycopy(oBuf, 0, arrHilb, p * h, h);
       }
       h = h >> 1;
       l++;

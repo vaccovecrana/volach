@@ -2,8 +2,10 @@ package io.vacco.volach.fprint.pk;
 
 import io.vacco.volach.audioio.VlSignalExtractor;
 import io.vacco.volach.fprint.pk.dto.*;
+import io.vacco.volach.schema.fprint.VlAnchorPoint;
+import io.vacco.volach.schema.fprint.VlPeakType;
 import io.vacco.volach.wavelet.VlWaveletPacketAnalysisExtractor;
-import io.vacco.volach.wavelet.dto.VlAudioIOParameters;
+import io.vacco.volach.wavelet.VlAudioIOParameters;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -41,9 +43,20 @@ public class VlPeakAnchorExtractor extends Spliterators.AbstractSpliterator<VlAn
           regionSquare(region.spectrum, j, k, spectrumBuffer);
           flatten(spectrumBuffer, feature);
 
-          VlAnchorPoint lp = VlAnchorPoint.maxLocal(spectrumBuffer, region.chunk.signal.sampleOffset);
+          int rOff = regionOffset + j;
+          long smpApprox;
+          double smpOff;
+
+          if (region.chunk.signal.sampleOffset == 0) {
+            smpOff = (region.chunk.signal.data.length * rOff) / (double) regionLength;
+          } else {
+            smpOff = (region.chunk.signal.sampleOffset * rOff) / (double) regionOffset;
+          }
+          smpApprox = Math.round(smpOff);
+
+          VlAnchorPoint lp = VlAnchorPoint.maxLocal(spectrumBuffer, smpApprox);
           lp.type = VlPeakType.fromRaw(params.network.estimate(feature));
-          lp.xOff = regionOffset + j;
+          lp.xOff = rOff;
           lp.yOff = k;
 
           if (lp.type != null && lp.magnitude > params.peakMagnitudeThreshold) {
