@@ -1,15 +1,9 @@
-.DS_Store
-data.tar.gz
-
 .idea/
 .gradle/
-gradle/
-gradlew*
 build/
 
-node_modules/
-main.js
-main.js.map
+gradle/
+gradlew*
 
-query-set-*/
-training-set-*/
+*.aiff
+*.wav
