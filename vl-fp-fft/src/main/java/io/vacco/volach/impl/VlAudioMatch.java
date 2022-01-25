@@ -2,6 +2,8 @@ package io.vacco.volach.impl;
 
 import io.vacco.volach.extraction.*;
 import io.vacco.volach.schema.*;
+
+import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,8 +18,8 @@ public class VlAudioMatch {
     }
   }
 
-  public static List<VlFftPeakPair> fingerPrint(URL audioSrc, VlStFtParams exp) {
-    VlStFtExt ext = new VlStFtExt(new VlFft(exp.fftBufferSize, exp.fftDirect), exp.fftHopSize);
+  public static List<VlFftPeakPair> fingerPrint(URL audioSrc, VlStFtParams exp, Map<Integer, Serializable> fftCache) {
+    VlStFtExt ext = new VlStFtExt(new VlFft(exp.fftBufferSize, exp.fftDirect), exp.fftHopSize, fftCache);
     VlRegionExt rxt = new VlRegionExt(audioSrc, ext, exp);
     return rxt.peakPairs(exp.peakDistanceMin, exp.peakDistanceMax);
   }

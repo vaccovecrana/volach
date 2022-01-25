@@ -21,7 +21,9 @@ public class VlNetTrainer {
   public static final VlStFtParams rp = VlStFtParams.getDefault();
 
   public static void dumpSpectrum(URL audioSrc, File spectrumOut) throws IOException {
-    VlStFtExt ext = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize);
+    File fftCache = new File("./build/net-trainer-fft-cache");
+    VlFftDiskMap fm = new VlFftDiskMap(fftCache);
+    VlStFtExt ext = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize, fm);
 
     ext.reset(new VlSampleExt(audioSrc, rp.audioScaleToUnit));
     System.out.printf("Extracted [%d] fft samples%n", ext.asStream().count());
@@ -31,6 +33,7 @@ public class VlNetTrainer {
     FileWriter fw = new FileWriter(spectrumOut);
     g.toJson(spec, fw);
     fw.close();
+    fm.close();
   }
 
   public static void loadPatches(float[][] spectrum, List<VlTonePatch> patches) {

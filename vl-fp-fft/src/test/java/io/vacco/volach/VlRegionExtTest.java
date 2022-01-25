@@ -8,18 +8,18 @@ import j8spec.junit.J8SpecRunner;
 import org.junit.runner.RunWith;
 import java.util.*;
 
+import static io.vacco.volach.VlTestVals.*;
 import static j8spec.J8Spec.*;
 
 @DefinedOrder
 @RunWith(J8SpecRunner.class)
 public class VlRegionExtTest {
-
   static {
     it("Extracts STFT regions from audio content",  () -> {
-      String audio = VlTestVals.sourceAudio;
       VlStFtParams rp = VlStFtParams.getDefault();
-      VlStFtExt ext = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize);
-      VlRegionExt rxt = new VlRegionExt(VlRegionExtTest.class.getResource(audio), ext, rp);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlStFtExt ext = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize, fm);
+      VlRegionExt rxt = new VlRegionExt(VlRegionExtTest.class.getResource(sourceAudio), ext, rp);
 
       Map<String, VlFftRegion> regs = rxt.peakIndex();
       System.out.printf("Got [%d] peak anchor regions.%n", regs.size());
@@ -29,6 +29,7 @@ public class VlRegionExtTest {
       for (VlFftPeakPair pkp : peakPairs) {
         System.out.println(pkp);
       }
+      fm.close();
     });
   }
 

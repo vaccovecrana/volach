@@ -1,5 +1,7 @@
 package io.vacco.volach;
 
+import java.io.File;
+
 public class VlTestVals {
 
   public static final String sourceAudio = "/audio/title03-track02.ogg";
@@ -20,5 +22,7 @@ public class VlTestVals {
   public static final long[] trackIds = {0, 1, 100, 200, 201, 300, 301, 302, 400, 401};
 
   public static final String queryAudio = "/audio/title03-track02-query00.ogg";
+
+  public static final File fftCacheDir = new File("./build/fft-cache");
 
 }

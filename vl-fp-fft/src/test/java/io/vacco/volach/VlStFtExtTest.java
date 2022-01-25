@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.*;
 import org.junit.runner.RunWith;
 
+import static io.vacco.volach.VlTestVals.*;
 import static j8spec.J8Spec.it;
 
 @DefinedOrder
@@ -50,33 +51,36 @@ public class VlStFtExtTest {
     it("Can perform STFT on pre-computed samples", () -> {
       VlUpdateListener l = new VlUpdateListener();
       double[] input = g.fromJson(l.loadRes("/samples-eas.json"), double[].class);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlStFtExt s = new VlStFtExt(new VlFft(256, true), 128, fm)
+          .reset(Arrays.stream(input).mapToObj(v -> (float) v).spliterator());
       l.withWriter(new File("./build/stft-samples.csv"), p -> {
-        VlStFtExt s = new VlStFtExt(new VlFft(256, true), 128)
-            .reset(Arrays.stream(input).mapToObj(v -> (float) v).spliterator());
         s.asStream().forEach(smp -> {
           System.out.println(smp.sampleOffset);
           l.onData(smp.realQtr, p, true);
         });
         l.done();
       });
+      fm.close();
     });
 
     it("Can perform STFT on an audio signal", () -> {
       VlUpdateListener l = new VlUpdateListener();
       VlStFtParams rp = VlStFtParams.getDefault();
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
 
       l.withWriter(new File("./build/stft-audio.csv"), p -> {
-        int fftSize = rp.fftBufferSize, hopSize = rp.fftHopSize;
-        String audioSrc = VlTestVals.sourceAudio;
-        VlStFtExt s = new VlStFtExt(new VlFft(fftSize, rp.fftDirect), hopSize)
-            .reset(new VlSampleExt(VlStFtExtTest.class.getResource(audioSrc), rp.audioScaleToUnit));
+        VlStFtExt s = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize, fm)
+            .reset(new VlSampleExt(VlStFtExtTest.class.getResource(sourceAudio), rp.audioScaleToUnit));
 
         System.out.printf("Extracted [%d] FFT samples%n", s.asStream().count());
-        s = s.reset(new VlSampleExt(VlStFtExtTest.class.getResource(audioSrc), rp.audioScaleToUnit));
+
+        s = s.reset(new VlSampleExt(VlStFtExtTest.class.getResource(sourceAudio), rp.audioScaleToUnit));
         s.asStream().forEach(smp -> l.onData(smp.realQtr, p, false));
         System.out.println("2nd pass done");
         l.done();
       });
+      fm.close();
     });
   }
 }
