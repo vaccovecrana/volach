@@ -6,3 +6,9 @@ dependencies {
   testImplementation("io.vacco.joggvorbis:joggvorbis:1.3.6")
   testImplementation("com.google.code.gson:gson:2.8.9")
 }
+
+tasks.withType<Javadoc> {
+  options {
+    exclude("io/vacco/lash/util/**")
+  }
+}
