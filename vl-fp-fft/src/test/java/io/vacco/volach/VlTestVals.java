@@ -23,6 +23,6 @@ public class VlTestVals {
 
   public static final String queryAudio = "/audio/title03-track02-query00.ogg";
 
-  public static final File fftCacheDir = new File("./build/fft-cache");
+  public static final File fftCacheFile = new File("./build/fft-cache.txt");
 
 }

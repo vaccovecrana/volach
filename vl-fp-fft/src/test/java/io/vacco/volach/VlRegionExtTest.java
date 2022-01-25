@@ -17,7 +17,7 @@ public class VlRegionExtTest {
   static {
     it("Extracts STFT regions from audio content",  () -> {
       VlStFtParams rp = VlStFtParams.getDefault();
-      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheFile);
       VlStFtExt ext = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize, fm);
       VlRegionExt rxt = new VlRegionExt(VlRegionExtTest.class.getResource(sourceAudio), ext, rp);
 

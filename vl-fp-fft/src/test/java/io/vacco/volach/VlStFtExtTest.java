@@ -51,7 +51,7 @@ public class VlStFtExtTest {
     it("Can perform STFT on pre-computed samples", () -> {
       VlUpdateListener l = new VlUpdateListener();
       double[] input = g.fromJson(l.loadRes("/samples-eas.json"), double[].class);
-      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheFile);
       VlStFtExt s = new VlStFtExt(new VlFft(256, true), 128, fm)
           .reset(Arrays.stream(input).mapToObj(v -> (float) v).spliterator());
       l.withWriter(new File("./build/stft-samples.csv"), p -> {
@@ -67,7 +67,7 @@ public class VlStFtExtTest {
     it("Can perform STFT on an audio signal", () -> {
       VlUpdateListener l = new VlUpdateListener();
       VlStFtParams rp = VlStFtParams.getDefault();
-      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheFile);
 
       l.withWriter(new File("./build/stft-audio.csv"), p -> {
         VlStFtExt s = new VlStFtExt(new VlFft(rp.fftBufferSize, rp.fftDirect), rp.fftHopSize, fm)

@@ -25,7 +25,7 @@ public class VlAudioMatchTest {
       VlStFtParams rp = VlStFtParams.getDefault();
       File fpDb = new File("./build/fp-db.json");
       VlFingerPrintIndex db = new VlFingerPrintIndex();
-      VlFftDiskMap fm = new VlFftDiskMap(fftCacheDir);
+      VlFftDiskMap fm = new VlFftDiskMap(fftCacheFile);
 
       if (!fpDb.exists()) {
         for (int i = 0; i < dbSources.length; i++) {

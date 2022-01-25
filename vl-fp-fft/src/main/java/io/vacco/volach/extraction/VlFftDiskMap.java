@@ -1,11 +1,11 @@
 package io.vacco.volach.extraction;
 
-import io.vacco.lash.*;
-import io.vacco.lash.serde.*;
+import io.vacco.filemap.IndexedFileMap;
+import io.vacco.volach.schema.VlFftSample;
 import java.io.*;
 
-public class VlFftDiskMap extends DiskMap<Integer, Serializable> {
-  public VlFftDiskMap(File dir) {
-    super(IntSerde.getInstance(), SerializingSerde.getInstance(), new BucketDiskMap(dir));
+public class VlFftDiskMap extends IndexedFileMap<Integer, VlFftSample> {
+  public VlFftDiskMap(File data) {
+    super(data);
   }
 }

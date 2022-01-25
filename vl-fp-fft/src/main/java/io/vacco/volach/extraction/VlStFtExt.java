@@ -2,7 +2,6 @@ package io.vacco.volach.extraction;
 
 import io.vacco.volach.impl.*;
 import io.vacco.volach.schema.VlFftSample;
-import java.io.*;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.*;
@@ -12,7 +11,7 @@ public class VlStFtExt extends Spliterators.AbstractSpliterator<VlFftSample> {
 
   private final VlFft fft;
   private final VlHammingWindow window;
-  private final Map<Integer, Serializable> fftCache;
+  private final Map<Integer, VlFftSample> fftCache;
 
   private Spliterator<Float> src;
   private final int hopDelta, hopSize;
@@ -29,7 +28,7 @@ public class VlStFtExt extends Spliterators.AbstractSpliterator<VlFftSample> {
   private final float[] buff;
   private final int[] i = new int[1];
 
-  public VlStFtExt(VlFft fft, int hopSize, Map<Integer, Serializable> fftCache) {
+  public VlStFtExt(VlFft fft, int hopSize, Map<Integer, VlFftSample> fftCache) {
     super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.NONNULL);
     if (hopSize < 1 || hopSize > fft.bufferSize) {
       throw new IllegalArgumentException(String.format("Invalid buffer/hop size: [%d, %d]", fft.bufferSize, hopSize));
@@ -74,7 +73,7 @@ public class VlStFtExt extends Spliterators.AbstractSpliterator<VlFftSample> {
     offsetSmp = cursorSmp - buff.length;
 
     float[] slice = window.update(buff);
-    Serializable sr = fftCache.computeIfAbsent(Arrays.hashCode(slice), sk -> {
+    VlFftSample s = fftCache.computeIfAbsent(Arrays.hashCode(slice), sk -> {
       VlFftSample s0 = fft.apply(slice).withSampleOffset(offsetSmp).withSampleFftOffset(cursorSlice);
       for (int k = 0; k < s0.realQtr.length; k++) {
         s0.realQtr[k] = Math.abs(s0.realQtr[k]);
@@ -82,7 +81,6 @@ public class VlStFtExt extends Spliterators.AbstractSpliterator<VlFftSample> {
       cursorSlice++;
       return s0;
     });
-    VlFftSample s = (VlFftSample) sr;
 
     if (ranged) {
       normalize(s.realQtr, min, max);
